@@ -1,5 +1,7 @@
 package com.example.bismapp;
 
-public class YourTeams {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class YourTeams extends AppCompatActivity {
 
 }
