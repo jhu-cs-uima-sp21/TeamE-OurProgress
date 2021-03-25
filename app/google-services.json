@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "703157190090",
+    "firebase_url": "https://uimaxbism-default-rtdb.firebaseio.com",
+    "project_id": "uimaxbism",
+    "storage_bucket": "uimaxbism.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703157190090:android:b322a08db550eeb445a333",
+        "android_client_info": {
+          "package_name": "com.example.bismapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703157190090-0tb0qdmrv8pkuqhag5ali79lk5r0m3ea.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvLmms7CyouIyRlIfWcCBX_MYrtDKpC-4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703157190090-0tb0qdmrv8pkuqhag5ali79lk5r0m3ea.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
