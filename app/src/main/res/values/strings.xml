@@ -16,6 +16,12 @@
     <string name="employee_id">Employee ID</string>
     <string name="remember_me">Remember me</string>
     <string name="login">Log in</string>
+    <string name="team_progress_circle">Team Progress Circle</string>
+    <string name="team_arrow">team arrow</string>
+    <string name="team_a">Team A</string>
+    <string name="your_teams">Your Teams</string>
+    <string name="refresh_teams_screen">Refresh teams screen</string>
+    <string name="create_a_new_team">Create a new team</string>
 
 
 </resources>

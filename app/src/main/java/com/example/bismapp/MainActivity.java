@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -12,13 +13,19 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /*
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,8 +40,22 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
         */
+
+        buttonClick.setDuration(100);
+        Button login_btn = (Button)findViewById(R.id.login_b);
+        login_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // switch to Your Teams activity
+                view.startAnimation(buttonClick);
+                EditText id = (EditText)findViewById(R.id.eid_field);
+                System.out.println(id.getText().toString());
+                if (id.getText().toString().equals("123456789")) {
+                    Intent intent = new Intent(getApplicationContext(), YourTeams.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
     }
 
@@ -59,4 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }
