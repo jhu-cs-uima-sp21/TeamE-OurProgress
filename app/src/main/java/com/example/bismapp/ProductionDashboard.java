@@ -1,15 +1,18 @@
 package com.example.bismapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 /**
@@ -28,7 +31,9 @@ public class ProductionDashboard extends Fragment {
     private String mParam1;
     private String mParam2;
     public Context cntx;
-    public MainActivity myact;
+    //public MainActivity myact;
+    public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
+
 
     public ProductionDashboard() {
         // Required empty public constructor
@@ -61,17 +66,55 @@ public class ProductionDashboard extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+/*
+        buttonClick.setDuration(100);
+        ImageButton team_btn =  findViewById(R.id.teamButton);
+        team_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // switch to Your Teams activity
+                view.startAnimation(buttonClick);
+                //TODO: MAKE THIS ON CLICK LEAD BACK TO YOURTEAMS
+                //Intent intent = new Intent(myact.getApplicationContext(), YourTeams.class);
+                //startActivity(intent);
+            }
+        });
+*/
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
+
         View myView = inflater.inflate(R.layout.fragment_production_dashboard, container, false);
         Context cntx = getActivity().getApplicationContext();
-        myact = (MainActivity) getActivity();
-        ProgressBar progBar = (ProgressBar) myView.findViewById(R.id.progressBar2);
-        progBar.setProgress(90);
+
+        buttonClick.setDuration(100);
+        ImageButton team_btn = (ImageButton) myView.findViewById(R.id.teamButton);
+        team_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // switch to Your Teams activity
+                view.startAnimation(buttonClick);
+                //TODO: MAKE THIS ON CLICK LEAD BACK TO YOURTEAMS
+                getActivity().finish();
+                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
+                //startActivity(intent);
+            }
+        });
+
+        ImageButton settings_btn = (ImageButton) myView.findViewById(R.id.settingsButton);
+        team_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { // switch to Your Teams activity
+                view.startAnimation(buttonClick);
+                //TODO: MAKE THIS ON CLICK LEAD BACK TO EDIT TEAMAS
+                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
+                //startActivity(intent);
+            }
+        });
 
         return myView;
     }
