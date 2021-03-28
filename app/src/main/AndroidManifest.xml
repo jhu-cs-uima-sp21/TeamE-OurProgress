@@ -26,8 +26,9 @@
         <activity
             android:name=".YourTeams"
             android:label="@string/your_teams"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.BISMApp.NoActionBar"></activity>
+            android:theme="@style/Theme.BISMApp.NoActionBar"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"
