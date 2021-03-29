@@ -1,0 +1,40 @@
+UIMA Team E Scrum meeting  3/25/21
+
+Those in attendance:
+	Samuel
+	Emi
+	Keidai
+	Chiamaka
+
+Agenda: 
+1. Standup Meeting for Sprint 1
+ 
+ 
+
+Meetings Times:
+10:05 Meeting Start Time
+10:06 Emi and Sam working on the UI for the Login screen
+but no functionality yet
+          Emi set up the Firebase but hasn't added anything yet
+10:07 Chiamaka and Keidai haved completing the set up Firebase
+           Worked on UI for the Your Teams Page
+	   Entering in a certain username will direct you to the Your
+	   Teams page
+           Added button animations  
+10:08 Should we switch to SQLite or Firebase?
+	Resources for SQLite 
+		LinkedIn Learning - "Manage Relational Data with SQLite"
+		Android Developer Site
+	Keidai will put resources in the Google Drive folder
+10:12 Making sure login works for 1st sprint
+10:13 Timeline for Chiamaka and Keidai
+	Will be done with Your Teams and Create Teams by Monday
+	Will be done with Edit Teams by Thursday
+10:14 By Saturday, Emi and Samuel will work on Production Dashboard
+	Should start thinking about how to implement storage using SQLite
+10:15 Start LinkedIn Learning - Emi/Samuel
+10:19 Emi/Samuel should work on having a user login when employee id
+is in the database
+10:20 Resources will be found in Slack "Resource" Channel 
+10:21 Make the "Remember Me" Button larger
+10:21 Meeting End Time
