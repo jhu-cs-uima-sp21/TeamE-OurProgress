@@ -32,6 +32,9 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="create_team">Create Team</string>
+    <string name="dummy_name">Anna Banana Cherry</string>
+    <string name="dummy_id">12345678</string>
+    <string name="remove_a_member">Remove a member</string>
 
 
 </resources>

@@ -15,42 +15,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:background="@drawable/team_member_background"
+            android:gravity="fill_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:padding="18dp">
 
             <TextView
-                android:id="@+id/team_progress"
+                android:id="@+id/member_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".40"
+                android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="3"
                 android:contentDescription="@string/team_progress_circle"
+                android:ellipsize="end"
                 android:fontFamily="@font/montserrat"
-                android:padding="10dp"
-                android:text="Anna"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@string/dummy_name"
                 android:textColor="@color/black"
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/team_name"
+                android:id="@+id/member_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight=".40"
-                android:ellipsize="end"
+                android:ems="5"
                 android:fontFamily="@font/montserrat"
-                android:maxLines="1"
-                android:padding="20dp"
                 android:singleLine="true"
-                android:text="@string/team_a"
+                android:text="@string/dummy_id"
                 android:textColor="@color/bism_blue"
                 android:textSize="24sp" />
 
-            <ImageView
-                android:id="@+id/team_arrow"
+            <ImageButton
+                android:id="@+id/remove_member_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".20"
-                android:contentDescription="@string/team_arrow"
-                app:srcCompat="@drawable/ic_navigate_next_24px" />
+                android:layout_marginEnd="3dp"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/circle_red"
+                android:contentDescription="@string/remove_a_member"
+                app:srcCompat="@drawable/ic_clear_white_18dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

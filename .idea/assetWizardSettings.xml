@@ -11,25 +11,11 @@
                   <entry key="vectorAssetStep">
                     <value>
                       <PersistentState>
-                        <option name="children">
-                          <map>
-                            <entry key="clipartAsset">
-                              <value>
-                                <PersistentState>
-                                  <option name="values">
-                                    <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/settings/baseline_settings_24.xml" />
-                                    </map>
-                                  </option>
-                                </PersistentState>
-                              </value>
-                            </entry>
-                          </map>
-                        </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="settings_icon" />
-                            <entry key="sourceFile" value="$PROJECT_DIR$/app/src/main/res/drawable/edit-white-18dp.svg" />
+                            <entry key="assetSourceType" value="FILE" />
+                            <entry key="outputName" value="ic_clear_white_18dp" />
+                            <entry key="sourceFile" value="C:\Users\canae\Desktop\Hopkins\UIMA\TeamE-OurProgress\app\src\main\res\drawable\clear-white-18dp.svg" />
                           </map>
                         </option>
                       </PersistentState>

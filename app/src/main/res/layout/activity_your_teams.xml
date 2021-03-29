@@ -21,19 +21,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/refresh_btn"
-        android:layout_width="84dp"
-        android:layout_height="84dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginLeft="28dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/circle_inverted"
-        app:srcCompat="@drawable/ic_sync_24px"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/refresh_teams_screen" />
-
-    <ImageButton
         android:id="@+id/create_btn"
         android:layout_width="84dp"
         android:layout_height="84dp"

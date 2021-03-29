@@ -16,22 +16,10 @@ public class YourTeams extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_teams);
 
-        ImageButton refresh_btn = (ImageButton) findViewById(R.id.refresh_btn);
-        refresh_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(MainActivity.buttonClick);
-                // TODO
-            }
-        });
-
         ImageButton create_btn = (ImageButton) findViewById(R.id.create_btn);
-        create_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                view.startAnimation(MainActivity.buttonClick);
-                // TODO
-            }
+        create_btn.setOnClickListener(view -> {
+            view.startAnimation(MainActivity.buttonClick);
+            // TODO
         });
     }
 }

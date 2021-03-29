@@ -10,5 +10,6 @@
     <color name="dodgerBlue">#1076ff</color>
     <color name= "gray">#949494</color>
     <color name="dark_gray">#c4c0bd</color>
+    <color name="red">#ff0000</color>
 
 </resources>
