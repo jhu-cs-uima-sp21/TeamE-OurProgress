@@ -22,4 +22,6 @@ public class TeamMember {
     public int getId() {return id;}
 
     public String getStation() {return station;}
+
+    public void setStation (String newStation) { this.station = newStation; }
 }
