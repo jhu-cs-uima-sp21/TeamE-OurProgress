@@ -1,0 +1,35 @@
+UIMA Team E Scrum meeting  3/28/21
+
+Those in attendance:
+	Samuel
+	Emi
+	Keidai
+	Chiamaka
+
+Agenda: 
+1. Standup Meeting for Sprint 1
+ 
+ 
+
+
+Meeting Times:
+7:47 Meeting Start Time
+7:48 Who will work on database?
+7:49 Build clean before pushing project
+7:56 Showing Keidai how to use VCS and git
+7:57 Samuel and Emi will create table for Database
+7:58 Separate tables for users
+7:59 Keidai will run database stuff by Jacob
+	SQLite and Android studio don't update automatically but
+	there are alternatives
+	Using both Room and SQLite?
+8:02 Samuel explains what him and Emi worked on
+     Setting up Bottom navigation bar 
+8:03 Finish project by Thursday
+8:03 Refresh button to regenerate the progress circle after some
+duration of times
+8:05 How to make progress bar stop animating?
+	Fragment of the Progress Circle inside another fragment?
+8:06 Keidai and Chimaka explains what they have been working on
+	Converging Edit Teams and Create Team 
+8:10 Meeting End time
