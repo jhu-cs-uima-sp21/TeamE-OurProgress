@@ -38,9 +38,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemCount() { return teamMembers.size(); }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
