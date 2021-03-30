@@ -1,17 +1,21 @@
 package com.example.bismapp;
 
-public class TeamMember {
+public class TeamMember extends User {
     private String name;
-    private final int id;
+    private String id;
     private String station;
 
-    public TeamMember(String name, int id, String station) {
+    public TeamMember(){
+
+    }
+
+    public TeamMember(String name, String id, String station) {
+        super(id);
         this.name = name;
-        this.id = id;
         this.station = station;
     }
 
-    TeamMember(String name, int id) {
+    public TeamMember(String name, String id) {
         this.name = name;
         this.id = id;
         this.station = "N/A";
@@ -19,7 +23,7 @@ public class TeamMember {
 
     public String getName() {return name;}
 
-    public int getId() {return id;}
+    public String getId() {return id;}
 
     public String getStation() {return station;}
 
