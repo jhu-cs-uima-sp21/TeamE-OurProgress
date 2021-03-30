@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
@@ -25,6 +26,8 @@ public class TeamMRFragment extends Fragment {
         cntx = getActivity().getApplicationContext();
 
         myact = (MainActivity) getActivity();
+
+        teamRoster = (RecyclerView) myview.findViewById(R.id.team_member_recycler);
         //ToDo
 
     }
