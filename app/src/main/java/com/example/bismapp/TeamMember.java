@@ -5,7 +5,7 @@ public class TeamMember {
     private final int id;
     private String station;
 
-    TeamMember(String name, int id, String station) {
+    public TeamMember(String name, int id, String station) {
         this.name = name;
         this.id = id;
         this.station = station;
@@ -14,7 +14,7 @@ public class TeamMember {
     TeamMember(String name, int id) {
         this.name = name;
         this.id = id;
-        this.station = "NA";
+        this.station = "N/A";
     }
 
     public String getName() {return name;}

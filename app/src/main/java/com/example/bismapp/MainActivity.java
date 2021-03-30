@@ -17,14 +17,22 @@ import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
-
+    public static ArrayList<TeamMember> teamMembers = new ArrayList<>(5);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Dummy list of team members
+        for (int i = 1; i < 6; i++) {
+            TeamMember member = new TeamMember("Member #" + i, i * 12349 % 10000, "Station " + (6 - i));
+            teamMembers.add(member);
+        }
 
         /*
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -50,10 +58,10 @@ public class MainActivity extends AppCompatActivity {
                 view.startAnimation(buttonClick);
                 EditText id = (EditText)findViewById(R.id.eid_field);
                 System.out.println(id.getText().toString());
-                if (id.getText().toString().equals("123456789")) {
+                //if (id.getText().toString().equals("123456789")) {
                     Intent intent = new Intent(getApplicationContext(), YourTeams.class);
                     startActivity(intent);
-                }
+                //}
             }
         });
 

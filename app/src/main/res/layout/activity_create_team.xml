@@ -7,6 +7,7 @@
     android:layout_gravity="center">
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/bism_blue"
@@ -42,6 +43,17 @@
 
 
     </LinearLayout>
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.bismapp.ui.modifyTeams.TeamMRFragment"
+        class="com.example.bismapp.ui.modifyTeams.TeamMRFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

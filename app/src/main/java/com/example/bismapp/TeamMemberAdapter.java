@@ -26,13 +26,15 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
     public TeamMemberAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_team_member, parent, false);
-
-        return new ViewHolder(view);
+        TextView name = (TextView)view.findViewById(R.id.member_name);
+        TextView id = (TextView)view.findViewById(R.id.member_id);
+        return new ViewHolder(view, name, id);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TeamMemberAdapter.ViewHolder holder, int position) {
-
+        TeamMember member = teamMembers.get(position);
+        holder.setData(member);
     }
 
     @Override
