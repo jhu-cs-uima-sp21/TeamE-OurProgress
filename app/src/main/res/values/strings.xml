@@ -35,6 +35,10 @@
     <string name="dummy_name">Anna Banana Cherry</string>
     <string name="dummy_id">12345678</string>
     <string name="remove_a_member">Remove a member</string>
+    <string name="set_daily_goal">Set daily goal:</string>
+    <string name="enter_daily_goal">Enter daily goal...</string>
+    <string name="add_team_members">Add team members:</string>
+    <string name="enter_associate_name">Enter associate name...</string>
 
 
 </resources>

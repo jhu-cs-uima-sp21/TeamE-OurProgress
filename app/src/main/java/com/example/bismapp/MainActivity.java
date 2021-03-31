@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
         dbref = mdbase.getReference();
 
         // Dummy list of team members
-        /*for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 6; i++) {
             TeamMember member = new TeamMember("Member #" + i, i * 12349 % 10000, "Station " + (6 - i));
             teamMembers.add(member);
-        }*/
+        }
 
         /*
 
