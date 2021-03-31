@@ -65,22 +65,6 @@ public class ProductionDashboard extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-/*
-        buttonClick.setDuration(100);
-        ImageButton team_btn =  findViewById(R.id.teamButton);
-        team_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { // switch to Your Teams activity
-                view.startAnimation(buttonClick);
-                //TODO: MAKE THIS ON CLICK LEAD BACK TO YOURTEAMS
-                //Intent intent = new Intent(myact.getApplicationContext(), YourTeams.class);
-                //startActivity(intent);
-            }
-        });
-*/
-
-
     }
 
     @Override
