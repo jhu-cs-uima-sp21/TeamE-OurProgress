@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp">
 
     <androidx.cardview.widget.CardView
@@ -35,7 +35,7 @@
                 android:singleLine="true"
                 android:text="@string/dummy_name"
                 android:textColor="@color/black"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 tools:layout_marginRight="5dp" />
 
             <TextView
@@ -47,12 +47,12 @@
                 android:layout_marginEnd="2dp"
                 android:layout_marginRight="2dp"
                 android:layout_weight=".40"
-                android:ems="5"
+                android:ems="4"
                 android:fontFamily="@font/montserrat"
                 android:singleLine="true"
                 android:text="@string/dummy_id"
                 android:textColor="@color/bism_blue"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
             <ImageButton
                 android:id="@+id/remove_member_btn"

@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Dummy list of team members
         for (int i = 1; i < 6; i++) {
-            TeamMember member = new TeamMember("Member #" + i, i * 12349 % 10000, "Station " + (6 - i));
+            TeamMember member = new TeamMember("Member #" + i,
+                    String.valueOf(i * 82345679 % 10000000), "Station " + (6 - i));
             teamMembers.add(member);
         }
 
@@ -119,6 +120,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
 }

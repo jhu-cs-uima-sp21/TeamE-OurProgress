@@ -26,8 +26,8 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
     public TeamMemberAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_team_member, parent, false);
-        TextView name = (TextView)view.findViewById(R.id.member_name);
-        TextView id = (TextView)view.findViewById(R.id.member_id);
+        TextView name = view.findViewById(R.id.member_name);
+        TextView id = view.findViewById(R.id.member_id);
         return new ViewHolder(view, name, id);
     }
 
@@ -44,10 +44,6 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         private TextView name;
         private TextView id;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-
         public ViewHolder(View view, TextView name, TextView id) {
             super(view);
             this.name = name;
@@ -56,7 +52,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
 
         public void setData(TeamMember teamMember) {
             name.setText(teamMember.getName());
-            id.setText(String.valueOf(teamMember.getId()));
+            id.setText(teamMember.getId());
         }
     }
 }
