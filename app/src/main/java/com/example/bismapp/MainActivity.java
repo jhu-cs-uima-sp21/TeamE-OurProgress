@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -23,6 +24,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.contentcapture.DataShareRequest;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
         buttonClick.setDuration(100);
         Button login_btn = (Button)findViewById(R.id.login_b);
+
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { // switch to Your Teams activity
@@ -72,32 +75,70 @@ public class MainActivity extends AppCompatActivity {
                 EditText id = (EditText)findViewById(R.id.eid_field);
                 String entered_id = id.getText().toString();
 
+                System.out.println("hello");
+
+                boolean isAssociate;
+
                 //READ FROM DATABASE TO CHECK IF MANAGER
                 dbref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
+                        System.out.println("hello");
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
                         // do something with snapshot values
                         boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
-                        System.out.println(isManager);
+                        boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
+
+                        if (isManager) {
+                            Log.w(TAG, "This user is a Manager");
+                            Intent intent = new Intent(getApplicationContext(), YourTeams.class);
+                            startActivity(intent);
+                        } else if (isAssociate) {
+                            Log.w(TAG, "This user is a Associate");
+                            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                            startActivity(intent);
+                        } else {
+                            //TODO: See if we can make the toast larger
+                            Context context = getApplicationContext();
+                            CharSequence text = "ERROR: Please enter a valid employee id";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                            Log.w(TAG, "Invalid Employee ID");
+                        }
+
 
                         Log.d(TAG, "Children count: " + snapshot.getChildrenCount()); }
                     @Override
                     public void onCancelled(DatabaseError error) {
-                    // Failed to read value
+                        // Failed to read value
                         Log.w(TAG, "Failed to read value.", error.toException()); }
                 });
-                //end of readnig from data base
 
-                Intent intent = new Intent(getApplicationContext(), YourTeams.class);
-                startActivity(intent);
+                /*dbref.child("users").child("managers").child("123456789").child("id").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (!task.isSuccessful()) {
+                            Log.e("firebase", "Error getting data", task.getException());
+                        }
+                        else {
+                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                        }
+                    }
+                });*/
+
+                //end of reading from data base
+
+                /*Intent intent = new Intent(getApplicationContext(), YourTeams.class);
+                startActivity(intent);*/
             }
         });
 
-
-
+        // dbref.child("users").child("associates").child("234567891").exists();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
