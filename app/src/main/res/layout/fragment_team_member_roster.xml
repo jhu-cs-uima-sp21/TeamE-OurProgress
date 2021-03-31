@@ -9,49 +9,46 @@
                                                 Relative to androidx....Contrainst -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/team_member_recycler"
-        android:layout_width="409dp"
-        android:layout_height="460dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/button_second"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginTop="15dp"-->
-<!--        android:orientation="vertical"-->
-<!--        android:paddingTop="15dp">-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_marginTop="15dp"-->
+    <!--        android:orientation="vertical"-->
+    <!--        android:paddingTop="15dp">-->
 
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/team_member_recycler"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="#00FFFFFF"-->
-<!--            android:isScrollContainer="true"-->
-<!--            android:scrollbarAlwaysDrawVerticalTrack="true"-->
-<!--            android:scrollbars="vertical"-->
-<!--            android:soundEffectsEnabled="true"/>-->
+    <!--        <androidx.recyclerview.widget.RecyclerView-->
+    <!--            android:id="@+id/team_member_recycler"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="#00FFFFFF"-->
+    <!--            android:isScrollContainer="true"-->
+    <!--            android:scrollbarAlwaysDrawVerticalTrack="true"-->
+    <!--            android:scrollbars="vertical"-->
+    <!--            android:soundEffectsEnabled="true"/>-->
 
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 
-<!--</RelativeLayout>-->
-<!--            android:id="@+id/team_member_recycler"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1"-->
-<!--            android:background="#00FFFFFF"-->
-<!--            android:isScrollContainer="true"-->
-<!--            android:scrollbarAlwaysDrawVerticalTrack="true"-->
-<!--            android:scrollbars="vertical"-->
-<!--            android:soundEffectsEnabled="true"/>-->
+    <!--</RelativeLayout>-->
+    <!--            android:id="@+id/team_member_recycler"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:background="#00FFFFFF"-->
+    <!--            android:isScrollContainer="true"-->
+    <!--            android:scrollbarAlwaysDrawVerticalTrack="true"-->
+    <!--            android:scrollbars="vertical"-->
+    <!--            android:soundEffectsEnabled="true"/>-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

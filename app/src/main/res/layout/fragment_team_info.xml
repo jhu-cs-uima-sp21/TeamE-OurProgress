@@ -3,17 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.modifyTeams.TeamInfoFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +22,7 @@
             android:paddingBottom="10dp"
             android:text="@string/set_daily_goal"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
         <EditText
@@ -40,17 +36,17 @@
             android:inputType="number"
             android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="32sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/addTeamMembers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:paddingBottom="10dp"
             android:text="@string/add_team_members"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
         <EditText
@@ -61,10 +57,10 @@
             android:ems="10"
             android:fontFamily="@font/montserrat"
             android:hint="@string/enter_associate_name"
-            android:inputType="number"
+            android:inputType="text|textCapSentences"
             android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="32sp" />
+            android:textSize="30sp" />
 
     </LinearLayout>
 
