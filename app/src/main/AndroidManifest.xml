@@ -37,6 +37,7 @@
             android:name=".CreateTeam"
             android:label="@string/create_team"
             android:theme="@style/Theme.BISMApp.NoActionBar"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".YourTeams">
         </activity>
 
