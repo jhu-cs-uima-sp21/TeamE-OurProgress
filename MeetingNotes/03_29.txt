@@ -1,0 +1,53 @@
+Those in Attendance
+Keidai
+Samuel
+Emi
+Chiamaka
+
+Agenda:
+1. Updates for Sprint 1
+
+Meeting minutes:
+4:50 Meeting Start Time
+4:51 Sharing data?
+	Would Firebase be a better method?
+		Ask Jacob
+4:59 SQLite vs Firebase
+	SQLite
+Pros
+Better when you have a lot of data for querying data
+Easier to write more complicated data for queries
+More control over data
+Working with lower-level data
+More data you get, easier to parse for data
+Better for LONG TERM
+Cons
+Will have to write a web service which might be beyond the scope of this class
+	Firebase
+Pros
+Simpler and more intuitive
+Simpler for retrieving data
+Better for SHORT TERM
+Cons
+Paid depending on how much data is being processed
+5:05 Initial investment in Firebase and switching to SQLite in the long run (Possibly at the end of the semester)
+5:08 Using tools like visualizer for SQLite
+	For long term, YES
+	Probably wouldn't need it for short term
+5:09 Sam and Emi will switch focus to Firebase to being displaying data for dashboard
+5:11 Chiamaka and Keidai have been working on Teams/Manager Screens
+5:11 Leave time to merge changes across teams
+5:12 Recording slowly while navigating views on emulator in order to have time to provide voice overs
+	Going through all screens SLOWLY
+5:15 Adding icons to Ask for Help Screen
+5:15 No need to use Room
+5:41 Merge changes as a group by Friday
+5:41 Some buttons, like the Login button, are sometimes squished for smaller devices; work on fixing dark mode
+5:42 Dark mode theme?
+5:45 Meeting End Time
+
+
+
+
+
+
