@@ -4,6 +4,7 @@ public class TeamMember extends User {
     private String name;
     private String id;
     private String station = "N/A";
+    private String team_id;
 
     public TeamMember(String name, String id, String station) {
         this.name = name;

@@ -2,6 +2,7 @@ package com.example.bismapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private static final String TAG = "dbref: ";
+    private SharedPreferences myPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) { // switch to Your Teams activity
                 view.startAnimation(buttonClick);
-                EditText id = (EditText)findViewById(R.id.eid_field);
+                EditText id = (EditText) findViewById(R.id.eid_field);
                 String entered_id = id.getText().toString();
 
                 System.out.println("hello");
@@ -91,18 +94,32 @@ public class MainActivity extends AppCompatActivity {
                         // do something with snapshot values
                         boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
                         boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
+                        Context context = getApplicationContext();  // app level storage
+
+                        //store associate/manager in shared preferences
+                        myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        SharedPreferences.Editor peditor = myPrefs.edit();
+
 
                         if (isManager) {
                             Log.w(TAG, "This user is a Manager");
+                            peditor.putBoolean("MANAGER", isManager);
+                            peditor.putString("ID", entered_id);
+                            peditor.apply();
                             Intent intent = new Intent(getApplicationContext(), YourTeams.class);
                             startActivity(intent);
                         } else if (isAssociate) {
+                            String teamID = snapshot.child("users").child("associates").child(entered_id).child("team").getValue(String.class);
+                            peditor.putBoolean("MANAGER", isManager);
+                            peditor.putString("ID", entered_id);
+                            peditor.putString("TEAM", teamID);
+                            peditor.apply();
                             Log.w(TAG, "This user is a Associate");
                             Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
                             startActivity(intent);
                         } else {
                             //TODO: See if we can make the toast larger
-                            Context context = getApplicationContext();
+                            context = getApplicationContext();
                             CharSequence text = "ERROR: Please enter a valid employee id";
                             int duration = Toast.LENGTH_SHORT;
 
@@ -112,33 +129,17 @@ public class MainActivity extends AppCompatActivity {
                         }
 
 
-                        Log.d(TAG, "Children count: " + snapshot.getChildrenCount()); }
+                        Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
+                    }
+
                     @Override
                     public void onCancelled(DatabaseError error) {
                         // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException()); }
-                });
-
-                /*dbref.child("users").child("managers").child("123456789").child("id").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<DataSnapshot> task) {
-                        if (!task.isSuccessful()) {
-                            Log.e("firebase", "Error getting data", task.getException());
-                        }
-                        else {
-                            Log.d("firebase", String.valueOf(task.getResult().getValue()));
-                        }
+                        Log.w(TAG, "Failed to read value.", error.toException());
                     }
-                });*/
-
-                //end of reading from data base
-
-                /*Intent intent = new Intent(getApplicationContext(), YourTeams.class);
-                startActivity(intent);*/
+                });
             }
         });
-
-        // dbref.child("users").child("associates").child("234567891").exists();
     }
 
 
