@@ -49,7 +49,7 @@
             android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/enterAssociateName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +60,8 @@
             android:inputType="text|textCapSentences"
             android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:completionHint="3"/>
 
     </LinearLayout>
 

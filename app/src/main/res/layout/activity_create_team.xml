@@ -17,36 +17,40 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".15"
+            android:layout_height="96dp"
+            android:layout_weight=".2"
             android:background="@color/bism_blue"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:weightSum="1"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <EditText
                 android:id="@+id/create_teams"
                 android:layout_width="wrap_content"
-                android:layout_height="132dp"
-                android:layout_weight=".66"
+                android:layout_height="wrap_content"
                 android:background="@color/bism_blue"
                 android:fontFamily="@font/montserrat_bold"
                 android:gravity="center"
-                android:hint="@string/enter_team_name_here"
+                android:hint="@string/enter_team_name"
                 android:textColor="@color/white"
                 android:textColorHint="@color/dark_gray"
                 android:textScaleX="1.1"
-                android:textSize="36sp" />
+                android:textSize="32sp"
+                android:layout_marginLeft="5dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:ellipsize="end"/>
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight=".33"
-                android:paddingRight="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 app:srcCompat="@drawable/ic_edit_white_18dp" />
 
 
@@ -56,12 +60,12 @@
             android:id="@+id/team_info_frag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".35"
+            android:layout_weight=".3"
             android:background="@color/whitesmoke"
             android:paddingLeft="20dp"
-            android:paddingTop="10dp"
+            android:paddingTop="15dp"
             android:paddingRight="20dp"
-            android:paddingBottom="20dp"
+            android:paddingBottom="15dp"
             app:layout_constraintTop_toBottomOf="@id/linearLayout">
 
         </FrameLayout>

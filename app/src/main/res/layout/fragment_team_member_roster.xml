@@ -17,6 +17,7 @@
         android:visibility="visible"
         android:scrollbars="vertical"
         android:scrollbarThumbVertical="@drawable/scrollbar_bblue"
+        android:scrollbarSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
