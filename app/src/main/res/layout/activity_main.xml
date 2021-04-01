@@ -16,22 +16,24 @@
 
     <ImageView
         android:id="@+id/rectimage"
-        android:layout_width="377dp"
-        android:layout_height="378dp"
+        android:layout_width="298dp"
+        android:layout_height="256dp"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_bold"
+        android:fontFamily="@font/montserrat"
         android:text="@string/welcome"
         android:textColor="@color/white"
-        android:textSize="44sp"
+        android:textSize="50sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/rectimage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -39,54 +41,65 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.676" />
 
+
     <ImageView
         android:id="@+id/bism_logo"
-        android:layout_width="132dp"
-        android:layout_height="120dp"
+        android:layout_width="97dp"
+        android:layout_height="78dp"
         android:layout_marginStart="122dp"
         android:layout_marginLeft="122dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="123dp"
         android:layout_marginRight="123dp"
         app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintHorizontal_bias="0.477"
         app:layout_constraintStart_toStartOf="@+id/rectimage"
         app:layout_constraintTop_toTopOf="@+id/rectimage"
-        app:srcCompat="@drawable/bismlogo" />
-
+        app:srcCompat="@drawable/bismlogo"
+        tools:ignore="ContentDescription" />
 
     <EditText
         android:id="@+id/eid_field"
-        android:layout_width="310dp"
-        android:layout_height="63dp"
-        android:layout_marginTop="24dp"
-        android:paddingLeft="15dp"
+        android:layout_width="263dp"
+        android:layout_height="51dp"
+        android:layout_marginTop="16dp"
+        android:autofillHints="AUTOFILL_HINT_PASSWORD"
         android:background="@drawable/textview_border"
         android:ems="10"
+        android:fontFamily="@font/montserrat"
         android:hint="@string/employee_id"
         android:inputType="numberPassword"
-
-        android:textSize="30sp"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="15dp"
+        android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="@+id/rectimage"
         app:layout_constraintTop_toBottomOf="@+id/bism_logo"
         tools:textColorHint="@color/whitesmoke" />
-
 
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/montserrat"
+        android:paddingStart="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/remember_me"
         android:textSize="24sp"
+        app:buttonTint="@color/dodgerBlue"
         app:layout_constraintStart_toStartOf="@id/eid_field"
         app:layout_constraintTop_toBottomOf="@id/eid_field" />
 
     <Button
         android:id="@+id/login_b"
-        android:layout_width="157dp"
-        android:layout_height="90dp"
+        android:layout_width="215dp"
+        android:layout_height="80dp"
+        android:background="@drawable/button_background"
         android:fontFamily="@font/montserrat"
         android:text="@string/login"
         android:textAllCaps="false"
