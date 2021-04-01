@@ -19,8 +19,8 @@
 
             android:id="@+id/circularProgressbar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="213dp"
-            android:layout_height="218dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:layout_centerInParent="true"
             android:background="@drawable/circle_shape"
             android:indeterminate="false"
@@ -30,22 +30,22 @@
             android:secondaryProgress="90"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintVertical_bias="0.185" />
 
         <TextView
             android:id="@+id/hasMade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="76dp"
+            android:layout_marginTop="96dp"
             android:fontFamily="@font/montserrat"
             android:text="Team A has made"
             android:textColor="#000000"
-            android:textSize="28sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -53,14 +53,13 @@
             android:id="@+id/prodText"
             android:layout_width="275dp"
             android:layout_height="95dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:text="3600 out of 4000 units"
             android:textColor="#000000"
-            android:textSize="34sp"
+            android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hasMade" />
 
@@ -71,7 +70,7 @@
             android:fontFamily="@font/montserrat"
             android:text="90%"
             android:textColor="#000000"
-            android:textSize="45sp"
+            android:textSize="70sp"
             app:layout_constraintBottom_toBottomOf="@+id/circularProgressbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -79,8 +78,8 @@
 
         <ImageButton
             android:id="@+id/teamButton"
-            android:layout_width="69dp"
-            android:layout_height="57dp"
+            android:layout_width="84dp"
+            android:layout_height="75dp"
             android:background="@color/white"
             android:scaleType="fitCenter"
             android:tint="@color/black"
@@ -94,8 +93,8 @@
 
         <ImageButton
             android:id="@+id/settingsButton"
-            android:layout_width="58dp"
-            android:layout_height="59dp"
+            android:layout_width="75dp"
+            android:layout_height="74dp"
             android:background="#FFFFFF"
             android:scaleType="fitCenter"
             android:tint="@color/black"
