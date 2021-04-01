@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/your_teams"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="96dp"
         android:background="@color/bism_blue"
         android:fontFamily="@font/montserrat_bold"
