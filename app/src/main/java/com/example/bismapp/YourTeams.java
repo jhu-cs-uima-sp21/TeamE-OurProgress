@@ -42,10 +42,17 @@ public class YourTeams extends AppCompatActivity {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
 
+        ArrayList<Team> teams = new ArrayList<>(5);
+        // Dummy list of teams
+        for (int i = 0; i < 5; i++) {
+            teams.add(new Team("Team #" + i, "", 0, 0,
+            null));
+        }
+
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
-        adapter = new TeamListAdapter(genLocalTeams());
+        adapter = new TeamListAdapter(teams);
 
         teamList  = findViewById(R.id.team_list);
         teamList.setHasFixedSize(true);

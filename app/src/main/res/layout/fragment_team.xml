@@ -30,7 +30,7 @@
                 android:max="100"
                 android:progress="100"
                 android:progressDrawable="@drawable/circular_progress_bar"
-                android:secondaryProgress="90" />
+                android:secondaryProgress="50" />
 
             <TextView
                 android:id="@+id/team_name"

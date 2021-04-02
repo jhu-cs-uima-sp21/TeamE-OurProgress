@@ -24,7 +24,7 @@
         android:id="@+id/team_list"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:layout_margin="5dp"
         android:scrollbarSize="15dp"
         android:scrollbarThumbVertical="@drawable/scrollbar_bblue"
         android:scrollbars="vertical"
