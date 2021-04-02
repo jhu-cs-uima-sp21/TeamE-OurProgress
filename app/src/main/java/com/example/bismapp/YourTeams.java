@@ -45,11 +45,11 @@ public class YourTeams extends AppCompatActivity {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
 
-        ArrayList<Team> teams = new ArrayList<>(5);
+        ArrayList<Team> teams = new ArrayList<>();
         // Dummy list of teams
-        for (int i = 0; i < 5; i++) {
-            teams.add(new Team("Team #" + i, "", 0, 0,
-            null));
+        for (int i = 0; i < 10; i++) {
+            teams.add(new Team("Team #" + i, "", (i+94)*(i+7),
+                    (i+736)*(54*i), null));
         }
 
         // set up RecyclerView
