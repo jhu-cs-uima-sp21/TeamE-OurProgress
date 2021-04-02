@@ -16,8 +16,6 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
-
         buttonClick.setDuration(100);
         Button login_btn = (Button)findViewById(R.id.login_b);
         login_btn.setOnClickListener(new View.OnClickListener() {
