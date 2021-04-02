@@ -9,7 +9,12 @@ import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
+import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
+
 public class YourTeams extends AppCompatActivity {
+
+    private TeamInfoFragment teamInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

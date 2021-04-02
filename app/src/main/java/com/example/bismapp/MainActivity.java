@@ -115,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
                             peditor.putString("TEAM", teamID);
                             peditor.apply();
                             Log.w(TAG, "This user is a Associate");
-                            Intent intent = new Intent(getApplicationContext(), NavigationActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
                             startActivity(intent);
                         } else {
                             //TODO: See if we can make the toast larger
                             context = getApplicationContext();
-                            CharSequence text = "ERROR: Please enter a valid employee id";
-                            int duration = Toast.LENGTH_SHORT;
+                            CharSequence text = "Please enter a valid employee id";
+                            int duration = Toast.LENGTH_LONG;
 
                             Toast toast = Toast.makeText(context, text, duration);
                             toast.show();

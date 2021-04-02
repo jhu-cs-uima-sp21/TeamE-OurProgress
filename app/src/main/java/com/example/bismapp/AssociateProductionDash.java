@@ -32,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
  * Use the {@link ProductionDashboard#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProductionDashboard extends Fragment {
+public class AssociateProductionDash extends Fragment {
     private SharedPreferences myPrefs;
     public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
     private FirebaseDatabase mdbase;
@@ -40,7 +40,7 @@ public class ProductionDashboard extends Fragment {
     private static final String TAG = "dbref: ";
     private int daily_goal, units_produced, percent;
 
-    public ProductionDashboard() {
+    public AssociateProductionDash() {
 
     }
 
@@ -53,8 +53,8 @@ public class ProductionDashboard extends Fragment {
      * @return A new instance of fragment ProductionDashboard.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProductionDashboard newInstance(String param1, String param2) {
-        ProductionDashboard fragment = new ProductionDashboard();
+    public static AssociateProductionDash newInstance(String param1, String param2) {
+        AssociateProductionDash fragment = new AssociateProductionDash();
         return fragment;
     }
 
@@ -71,11 +71,10 @@ public class ProductionDashboard extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
-        View myView = inflater.inflate(R.layout.fragment_production_dashboard, container, false);
+        View myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
         Context cntx = getActivity().getApplicationContext();
 
         buttonClick.setDuration(100);
-        ImageButton team_btn = (ImageButton) myView.findViewById(R.id.teamButton);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         String teamID = myPrefs.getString("TEAM", "");
@@ -117,29 +116,6 @@ public class ProductionDashboard extends Fragment {
 
 
 
-
-
-        team_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { // switch to Your Teams activity
-                view.startAnimation(buttonClick);
-                //TODO: MAKE THIS ON CLICK LEAD BACK TO YOURTEAMS
-                getActivity().finish();
-                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
-                //startActivity(intent);
-            }
-        });
-
-        ImageButton settings_btn = (ImageButton) myView.findViewById(R.id.settingsButton);
-        team_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { // switch to Your Teams activity
-                view.startAnimation(buttonClick);
-                //TODO: MAKE THIS ON CLICK LEAD BACK TO EDIT TEAMAS
-                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
-                //startActivity(intent);
-            }
-        });
 
         return myView;
     }

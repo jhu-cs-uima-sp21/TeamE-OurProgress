@@ -9,12 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BISMApp.NoActionBar">
-
+        <activity android:name=".AssociateNavigationActivity"></activity>
         <activity
             android:name=".NavigationActivity"
-            android:label="@string/title_activity_navigation"></activity>
+            android:label="@string/title_activity_navigation" />
         <activity android:name=".Login" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -25,21 +24,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".YourTeams"
             android:label="@string/your_teams"
-            android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.BISMApp.NoActionBar"></activity>
         <activity
             android:name=".CreateTeam"
             android:label="@string/create_team"
+            android:parentActivityName=".YourTeams"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:parentActivityName=".YourTeams">
-        </activity>
+            android:windowSoftInputMode="adjustNothing"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

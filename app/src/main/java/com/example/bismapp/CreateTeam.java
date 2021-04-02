@@ -23,7 +23,7 @@ public class CreateTeam extends AppCompatActivity {
         okCancel = new OkCancelFragment();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.team_info_frag, teamInfo)
+                .replace(R.id.team_list_frag, teamInfo)
                 .replace(R.id.team_roster_frag, teamRoster)
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
     }
