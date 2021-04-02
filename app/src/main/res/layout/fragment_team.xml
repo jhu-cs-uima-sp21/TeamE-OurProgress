@@ -28,9 +28,9 @@
                 android:background="@drawable/circle_shape"
                 android:indeterminate="false"
                 android:max="100"
-                android:progress="90"
-                android:progressDrawable="@drawable/circular_progress_bar_green"
-                android:secondaryProgress="90" />
+                android:progress="100"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:secondaryProgress="50" />
 
             <TextView
                 android:id="@+id/team_name"
@@ -46,7 +46,7 @@
                 android:textColor="@color/black"
                 android:textSize="28sp" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/team_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
