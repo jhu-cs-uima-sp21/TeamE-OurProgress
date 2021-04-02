@@ -3,22 +3,27 @@ package com.example.bismapp;
 import java.util.ArrayList;
 
 public class Team {
+
     private String id;
     public String managed_by;
-    public int units_produced, daily_goal;
+    public int units_produced, daily_goal = -1;
     public ArrayList<TeamMember> team_members = new ArrayList<>();
-
-
-    public Team() {
-
-    }
 
     public Team(String id, String managed_by) {
         this.id = id;
         this.managed_by = managed_by;
     }
 
-    public String getId() {
+    public Team(String id, String managed_by, int units_produced, int daily_goal,
+                ArrayList<TeamMember> team_members) {
+        this.id = id;
+        this.managed_by = managed_by;
+        this.units_produced = units_produced;
+        this.daily_goal = daily_goal;
+        this.team_members = team_members;
+    }
+
+    public String getID() {
         return id;
     }
 

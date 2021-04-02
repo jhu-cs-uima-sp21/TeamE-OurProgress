@@ -28,13 +28,13 @@
             android:name=".YourTeams"
             android:label="@string/your_teams"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.BISMApp.NoActionBar"></activity>
+            android:theme="@style/Theme.BISMApp.NoActionBar" />
         <activity
             android:name=".CreateTeam"
             android:label="@string/create_team"
             android:parentActivityName=".YourTeams"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"></activity>
+            android:windowSoftInputMode="adjustNothing" />
 
         <meta-data
             android:name="preloaded_fonts"
