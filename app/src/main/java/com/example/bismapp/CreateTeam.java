@@ -29,4 +29,8 @@ public class CreateTeam extends AppCompatActivity {
                 .replace(R.id.team_roster_frag, teamRoster)
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
     }
+
+    public TeamMRFragment getTeamRoster() {
+        return teamRoster;
+    }
 }

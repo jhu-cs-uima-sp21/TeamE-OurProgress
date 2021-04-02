@@ -37,6 +37,10 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         holder.setData(member);
     }
 
+    public ArrayList<TeamMember> getTeamMembers() {
+        return teamMembers;
+    }
+
     @Override
     public int getItemCount() { return teamMembers.size(); }
 

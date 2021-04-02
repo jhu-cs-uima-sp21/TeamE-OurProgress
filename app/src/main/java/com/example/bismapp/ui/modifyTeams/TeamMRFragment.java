@@ -10,11 +10,15 @@ import android.view.ViewGroup;
 
 import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
+import com.example.bismapp.TeamMember;
 import com.example.bismapp.TeamMemberAdapter;
+
+import java.util.ArrayList;
 
 public class TeamMRFragment extends Fragment {
 
     private RecyclerView teamRoster;
+    private TeamMemberAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -24,14 +28,19 @@ public class TeamMRFragment extends Fragment {
 
         // setting up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-        TeamMemberAdapter adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers);
+
 
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
+        adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers)
         teamRoster.setAdapter(adapter);
         //registerForContextMenu(teamRoster);
 
         return view;
+    }
+
+    public ArrayList<TeamMember> getTeamMembers() {
+        return adapter.getTeamMembers();
     }
 }
