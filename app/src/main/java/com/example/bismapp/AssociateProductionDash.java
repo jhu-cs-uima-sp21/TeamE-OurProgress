@@ -89,16 +89,24 @@ public class AssociateProductionDash extends Fragment {
                 daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
                 units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
                 percent = (int) (((double) units_produced / daily_goal) * 100);
+                if (percent > 100) {
+                    percent = 100;
+                }
                 ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
-
+                Drawable draw;
                 //TODO: tryna figure out how to change colors
-                /*if (percent < 30) {
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar_orange.xml"));
-                } else if (percent < 65){
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar_yellow.xml"));
-                } else {
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar.xml"));
-                }*/
+                //TODO: case in which percent is more than 100
+                if (percent < 10) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_red);
+                } else if (percent < 24) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+                } else if (percent < 75) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+                } else  {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_green);
+                }
+                
+                progressBar.setProgressDrawable(draw);
                 progressBar.setSecondaryProgress(percent);
                 TextView per_text = (TextView) myView.findViewById(R.id.textView);
                 TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
