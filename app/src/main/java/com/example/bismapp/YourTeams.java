@@ -1,7 +1,10 @@
 package com.example.bismapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -59,6 +62,8 @@ public class YourTeams extends AppCompatActivity {
         teamList.setLayoutManager(layoutManager);
         teamList.setAdapter(adapter);
 
+        genLocalTeams();
+
         // set up Team Floating Button
         ImageButton create_btn = findViewById(R.id.create_btn);
         create_btn.setOnClickListener(view -> { // switch to Your Teams activity
@@ -74,33 +79,24 @@ public class YourTeams extends AppCompatActivity {
         // Fetch all teams managed by user
         // calling add value event listener method
         // for getting the values from database.
-        dbref.addChildEventListener(new ChildEventListener() {
+        dbref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Iterable<DataSnapshot> teamsSnapshot = snapshot.child("teams").getChildren();
+            public void onDataChange(DataSnapshot snapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                // do something with snapshot values
+                Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
+                for (DataSnapshot i : teamsShots) {
+                    System.out.println(i.getKey());
+                }
+
+                Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
-                Toast.makeText(YourTeams.this, "Fail to get data.",
-                        Toast.LENGTH_SHORT).show();
             }
         });
 
