@@ -29,7 +29,7 @@
                 android:indeterminate="false"
                 android:max="100"
                 android:progress="100"
-                android:progressDrawable="@drawable/circular_progress_bar"
+                android:progressDrawable="@drawable/circular_progress_bar_green"
                 android:secondaryProgress="50" />
 
             <TextView
