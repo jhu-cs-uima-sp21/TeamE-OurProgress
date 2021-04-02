@@ -1,2 +1,2 @@
 # Team-E
-# Keidai and Chiamaka were here lmayo
+# "Our Progress" production tracker app for the Blind Institutes of Maryland
