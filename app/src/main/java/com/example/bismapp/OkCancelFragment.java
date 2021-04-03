@@ -33,7 +33,6 @@ public class OkCancelFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         View view = inflater.inflate(R.layout.fragment_ok_cancel, container, false);

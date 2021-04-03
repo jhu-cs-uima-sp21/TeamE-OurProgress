@@ -4,27 +4,27 @@ import java.util.ArrayList;
 
 public class Team {
 
-    private String id;
+    private String name;
     public String managed_by;
     public Integer units_produced, daily_goal = -1;
     public ArrayList<TeamMember> team_members = new ArrayList<>();
 
-    public Team(String id, String managed_by) {
-        this.id = id;
+    public Team(String name, String managed_by) {
+        this.name = name;
         this.managed_by = managed_by;
     }
 
-    public Team(String id, String managed_by, int units_produced, int daily_goal,
+    public Team(String name, String managed_by, int units_produced, int daily_goal,
                 ArrayList<TeamMember> team_members) {
-        this.id = id;
+        this.name = name;
         this.managed_by = managed_by;
         this.units_produced = units_produced;
         this.daily_goal = daily_goal;
         this.team_members = team_members;
     }
 
-    public String getID() {
-        return id;
+    public String getName() {
+        return name;
     }
 
     public String getManaged_by() {

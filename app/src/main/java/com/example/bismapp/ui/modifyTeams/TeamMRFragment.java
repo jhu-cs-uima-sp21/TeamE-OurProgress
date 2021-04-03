@@ -33,7 +33,7 @@ public class TeamMRFragment extends Fragment {
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers)
+        adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers);
         teamRoster.setAdapter(adapter);
         //registerForContextMenu(teamRoster);
 

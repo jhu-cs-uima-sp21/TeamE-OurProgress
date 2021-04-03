@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -63,6 +64,40 @@ public class YourTeams extends AppCompatActivity {
         teamList.setAdapter(adapter);
 
         genLocalTeams();
+
+        // tap each team and go to its respective dashboard
+        // TODO
+        RecyclerView team_list = findViewById(R.id.team_list);
+        team_list.setOnClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { // switch to Your Teams activity
+                Team team;
+
+                view.startAnimation(MainActivity.buttonClick);
+
+                team_list.getAdapter().onBindViewHolder(team_list.findContainingViewHolder(view), position) {
+                    team = (Team) team_list.get(position);
+                    // TODO: there's no ReceyclerView equivalent for getItemAtPosision
+                    // The only equivalents I've found are thru onBindViewHolder in the Adapter
+                    // But we don't have an adapter. Tried doing it this way. Not working as of now.
+                    // See links Keidai sent in Slack for more info
+                };
+
+                String name = team.getName();
+                String managed_by = team.getManaged_by();
+                int units_produced = team.getUnits_produced();
+                int dailyGoal = team.getDaily_goal();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", name);
+                bundle.putString("manager by", managed_by);
+                bundle.putInt("units produced", units_produced);
+                bundle.putInt("daily goal", dailyGoal);
+
+                Intent intent = new Intent(getApplicationContext(), ProductionDashboard.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
         // set up Team Floating Button
         ImageButton create_btn = findViewById(R.id.create_btn);
