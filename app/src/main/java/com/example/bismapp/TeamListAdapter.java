@@ -81,6 +81,8 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
             v.startAnimation(MainActivity.buttonClick);
             clickListener.onItemClick(getAdapterPosition(), v);
             Intent intent = new Intent(cntx, NavigationActivity.class);
+            //TODO: Make it so that you go into a specific team when clicked.
+            //TODO: Also "notifydatasetchange"
             cntx.startActivity(intent);
         }
     }

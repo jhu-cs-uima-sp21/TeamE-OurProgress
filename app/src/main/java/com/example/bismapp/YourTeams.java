@@ -40,6 +40,8 @@ public class YourTeams extends AppCompatActivity {
     private static final String TAG = "dbref at YourTeams: ";
     RecyclerView team_list;
     TeamListAdapter adapter;
+    ArrayList<Team> teams; //TODO: Private? Static?
+    private SharedPreferences myPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +50,14 @@ public class YourTeams extends AppCompatActivity {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
 
-        ArrayList<Team> teams = new ArrayList<>();
+        teams = new ArrayList<>();
         // Dummy list of teams
-        for (int i = 0; i < 10; i++) {
+        /*for (int i = 0; i < 10; i++) {
             teams.add(new Team("Team #" + i, "", (i+94)*(i+7),
                     (i+736)*(54*i), null));
-        }
+        }*/
 
+        teams = genLocalTeams();
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -65,7 +68,7 @@ public class YourTeams extends AppCompatActivity {
         team_list.setLayoutManager(layoutManager);
         team_list.setAdapter(adapter);
 
-        genLocalTeams();
+        //genLocalTeams();
 
         // set up individual team clickListener
         adapter.setOnItemClickListener((position, v) ->
@@ -81,20 +84,31 @@ public class YourTeams extends AppCompatActivity {
     }
 
     private ArrayList<Team> genLocalTeams() {
-        ArrayList<Team> teams = new ArrayList<>();
+        ArrayList<Team> tmp_teams = new ArrayList<>();
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String manager_id = myPrefs.getString("ID", "");
 
         // Fetch all teams managed by user
         // calling add value event listener method
         // for getting the values from database.
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NotNull DataSnapshot snapshot) {
+            public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
                 Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
                 for (DataSnapshot i : teamsShots) {
-                    System.out.println(i.getKey());
+                    String managed_by = i.child("managed_by").getValue(String.class);
+                    if(managed_by.equals(manager_id)) {
+                        String name = i.child("name").getValue(String.class);
+                        Integer units_produced = i.child("units_produced").getValue(Integer.class);
+                        Integer daily_goal = i.child("daily_goal").getValue(Integer.class);
+                        System.out.println(name);
+                        tmp_teams.add(new Team(name, managed_by, units_produced, daily_goal, null));
+                    }
+                    //System.out.println(i.getKey());
+                    //System.out.println(i.getValue(Team.class));
                 }
 
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
@@ -107,6 +121,6 @@ public class YourTeams extends AppCompatActivity {
             }
         });
 
-        return teams;
+        return tmp_teams;
     }
 }
