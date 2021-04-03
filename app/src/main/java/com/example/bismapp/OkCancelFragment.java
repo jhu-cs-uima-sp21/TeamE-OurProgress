@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -25,53 +27,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-public class OkCancelFragment extends Fragment {
+import java.util.ArrayList;
 
-    FirebaseDatabase mdbase;
-    DatabaseReference dbref;
-    private static final String TAG = "dbref: ";
-    private SharedPreferences myPrefs;
-    private String teamID;
+public class OkCancelFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();
         View view = inflater.inflate(R.layout.fragment_ok_cancel, container, false);
 
-        myPrefs = getActivity().getSharedPreferences("MyPref", Context.MODE_PRIVATE);
-        teamID = myPrefs.getString("ID", null);
-
         ImageButton ok_btn = (ImageButton) view.findViewById(R.id.ok);
-        ok_btn.setOnClickListener(view1 -> { // switch to Your Teams activity
-            view1.startAnimation(MainActivity.buttonClick);
-            //EditText id = (EditText) findViewById(R.id.eid_field);
-            //String entered_id = id.getText().toString();
+        ok_btn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            if (getActivity() instanceof CreateTeam) {
+                ((CreateTeam) getActivity()).okButtonClicked();
+            }
+        });
 
-            Team dummyTeam = new Team("Team Tres", "Chiam", 42,
-                    -9999, null);
-            // TODO add better comment
-
-            if(getActivity() instanceof CreateTeam) {
-                Team team = new Team((view1.findViewById(R.id.create_teams)).toString(),
-                        teamID, 0,
-                        Integer.parseInt(view1.findViewById(R.id.enterDailyGoal).toString()),
-                        ((CreateTeam) getActivity()).getTeamRoster().getTeamMembers());
-
-                dbref.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NotNull DataSnapshot snapshot) {
-                        dbref.child("teams").child(team.getName()).setValue(team);
-
-                        Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
-                    }
-
-                    @Override
-                    public void onCancelled(@NotNull DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
+        ImageButton cancel_btn = (ImageButton) view.findViewById(R.id.cancel);
+        cancel_btn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            if (getActivity() instanceof CreateTeam) {
+                ((CreateTeam) getActivity()).cancelButtonClicked();
             }
         });
 

@@ -33,8 +33,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static AlphaAnimation buttonClick;
-    public static ArrayList<TeamMember> teamMembers;
+    public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
+    public static ArrayList<TeamMember> teamMembers = makeMembers();
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private static final String TAG = "dbref: ";
@@ -47,16 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        buttonClick = new AlphaAnimation(1F, 0.5F);
         buttonClick.setDuration(100);
-
-        // Dummy list of team members
-        teamMembers = new ArrayList<>(5);
-        for (int i = 1; i < 6; i++) {
-            TeamMember member = new TeamMember("Member #" + i,
-                    String.valueOf(i * 82345679 % 10000000), "Station " + (6 - i));
-            teamMembers.add(member);
-        }
 
         /*
 
@@ -163,4 +154,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private static ArrayList<TeamMember> makeMembers() {
+        // Dummy list of team members
+        ArrayList<TeamMember> members = new ArrayList<>(5);
+        for (int i = 1; i < 6; i++) {
+            TeamMember member = new TeamMember("Member #" + i,
+                    String.valueOf(i * 82345679 % 10000000), "Station " + (6 - i));
+            members.add(member);
+        }
+        return members;
+    }
 }

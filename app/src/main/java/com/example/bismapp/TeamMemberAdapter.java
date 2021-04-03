@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.ViewHolder> {
 
-    private ArrayList<TeamMember> teamMembers;
+    public ArrayList<TeamMember> teamMembers;
 
     public TeamMemberAdapter(FragmentActivity activity, ArrayList<TeamMember> teamMembers) {
         LayoutInflater inflater = LayoutInflater.from(activity);

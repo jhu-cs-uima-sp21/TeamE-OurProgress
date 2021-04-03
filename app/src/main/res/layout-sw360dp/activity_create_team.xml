@@ -7,7 +7,6 @@
     android:layout_gravity="center">
 
     <LinearLayout
-        android:id="@+id/full_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="fill_horizontal"
@@ -83,7 +82,7 @@
         <FrameLayout
             android:id="@+id/team_roster_frag"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="100dp"
             android:layout_weight="1"
             app:layout_constraintTop_toBottomOf="@id/team_info_frag">
 
@@ -93,7 +92,7 @@
             android:id="@+id/okay_cancel_frag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".25"
+            android:layout_weight=".4"
             android:layout_gravity="bottom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/team_roster_frag">

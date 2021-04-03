@@ -40,4 +40,8 @@ public class TeamMRFragment extends Fragment {
     public ArrayList<TeamMember> getTeamMembers() {
         return adapter.getTeamMembers();
     }
+
+    public void clearMembers() {
+        adapter.teamMembers.clear();
+    }
 }
