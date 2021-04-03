@@ -49,21 +49,6 @@ public class MainActivity extends AppCompatActivity {
         dbref = mdbase.getReference();
         buttonClick.setDuration(100);
 
-        /*
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        */
-
         Button login_btn = (Button)findViewById(R.id.login_b);
         login_btn.setOnClickListener((View.OnClickListener) view -> { // switch to Your Teams activity
             view.startAnimation(buttonClick);

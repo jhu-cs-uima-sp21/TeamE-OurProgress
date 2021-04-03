@@ -58,7 +58,7 @@ public class YourTeams extends AppCompatActivity {
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
-        adapter = new TeamListAdapter(teams);
+        adapter = new TeamListAdapter(teams, getApplicationContext());
 
         team_list = findViewById(R.id.team_list);
         team_list.setHasFixedSize(true);

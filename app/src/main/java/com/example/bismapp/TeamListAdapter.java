@@ -1,5 +1,7 @@
 package com.example.bismapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +17,12 @@ import java.util.ArrayList;
 public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHolder> {
     private final ArrayList<Team> teams;
     private static ClickListener clickListener;
+    private static Context cntx;
 
-    public TeamListAdapter(ArrayList<Team> teams) {
+
+    public TeamListAdapter(ArrayList<Team> teams, Context cntx) {
         this.teams = teams;
+        this.cntx = cntx;
     }
 
     @NonNull
@@ -75,6 +80,8 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
         public void onClick(View v) {
             v.startAnimation(MainActivity.buttonClick);
             clickListener.onItemClick(getAdapterPosition(), v);
+            Intent intent = new Intent(cntx, NavigationActivity.class);
+            cntx.startActivity(intent);
         }
     }
 

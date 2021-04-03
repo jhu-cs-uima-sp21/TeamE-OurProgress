@@ -89,13 +89,8 @@ public class AssociateProductionDash extends Fragment {
                 daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
                 units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
                 percent = (int) (((double) units_produced / daily_goal) * 100);
-                if (percent > 100) {
-                    percent = 100;
-                }
                 ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
                 Drawable draw;
-                //TODO: tryna figure out how to change colors
-                //TODO: case in which percent is more than 100
                 if (percent < 10) {
                     draw = getResources().getDrawable(R.drawable.circular_progress_bar_red);
                 } else if (percent < 24) {
@@ -111,7 +106,11 @@ public class AssociateProductionDash extends Fragment {
                 TextView per_text = (TextView) myView.findViewById(R.id.textView);
                 TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
                 per_text.setText(percent + "%");
-                prod_txt.setText(units_produced + " units out of \n" + daily_goal);
+                if (percent >=100){
+                    per_text.setTextSize(42);
+                    progressBar.setSecondaryProgress(100);
+                }
+                prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
 
             }
 

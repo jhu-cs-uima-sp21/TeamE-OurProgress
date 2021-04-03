@@ -52,7 +52,7 @@ tools:context=".AssociateProductionDash">
     <TextView
         android:id="@+id/prodText"
         android:layout_width="275dp"
-        android:layout_height="95dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
