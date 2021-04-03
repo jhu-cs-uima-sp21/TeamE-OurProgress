@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHolder> {
-
     private final ArrayList<Team> teams;
+    private static ClickListener clickListener;
 
     public TeamListAdapter(ArrayList<Team> teams) {
         this.teams = teams;
@@ -39,7 +39,16 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
     @Override
     public int getItemCount() { return teams.size(); }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    /** Clickable implementation **/
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        TeamListAdapter.clickListener = clickListener;
+    }
+
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ProgressBar progress;
         private final TextView name;
 
@@ -47,6 +56,9 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
             super(view);
             this.progress = progress;
             this.name = name;
+            // make view clickable
+            view.setClickable(true);
+            view.setOnClickListener(this);
         }
 
         public void setData(Team team) {
@@ -56,7 +68,15 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
             } else {
                 progress.setSecondaryProgress(100);
             }
-            name.setText(team.getID());
+            name.setText(team.getName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            v.startAnimation(MainActivity.buttonClick);
+            clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
+
+
 }

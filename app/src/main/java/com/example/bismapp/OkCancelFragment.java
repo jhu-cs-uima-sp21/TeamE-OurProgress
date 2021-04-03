@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 public class OkCancelFragment extends Fragment {
 
     FirebaseDatabase mdbase;
@@ -41,37 +43,35 @@ public class OkCancelFragment extends Fragment {
         teamID = myPrefs.getString("ID", null);
 
         ImageButton ok_btn = (ImageButton) view.findViewById(R.id.ok);
-        ok_btn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) { // switch to Your Teams activity
-                view.startAnimation(MainActivity.buttonClick);
-                //EditText id = (EditText) findViewById(R.id.eid_field);
-                //String entered_id = id.getText().toString();
+        ok_btn.setOnClickListener(view1 -> { // switch to Your Teams activity
+            view1.startAnimation(MainActivity.buttonClick);
+            //EditText id = (EditText) findViewById(R.id.eid_field);
+            //String entered_id = id.getText().toString();
 
-                Team dummyTeam = new Team("Team Tres", "Chiam", 42,
-                        -9999, null);
-                // TODO add better comment
+            Team dummyTeam = new Team("Team Tres", "Chiam", 42,
+                    -9999, null);
+            // TODO add better comment
 
-                if(getActivity() instanceof CreateTeam) {
-                    Team team = new Team((view.findViewById(R.id.create_teams)).toString(),
-                            teamID, 0,
-                            Integer.parseInt(view.findViewById(R.id.enterDailyGoal).toString()),
-                            ((CreateTeam) getActivity()).getTeamRoster().getTeamMembers());
+            if(getActivity() instanceof CreateTeam) {
+                Team team = new Team((view1.findViewById(R.id.create_teams)).toString(),
+                        teamID, 0,
+                        Integer.parseInt(view1.findViewById(R.id.enterDailyGoal).toString()),
+                        ((CreateTeam) getActivity()).getTeamRoster().getTeamMembers());
 
-                    dbref.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            dbref.child("teams").child(team.getID()).setValue(team);
+                dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NotNull DataSnapshot snapshot) {
+                        dbref.child("teams").child(team.getName()).setValue(team);
 
-                            Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
-                        }
+                        Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError error) {
-                            // Failed to read value
-                            Log.w(TAG, "Failed to read value.", error.toException());
-                        }
-                    });
-                }
+                    @Override
+                    public void onCancelled(@NotNull DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
             }
         });
 

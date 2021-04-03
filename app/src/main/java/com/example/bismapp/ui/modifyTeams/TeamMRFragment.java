@@ -28,14 +28,11 @@ public class TeamMRFragment extends Fragment {
 
         // setting up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
-
-
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
         adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers);
         teamRoster.setAdapter(adapter);
-        //registerForContextMenu(teamRoster);
 
         return view;
     }

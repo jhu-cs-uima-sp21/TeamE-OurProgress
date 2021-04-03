@@ -29,14 +29,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class YourTeams extends AppCompatActivity {
 
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
-    private static final String TAG = "dbref: ";
-    RecyclerView teamList;
+    private static final String TAG = "dbref at YourTeams: ";
+    RecyclerView team_list;
     TeamListAdapter adapter;
 
     @Override
@@ -58,46 +60,16 @@ public class YourTeams extends AppCompatActivity {
                 LinearLayoutManager.VERTICAL, false);
         adapter = new TeamListAdapter(teams);
 
-        teamList  = findViewById(R.id.team_list);
-        teamList.setHasFixedSize(true);
-        teamList.setLayoutManager(layoutManager);
-        teamList.setAdapter(adapter);
+        team_list = findViewById(R.id.team_list);
+        team_list.setHasFixedSize(true);
+        team_list.setLayoutManager(layoutManager);
+        team_list.setAdapter(adapter);
 
         genLocalTeams();
 
-        // tap each team and go to its respective dashboard
-        // TODO
-        RecyclerView team_list = findViewById(R.id.team_list);
-        team_list.setOnClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { // switch to Your Teams activity
-                Team team;
-
-                view.startAnimation(MainActivity.buttonClick);
-
-                team_list.getAdapter().onBindViewHolder(team_list.findContainingViewHolder(view), position) {
-                    team = (Team) team_list.get(position);
-                    // TODO: there's no ReceyclerView equivalent for getItemAtPosision
-                    // The only equivalents I've found are thru onBindViewHolder in the Adapter
-                    // But we don't have an adapter. Tried doing it this way. Not working as of now.
-                    // See links Keidai sent in Slack for more info
-                };
-
-                String name = team.getName();
-                String managed_by = team.getManaged_by();
-                int units_produced = team.getUnits_produced();
-                int dailyGoal = team.getDaily_goal();
-
-                Bundle bundle = new Bundle();
-                bundle.putString("name", name);
-                bundle.putString("manager by", managed_by);
-                bundle.putInt("units produced", units_produced);
-                bundle.putInt("daily goal", dailyGoal);
-
-                Intent intent = new Intent(getApplicationContext(), ProductionDashboard.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
+        // set up individual team clickListener
+        adapter.setOnItemClickListener((position, v) ->
+                Log.d("Team", "onItemClick position: " + position));
 
         // set up Team Floating Button
         ImageButton create_btn = findViewById(R.id.create_btn);
@@ -116,7 +88,7 @@ public class YourTeams extends AppCompatActivity {
         // for getting the values from database.
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
@@ -129,7 +101,7 @@ public class YourTeams extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NotNull DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }

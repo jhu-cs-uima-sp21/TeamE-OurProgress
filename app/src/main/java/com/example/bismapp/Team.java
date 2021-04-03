@@ -6,13 +6,8 @@ public class Team {
 
     private String name;
     public String managed_by;
-    public Integer units_produced, daily_goal = -1;
-    public ArrayList<TeamMember> team_members = new ArrayList<>();
-
-    public Team(String name, String managed_by) {
-        this.name = name;
-        this.managed_by = managed_by;
-    }
+    public Integer units_produced, daily_goal;
+    public ArrayList<TeamMember> team_members;
 
     public Team(String name, String managed_by, int units_produced, int daily_goal,
                 ArrayList<TeamMember> team_members) {
