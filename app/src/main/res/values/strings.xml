@@ -40,6 +40,7 @@
     <string name="add_team_members">Add team members:</string>
     <string name="enter_associate_name">Enter associate name...</string>
     <string name="enter_team_name">Enter Team Name</string>
+    <string name="enter_member_info">Enter member info...</string>
 
 
 </resources>

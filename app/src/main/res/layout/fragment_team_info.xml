@@ -13,7 +13,11 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp">
 
         <TextView
             android:id="@+id/setDailyGoal"
@@ -56,8 +60,8 @@
             android:background="@drawable/rectangle"
             android:ems="10"
             android:fontFamily="@font/montserrat"
-            android:hint="@string/enter_associate_name"
-            android:inputType="text|textCapSentences"
+            android:hint="@string/enter_member_info"
+            android:inputType="text"
             android:paddingLeft="15dp"
             android:textColor="@color/black"
             android:textSize="30sp"
