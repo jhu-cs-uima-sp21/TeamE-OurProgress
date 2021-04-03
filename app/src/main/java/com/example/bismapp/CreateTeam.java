@@ -4,6 +4,7 @@ package com.example.bismapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -39,7 +40,7 @@ public class CreateTeam extends AppCompatActivity {
         setContentView(R.layout.activity_create_team);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        myPrefs = getSharedPreferences("MyPref", Context.MODE_PRIVATE);
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         teamInfo = new TeamInfoFragment();
         teamRoster = new TeamMRFragment();
@@ -93,7 +94,6 @@ public class CreateTeam extends AppCompatActivity {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 dbref.child("teams").child(team.getName()).setValue(team);
-
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }
 
