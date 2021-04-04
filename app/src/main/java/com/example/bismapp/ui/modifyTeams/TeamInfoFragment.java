@@ -27,7 +27,7 @@ public class TeamInfoFragment extends Fragment {
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at YourTeams: ";
     public List<String> namesAndIDs;
-    private ArrayAdapter<String> adapter;
+    public ArrayAdapter<String> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,10 +37,13 @@ public class TeamInfoFragment extends Fragment {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
 
-        updateMemberSearch();
-
+        CreateTeam activity = ((CreateTeam)requireActivity());
+        namesAndIDs = new ArrayList<String>(Arrays.asList(activity.getTeamMemberNames()));
+        addAllIfNotNull(namesAndIDs, Arrays.asList(activity.getTeamMembersIDs()));
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, namesAndIDs);
+
+        updateMemberSearch();
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 view.findViewById(R.id.enterAssociateName);
@@ -48,6 +51,8 @@ public class TeamInfoFragment extends Fragment {
         textView.setAdapter(adapter);
 
         return view;
+
+        // TODO: actually add member
     }
 
     @Override
@@ -60,6 +65,7 @@ public class TeamInfoFragment extends Fragment {
         CreateTeam activity = ((CreateTeam)requireActivity());
         namesAndIDs = new ArrayList<String>(Arrays.asList(activity.getTeamMemberNames()));
         addAllIfNotNull(namesAndIDs, Arrays.asList(activity.getTeamMembersIDs()));
+        adapter.notifyDataSetChanged();
     }
 
     public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {

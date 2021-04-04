@@ -106,6 +106,10 @@ public class CreateTeam extends AppCompatActivity {
         finish();
     }
 
+    public void updateInfoAdapter() {
+        teamInfo.updateMemberSearch();
+    }
+
     public String[] getTeamMemberNames() {
         return teamRoster.getTeamMemberNames();
     }

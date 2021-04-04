@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.ViewHolder> {
-
     public ArrayList<TeamMember> teamMembers;
+    private static ClickListener clickListener;
 
     public TeamMemberAdapter(FragmentActivity activity, ArrayList<TeamMember> teamMembers) {
         LayoutInflater inflater = LayoutInflater.from(activity);
@@ -59,7 +59,16 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
     @Override
     public int getItemCount() { return teamMembers.size(); }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    /** Clickable implementation **/
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        TeamMemberAdapter.clickListener = clickListener;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView name;
         private TextView id;
 
@@ -67,11 +76,20 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             super(view);
             this.name = name;
             this.id = id;
+            // make view clickable
+            view.setClickable(true);
+            view.setOnClickListener(this);
         }
 
         public void setData(TeamMember teamMember) {
             name.setText(teamMember.getName());
             id.setText(teamMember.getId());
+        }
+
+        @Override
+        public void onClick(View v) {
+            v.startAnimation(MainActivity.buttonClick);
+            clickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 }
