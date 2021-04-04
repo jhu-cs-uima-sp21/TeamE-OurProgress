@@ -41,6 +41,14 @@ public class TeamMRFragment extends Fragment {
         return adapter.getTeamMembers();
     }
 
+    public String[] getTeamMemberNames() {
+        return adapter.getTeamMemberNames();
+    }
+
+    public  String[] getTeamMemberIDs() {
+        return adapter.getTeamMemberIDs();
+    }
+
     public void clearMembers() {
         adapter.teamMembers.clear();
     }

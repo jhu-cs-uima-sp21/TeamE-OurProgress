@@ -42,13 +42,13 @@ public class CreateTeam extends AppCompatActivity {
         dbref = mdbase.getReference();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        teamInfo = new TeamInfoFragment();
         teamRoster = new TeamMRFragment();
+        teamInfo = new TeamInfoFragment();
         okCancel = new OkCancelFragment();
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.team_info_frag, teamInfo)
                 .replace(R.id.team_roster_frag, teamRoster)
+                .replace(R.id.team_info_frag, teamInfo)
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
     }
 
@@ -104,5 +104,13 @@ public class CreateTeam extends AppCompatActivity {
             }
         });
         finish();
+    }
+
+    public String[] getTeamMemberNames() {
+        return teamRoster.getTeamMemberNames();
+    }
+
+    public  String[] getTeamMembersIDs() {
+        return teamRoster.getTeamMemberIDs();
     }
 }
