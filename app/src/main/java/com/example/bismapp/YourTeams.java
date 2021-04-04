@@ -123,4 +123,10 @@ public class YourTeams extends AppCompatActivity {
 
         return tmp_teams;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
 }
