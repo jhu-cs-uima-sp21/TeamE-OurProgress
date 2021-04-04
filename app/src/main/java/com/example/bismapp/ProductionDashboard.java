@@ -102,6 +102,7 @@ public class ProductionDashboard extends Fragment {
                     draw = getResources().getDrawable(R.drawable.circular_progress_bar_green);
                 }
 
+                TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
                 progressBar.setProgressDrawable(draw);
                 progressBar.setSecondaryProgress(percent);
                 TextView per_text = (TextView) myView.findViewById(R.id.textView);
@@ -113,6 +114,7 @@ public class ProductionDashboard extends Fragment {
                 }
 
                 prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
+                team_name_txt.setText("Team " + teamID + " has made");
 
             }
 
