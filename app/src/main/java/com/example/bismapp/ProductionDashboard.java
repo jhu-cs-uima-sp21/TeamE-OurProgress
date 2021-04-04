@@ -74,7 +74,6 @@ public class ProductionDashboard extends Fragment {
         Context cntx = getActivity().getApplicationContext();
 
         buttonClick.setDuration(100);
-        ImageButton team_btn = (ImageButton) myView.findViewById(R.id.teamButton);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         String teamID = myPrefs.getString("TEAM", "A");
@@ -127,21 +126,8 @@ public class ProductionDashboard extends Fragment {
 
 
 
-
-
-        team_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) { // switch to Your Teams activity
-                view.startAnimation(buttonClick);
-                //TODO: MAKE THIS ON CLICK LEAD BACK TO YOURTEAMS
-                getActivity().finish();
-                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
-                //startActivity(intent);
-            }
-        });
-
         ImageButton settings_btn = (ImageButton) myView.findViewById(R.id.settingsButton);
-        team_btn.setOnClickListener(new View.OnClickListener() {
+        settings_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { // switch to Your Teams activity
                 view.startAnimation(buttonClick);

@@ -25,7 +25,6 @@ public class NavigationActivity extends AppCompatActivity{
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 

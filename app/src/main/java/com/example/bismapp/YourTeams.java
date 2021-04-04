@@ -127,6 +127,7 @@ public class YourTeams extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        teams = genLocalTeams();
         adapter.notifyDataSetChanged();
     }
 }

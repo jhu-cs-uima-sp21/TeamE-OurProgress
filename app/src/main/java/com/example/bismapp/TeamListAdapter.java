@@ -3,6 +3,7 @@ package com.example.bismapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,13 +73,26 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
         }
 
         public void setData(Team team) {
+            int percent = (int) ((double) team.getUnits_produced()
+                    / team.getDaily_goal() * 100);
             if (team.getDaily_goal() > 0) {
-                progress.setSecondaryProgress((int) ((double) team.getUnits_produced()
-                        / team.getDaily_goal() * 100));
+                progress.setSecondaryProgress(percent);
             } else {
                 progress.setSecondaryProgress(100);
             }
             name.setText(team.getName());
+            Drawable draw;
+            if (percent < 10) {
+                draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
+            } else if (percent < 24) {
+                draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+            } else if (percent < 75) {
+                draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+            } else  {
+                draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
+            }
+
+            progress.setProgressDrawable(draw);
         }
 
         @Override
