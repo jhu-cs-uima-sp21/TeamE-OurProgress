@@ -38,7 +38,7 @@ public class NavigationActivity extends AppCompatActivity{
                             //openFragment(HomeFragment.newInstance("", ""));
                             return true;
                         case R.id.nav_production:
-                            openFragment(ProductionDashboard.newInstance("", ""));
+                            //openFragment(ProductionDashboard.newInstance("", ""));
                             return true;
                         case R.id.navigation_ask:
                             //openFragment(NotificationFragment.newInstance("", ""));

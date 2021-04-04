@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="ui.dashboard.DashboardFragment">
+    android:background="@color/white">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -41,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="96dp"
             android:fontFamily="@font/montserrat"
-            android:text="Team A has made"
             android:textColor="#000000"
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +54,6 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
-            android:text="3600 out of 4000 units"
             android:textColor="#000000"
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +65,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
-            android:text="90%"
             android:textColor="#000000"
             android:textSize="70sp"
             app:layout_constraintBottom_toBottomOf="@+id/circularProgressbar"
