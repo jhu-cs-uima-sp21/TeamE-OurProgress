@@ -73,21 +73,6 @@
             app:layout_constraintTop_toTopOf="@+id/circularProgressbar" />
 
         <ImageButton
-            android:id="@+id/teamButton"
-            android:layout_width="84dp"
-            android:layout_height="75dp"
-            android:background="@color/white"
-            android:scaleType="fitCenter"
-            android:tint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settingsButton"
-            app:layout_constraintHorizontal_bias="0.066"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.009"
-            app:srcCompat="@drawable/team_icon" />
-
-        <ImageButton
             android:id="@+id/settingsButton"
             android:layout_width="75dp"
             android:layout_height="74dp"
