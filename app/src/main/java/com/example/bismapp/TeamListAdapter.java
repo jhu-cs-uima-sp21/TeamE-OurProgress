@@ -2,6 +2,8 @@ package com.example.bismapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.common.api.Api;
+
 import java.util.ArrayList;
+import java.util.prefs.PreferenceChangeEvent;
 
 public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHolder> {
     private final ArrayList<Team> teams;
@@ -80,10 +85,14 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
         public void onClick(View v) {
             v.startAnimation(MainActivity.buttonClick);
             clickListener.onItemClick(getAdapterPosition(), v);
+            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
+            SharedPreferences.Editor peditor = myPrefs.edit();
+            peditor.putString("TEAM", (String) name.getText());
+            peditor.apply();
+            //TODO is this broken?
             Intent intent = new Intent(cntx, NavigationActivity.class);
-            //TODO: Make it so that you go into a specific team when clicked.
-            //TODO: Also "notifydatasetchange"
             cntx.startActivity(intent);
+
         }
     }
 

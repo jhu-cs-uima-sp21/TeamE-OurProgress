@@ -63,7 +63,6 @@ public class ProductionDashboard extends Fragment {
         super.onCreate(savedInstanceState);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-
     }
 
     @Override
@@ -78,7 +77,7 @@ public class ProductionDashboard extends Fragment {
         ImageButton team_btn = (ImageButton) myView.findViewById(R.id.teamButton);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        String teamID = myPrefs.getString("TEAM", "");
+        String teamID = myPrefs.getString("TEAM", "A");
 
         //READ FROM DATABASE TO CHECK IF MANAGER
         dbref.addValueEventListener(new ValueEventListener() {
@@ -92,14 +91,18 @@ public class ProductionDashboard extends Fragment {
                 percent = (int) (((double) units_produced / daily_goal) * 100);
                 ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
 
-                //TODO: tryna figure out how to change colors
-                /*if (percent < 30) {
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar_orange.xml"));
-                } else if (percent < 65){
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar_yellow.xml"));
-                } else {
-                    progressBar.setProgressDrawable(Drawable.createFromPath("../../res/drawable/circular_progress_bar.xml"));
-                }*/
+                Drawable draw;
+                if (percent < 10) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_red);
+                } else if (percent < 24) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+                } else if (percent < 75) {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+                } else  {
+                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_green);
+                }
+
+                progressBar.setProgressDrawable(draw);
                 progressBar.setSecondaryProgress(percent);
                 TextView per_text = (TextView) myView.findViewById(R.id.textView);
                 TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
