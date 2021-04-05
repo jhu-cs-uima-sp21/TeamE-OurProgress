@@ -3,5 +3,5 @@
 #
 # Usernames and passwords (Employee IDs)
 # Manager: 123456789
+#          987654321
 # Associate: 234567891
-  
