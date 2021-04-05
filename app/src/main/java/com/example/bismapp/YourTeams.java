@@ -49,8 +49,6 @@ public class YourTeams extends AppCompatActivity {
         setContentView(R.layout.activity_your_teams);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-
-        teams = new ArrayList<>();
         // Dummy list of teams
         /*for (int i = 0; i < 10; i++) {
             teams.add(new Team("Team #" + i, "", (i+94)*(i+7),
@@ -64,7 +62,7 @@ public class YourTeams extends AppCompatActivity {
         adapter = new TeamListAdapter(teams, getApplicationContext());
 
         team_list = findViewById(R.id.team_list);
-        team_list.setHasFixedSize(true);
+        //team_list.setHasFixedSize(true);
         team_list.setLayoutManager(layoutManager);
         team_list.setAdapter(adapter);
 
@@ -129,5 +127,19 @@ public class YourTeams extends AppCompatActivity {
         super.onResume();
         teams = genLocalTeams();
         adapter.notifyDataSetChanged();
+        /*LinearLayoutManager layoutManager = new LinearLayoutManager(this,
+                LinearLayoutManager.VERTICAL, false);
+        adapter = new TeamListAdapter(teams, getApplicationContext());
+
+        team_list = findViewById(R.id.team_list);
+        team_list.setHasFixedSize(true);
+        team_list.setLayoutManager(layoutManager);
+        team_list.setAdapter(adapter);*/
     }
+
+    /*@Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }*/
 }
