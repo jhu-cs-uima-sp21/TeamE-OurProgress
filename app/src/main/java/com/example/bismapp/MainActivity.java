@@ -149,4 +149,21 @@ public class MainActivity extends AppCompatActivity {
         }
         return members;
     }
+
+    public static TeamMember getTeamMember(String name) throws Exception {
+        TeamMember theMember = null;
+        TeamMember currMember;
+
+        for (int i = 0; i < teamMembers.size(); i++) {
+            currMember = teamMembers.get(i);
+            if (currMember.getName().equals(name)) {
+                theMember = currMember;
+                break;
+            }
+        }
+        if (theMember == null) {
+            throw new Exception("Null teammber");
+        }
+        return theMember;
+    }
 }

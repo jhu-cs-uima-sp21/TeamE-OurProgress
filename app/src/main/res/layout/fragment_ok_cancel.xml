@@ -21,8 +21,8 @@
             android:layout_height="104dp"
             android:layout_weight=".5"
             android:layout_marginRight="36dp"
-            android:layout_gravity="left"
             android:background="@drawable/bk_rndrec_bblue"
+            android:layout_gravity="left"
             android:contentDescription="@string/remove_a_member"
             app:srcCompat="@drawable/ic_baseline_done_24" />
 

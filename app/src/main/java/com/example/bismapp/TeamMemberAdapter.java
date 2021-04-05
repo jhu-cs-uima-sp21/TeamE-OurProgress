@@ -40,6 +40,16 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         return teamMembers;
     }
 
+    public void addTeamMembers(TeamMember newTeamMember) {
+        teamMembers.add(newTeamMember);
+        notifyDataSetChanged();
+    }
+
+    public void removeTeamMembers(TeamMember newTeamMember) {
+        teamMembers.remove(newTeamMember);
+        notifyDataSetChanged();
+    }
+
     public String[] getTeamMemberNames() {
         String[] names = new String[teamMembers.size()];
         for (int i = 0; i < teamMembers.size(); i++) {

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
@@ -33,7 +34,7 @@ public class TeamMRFragment extends Fragment {
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new TeamMemberAdapter(getActivity(), MainActivity.teamMembers);
+        adapter = new TeamMemberAdapter(getActivity(), new ArrayList<TeamMember>());
         teamRoster.setAdapter(adapter);
 
         // make clickable
@@ -41,14 +42,26 @@ public class TeamMRFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
-                        MainActivity.teamMembers.get(position).getName()
+                        adapter.teamMembers.get(position).getName()
                                 +" has been removed from team", Toast.LENGTH_SHORT);
                 toast.show();
-                MainActivity.teamMembers.remove(position);
+                adapter.teamMembers.remove(position);
                 adapter.notifyDataSetChanged();
                 ((CreateTeam)requireActivity()).updateInfoAdapter();
             }
         });
+
+//        ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
+//        remove_member_btn.setOnClickListener(btnView -> {
+//            btnView.startAnimation(MainActivity.buttonClick);
+//            Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+//                    MainActivity.teamMembers.get(position).getName()
+//                            +" has been removed from team", Toast.LENGTH_SHORT);
+//            toast.show();
+//            MainActivity.teamMembers.remove(position);
+//            adapter.notifyDataSetChanged();
+//            ((CreateTeam)requireActivity()).updateInfoAdapter();
+//        });
 
         return view;
     }
@@ -68,4 +81,9 @@ public class TeamMRFragment extends Fragment {
     public void clearMembers() {
         adapter.teamMembers.clear();
     }
+
+    public TeamMemberAdapter getTeamMemberAdapter() {
+        return adapter;
+    }
 }
+

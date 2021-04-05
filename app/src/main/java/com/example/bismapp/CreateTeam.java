@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class CreateTeam extends AppCompatActivity {
     private TeamInfoFragment teamInfo;
-    private TeamMRFragment teamRoster;
+    public TeamMRFragment teamRoster;
     private OkCancelFragment okCancel;
 
     FirebaseDatabase mdbase;
@@ -110,11 +110,24 @@ public class CreateTeam extends AppCompatActivity {
         teamInfo.updateMemberSearch();
     }
 
-    public String[] getTeamMemberNames() {
-        return teamRoster.getTeamMemberNames();
+
+    public ArrayList<String> getTeamMemberNames() {
+        ArrayList<String> teamMemberNames = new ArrayList<>();
+        ArrayList<TeamMember> currRoster = MainActivity.teamMembers;
+
+        for (int i = 0; i < currRoster.size(); i++) {
+            teamMemberNames.add(currRoster.get(i).getName());
+        }
+        return teamMemberNames;
     }
 
-    public  String[] getTeamMembersIDs() {
-        return teamRoster.getTeamMemberIDs();
+    public  ArrayList<String> getTeamMembersIDs() {
+        ArrayList<String> teamMemberIDs = new ArrayList<>();
+        ArrayList<TeamMember> currRoster = MainActivity.teamMembers;
+
+        for (int i = 0; i < currRoster.size(); i++) {
+            teamMemberIDs.add(currRoster.get(i).getId());
+        }
+        return teamMemberIDs;
     }
 }

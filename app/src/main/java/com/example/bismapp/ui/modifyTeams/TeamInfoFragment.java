@@ -9,9 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
+import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
+import com.example.bismapp.TeamMember;
+import com.example.bismapp.TeamMemberAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,18 +42,34 @@ public class TeamInfoFragment extends Fragment {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
 
-        CreateTeam activity = ((CreateTeam)requireActivity());
-        namesAndIDs = new ArrayList<String>(Arrays.asList(activity.getTeamMemberNames()));
-        addAllIfNotNull(namesAndIDs, Arrays.asList(activity.getTeamMembersIDs()));
+        CreateTeam activity = (CreateTeam)requireActivity();
+        namesAndIDs = activity.getTeamMemberNames();
+        addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, namesAndIDs);
 
         updateMemberSearch();
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
-                view.findViewById(R.id.enterAssociateName);
+                view.findViewById(R.id.enterNames);
 
         textView.setAdapter(adapter);
+
+        ImageButton enterNames_btn = (ImageButton) view.findViewById(R.id.enterNames_btn);
+        enterNames_btn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            String newTeamMemberName = textView.getText().toString();
+            try {
+                TeamMember newMember = MainActivity.getTeamMember(newTeamMemberName);
+                ((CreateTeam) requireActivity()).teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+            } catch (Exception e) {
+                System.out.println("NULL TEAM MEMBER");
+            }
+            Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                    newTeamMemberName
+                            +" has been added to the team", Toast.LENGTH_SHORT);
+            toast.show();
+        });
 
         return view;
 
@@ -62,9 +83,9 @@ public class TeamInfoFragment extends Fragment {
     }
 
     public void updateMemberSearch() {
-        CreateTeam activity = ((CreateTeam)requireActivity());
-        namesAndIDs = new ArrayList<String>(Arrays.asList(activity.getTeamMemberNames()));
-        addAllIfNotNull(namesAndIDs, Arrays.asList(activity.getTeamMembersIDs()));
+        CreateTeam activity = (CreateTeam)requireActivity();
+        namesAndIDs = activity.getTeamMemberNames();
+        addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter.notifyDataSetChanged();
     }
 
