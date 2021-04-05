@@ -142,4 +142,13 @@ public class YourTeams extends AppCompatActivity {
         super.onBackPressed();
         finish();
     }*/
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == resultCode) {
+            adapter.notifyDataSetChanged();
+        }
+
+    }
 }
