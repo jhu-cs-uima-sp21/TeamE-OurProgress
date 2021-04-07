@@ -111,5 +111,15 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
         }
     }
 
+    public void updateDataSet(ArrayList<Team> data) {
+        // clear old list
+        teams.clear();
+
+        teams.addAll(data);
+
+        // notify adapter
+        notifyDataSetChanged();
+    }
+
 
 }

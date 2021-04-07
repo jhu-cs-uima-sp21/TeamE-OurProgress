@@ -92,13 +92,13 @@ public class ProductionDashboard extends Fragment {
 
                 Drawable draw;
                 if (percent < 10) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_red);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
                 } else if (percent < 24) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_orange);
                 } else if (percent < 75) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
                 } else  {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_green);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
                 }
 
                 TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);

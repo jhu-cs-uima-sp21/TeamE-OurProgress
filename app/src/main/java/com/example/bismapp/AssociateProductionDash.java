@@ -92,13 +92,13 @@ public class AssociateProductionDash extends Fragment {
                 ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
                 Drawable draw;
                 if (percent < 10) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_red);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
                 } else if (percent < 24) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_orange);
                 } else if (percent < 75) {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
                 } else  {
-                    draw = getResources().getDrawable(R.drawable.circular_progress_bar_green);
+                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
                 }
                 
                 progressBar.setProgressDrawable(draw);

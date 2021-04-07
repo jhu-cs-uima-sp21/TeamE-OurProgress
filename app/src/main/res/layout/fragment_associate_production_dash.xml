@@ -39,12 +39,13 @@ tools:context=".AssociateProductionDash">
         android:id="@+id/hasMade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="120dp"
         android:fontFamily="@font/montserrat"
+        android:text="@string/has_made"
         android:textColor="#000000"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintHorizontal_bias="0.529"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 

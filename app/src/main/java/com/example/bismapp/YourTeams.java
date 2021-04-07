@@ -54,19 +54,20 @@ public class YourTeams extends AppCompatActivity {
             teams.add(new Team("Team #" + i, "", (i+94)*(i+7),
                     (i+736)*(54*i), null));
         }*/
-
-        teams = genLocalTeams();
+        teams = new ArrayList<Team>();
+        genLocalTeams();
+        //genLocalTeams();
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         adapter = new TeamListAdapter(teams, getApplicationContext());
 
+        genLocalTeams();
+
         team_list = findViewById(R.id.team_list);
         //team_list.setHasFixedSize(true);
         team_list.setLayoutManager(layoutManager);
         team_list.setAdapter(adapter);
-
-        //genLocalTeams();
 
         // set up individual team clickListener
         adapter.setOnItemClickListener((position, v) ->
@@ -81,8 +82,8 @@ public class YourTeams extends AppCompatActivity {
         });
     }
 
-    private ArrayList<Team> genLocalTeams() {
-        ArrayList<Team> tmp_teams = new ArrayList<>();
+    private void genLocalTeams() {
+        //ArrayList<Team> tmp_teams = new ArrayList<>();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String manager_id = myPrefs.getString("ID", "");
 
@@ -95,6 +96,8 @@ public class YourTeams extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
+
+                ArrayList<Team> tmp_teams = new ArrayList<>();
                 Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
                 for (DataSnapshot i : teamsShots) {
                     String managed_by = i.child("managed_by").getValue(String.class);
@@ -109,6 +112,13 @@ public class YourTeams extends AppCompatActivity {
                     //System.out.println(i.getValue(Team.class));
                 }
 
+                adapter.updateDataSet(tmp_teams);
+                adapter.notifyDataSetChanged();
+
+                teams.clear();
+
+                teams.addAll(tmp_teams);
+
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }
 
@@ -119,13 +129,13 @@ public class YourTeams extends AppCompatActivity {
             }
         });
 
-        return tmp_teams;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        teams = genLocalTeams();
+        genLocalTeams();
+        //adapter.updateDataSet(teams);
         adapter.notifyDataSetChanged();
         /*LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
@@ -147,8 +157,10 @@ public class YourTeams extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == resultCode) {
+            //adapter.updateDataSet(teams);
             adapter.notifyDataSetChanged();
         }
 
     }
+
 }
