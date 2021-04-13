@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AskForHelp">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:id="@+id/your_teams2"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:background="@color/whitesmoke"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:text="@string/askheader"
+        android:textColor="@color/black"
+        android:textSize="45dp"
+        app:layout_constraintBottom_toTopOf="@id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bism_blue"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintTop_toBottomOf="@id/your_teams2"
+        tools:layout_editor_absoluteY="199dp">
+
+
+        <EditText
+            android:id="@+id/editTextTextPersonName4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="50dp"
+            android:autofillHints=""
+            android:background="@drawable/button_background"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center_horizontal"
+            android:inputType="textPersonName"
+            android:letterSpacing="0.05"
+            android:text="@string/search"
+            android:textAllCaps="false"
+            android:textSize="40sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="297dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:foregroundGravity="fill_horizontal"
+                android:gravity="left|center_vertical"
+                android:text="@string/team"
+                android:textAllCaps="false"
+                tools:textSize="36sp" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="wrap_content"
+                android:layout_height="297dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat_bold"
+                android:text="@string/Manager"
+                android:textAllCaps="false"
+                android:textSize="36sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

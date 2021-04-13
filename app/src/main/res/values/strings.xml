@@ -25,6 +25,14 @@
     <string name="create_a_new_team">Create a new team</string>
     <string name="new_team_name">New Team Name</string>
     <string name="enter_team_name_here">Enter Team Name Here</string>
+
+
+    <!--ASK FOR HELP SCREEN-->
+    <string name="team">Team</string>
+    <string name="Manager">Manager</string>
+    <string name="search">  SEARCH...  </string>
+    <string name="askheader">Ask for Help!</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation">MainActivity</string>
