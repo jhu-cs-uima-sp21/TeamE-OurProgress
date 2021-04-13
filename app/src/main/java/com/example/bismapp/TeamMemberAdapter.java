@@ -3,7 +3,9 @@ package com.example.bismapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -78,17 +80,34 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         TeamMemberAdapter.clickListener = clickListener;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView id;
+
 
         public ViewHolder(View view, TextView name, TextView id) {
             super(view);
             this.name = name;
             this.id = id;
             // make view clickable
-            view.setClickable(true);
-            view.setOnClickListener(this);
+//            view.setClickable(true);
+//            view.setOnClickListener(this);
+
+            ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
+            remove_member_btn.setOnClickListener(new View.OnClickListener() {
+//            ?.startAnimation(MainActivity.buttonClick);
+                @Override
+                public void onClick(View v) {
+                    Toast toast = Toast.makeText(v.getContext(),
+                            teamMembers.get(getAdapterPosition()).getName()
+                                    + " has been removed from team", Toast.LENGTH_SHORT);
+                    toast.show();
+//                    clickListener.onItemClick(getAdapterPosition(), v);
+                    teamMembers.remove(getAdapterPosition());
+                    notifyDataSetChanged();
+//                    ((CreateTeam) requireActivity()).updateInfoAdapter();
+                }
+            });
         }
 
         public void setData(TeamMember teamMember) {
@@ -96,10 +115,5 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             id.setText(teamMember.getId());
         }
 
-        @Override
-        public void onClick(View v) {
-            v.startAnimation(MainActivity.buttonClick);
-            clickListener.onItemClick(getAdapterPosition(), v);
-        }
     }
 }

@@ -38,29 +38,32 @@ public class TeamMRFragment extends Fragment {
         teamRoster.setAdapter(adapter);
 
         // make clickable
-        adapter.setOnItemClickListener(new TeamMemberAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
-                        adapter.teamMembers.get(position).getName()
-                                +" has been removed from team", Toast.LENGTH_SHORT);
-                toast.show();
-                adapter.teamMembers.remove(position);
-                adapter.notifyDataSetChanged();
-                ((CreateTeam)requireActivity()).updateInfoAdapter();
-            }
-        });
+//        adapter.setOnItemClickListener(new TeamMemberAdapter.ClickListener() {
+//            @Override
+//            public void onItemClick(int position, View v) {
+//                Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+//                        adapter.teamMembers.get(position).getName()
+//                                +" has been removed from team", Toast.LENGTH_SHORT);
+//                toast.show();
+//                adapter.teamMembers.remove(position);
+//                adapter.notifyDataSetChanged();
+//                ((CreateTeam)requireActivity()).updateInfoAdapter();
+//            }
+//        });
 
 //        ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
 //        remove_member_btn.setOnClickListener(btnView -> {
 //            btnView.startAnimation(MainActivity.buttonClick);
-//            Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
-//                    MainActivity.teamMembers.get(position).getName()
-//                            +" has been removed from team", Toast.LENGTH_SHORT);
-//            toast.show();
-//            MainActivity.teamMembers.remove(position);
-//            adapter.notifyDataSetChanged();
-//            ((CreateTeam)requireActivity()).updateInfoAdapter();
+//            @Override
+//            public void onItemClick(int position, View v) {
+//                Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
+//                        adapter.teamMembers.get(position).getName()
+//                                + " has been removed from team", Toast.LENGTH_SHORT);
+//                toast.show();
+//                adapter.teamMembers.remove(position);
+//                adapter.notifyDataSetChanged();
+//                ((CreateTeam) requireActivity()).updateInfoAdapter();
+//            }
 //        });
 
         return view;

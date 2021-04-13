@@ -3,6 +3,7 @@ package com.example.bismapp.ui.modifyTeams;
 import androidx.fragment.app.Fragment;
 
 import android.content.SharedPreferences;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,12 @@ public class TeamInfoFragment extends Fragment {
                 view.findViewById(R.id.enterNames);
 
         textView.setAdapter(adapter);
+
+        ImageButton clearName_btn =(ImageButton) view.findViewById(R.id.clearName_btn);
+        clearName_btn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            textView.setText("");
+        });
 
         ImageButton enterNames_btn = (ImageButton) view.findViewById(R.id.enterNames_btn);
         enterNames_btn.setOnClickListener(btnView -> {
