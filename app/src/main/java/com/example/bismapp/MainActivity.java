@@ -166,4 +166,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return theMember;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EditText id = (EditText) findViewById(R.id.eid_field);
+        id.setText("");
+    }
 }
