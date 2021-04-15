@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -62,7 +63,7 @@ public class YourTeams extends AppCompatActivity {
                 LinearLayoutManager.VERTICAL, false);
         adapter = new TeamListAdapter(teams, getApplicationContext());
 
-        genLocalTeams();
+        //genLocalTeams();
 
         team_list = findViewById(R.id.team_list);
         //team_list.setHasFixedSize(true);
@@ -80,7 +81,9 @@ public class YourTeams extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), CreateTeam.class);
             startActivity(intent);
         });
+
     }
+
 
     private void genLocalTeams() {
         //ArrayList<Team> tmp_teams = new ArrayList<>();

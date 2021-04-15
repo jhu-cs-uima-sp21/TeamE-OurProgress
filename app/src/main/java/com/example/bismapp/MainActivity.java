@@ -26,6 +26,7 @@ import android.view.MenuItem;
 import android.view.animation.AlphaAnimation;
 import android.view.contentcapture.DataShareRequest;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -39,15 +40,34 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbref;
     private static final String TAG = "dbref: ";
     private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
+
+    private Boolean isRemembered;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        peditor = myPrefs.edit();
         setContentView(R.layout.activity_main);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         buttonClick.setDuration(100);
+
+        Boolean remember = myPrefs.getBoolean("REMEMBER", false);
+        EditText id_field = (EditText) findViewById(R.id.eid_field);
+        // Clear text
+        if (!remember) {
+            //EditText id = (EditText) findViewById(R.id.eid_field);
+            // Clear text
+            id_field.setText("");
+        } else {
+            String id = myPrefs.getString("ID", "");
+            id_field.setText(id);
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+            checkBox.setChecked(true);
+        }
 
         Button login_btn = (Button)findViewById(R.id.login_b);
         login_btn.setOnClickListener((View.OnClickListener) view -> { // switch to Your Teams activity
@@ -57,7 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
             System.out.println("hello");
 
-            boolean isAssociate;
+            // TODO: DO we need this?
+            //boolean isAssociate;
 
             //READ FROM DATABASE TO CHECK IF MANAGER
             dbref.addValueEventListener(new ValueEventListener() {
@@ -72,8 +93,9 @@ public class MainActivity extends AppCompatActivity {
                     Context context = getApplicationContext();  // app level storage
 
                     //store associate/manager in shared preferences
-                    myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    SharedPreferences.Editor peditor = myPrefs.edit();
+                    //TODO: Might need to uncomment if this fails!
+                   // myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+                    //SharedPreferences.Editor peditor = myPrefs.edit();
 
 
                     if (isManager) {
@@ -113,6 +135,23 @@ public class MainActivity extends AppCompatActivity {
                     Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
+        });
+
+        CheckBox checkBox = findViewById(R.id.checkBox);
+        checkBox.setOnClickListener(view -> { // switch to Your Teams activity
+            view.startAnimation(MainActivity.buttonClick);
+            if(!checkBox.isChecked()) {
+                isRemembered = false;
+            } else {
+                isRemembered = true;
+            }
+
+            //TODO: Might need to uncomment if this fails!
+            //myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            //SharedPreferences.Editor peditor = myPrefs.edit();
+
+            peditor.putBoolean("REMEMBER", isRemembered);
+            peditor.apply();
         });
     }
 
@@ -170,7 +209,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EditText id = (EditText) findViewById(R.id.eid_field);
-        id.setText("");
+
+        Boolean remember = myPrefs.getBoolean("REMEMBER", false);
+        if (!remember) {
+            EditText id = (EditText) findViewById(R.id.eid_field);
+            // Clear text
+            id.setText("");
+        }
     }
 }

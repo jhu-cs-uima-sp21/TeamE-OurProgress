@@ -17,7 +17,10 @@ public class NavigationActivity extends AppCompatActivity{
         setContentView(R.layout.activity_navigation);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        openFragment(new ProductionDashboard());
+        //openFragment(new ProductionDashboard());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.nav_host_fragment, new ProductionDashboard());
+        transaction.commit();
 
         //open to production dashboard
     }
@@ -37,10 +40,10 @@ public class NavigationActivity extends AppCompatActivity{
                             //openFragment(HomeFragment.newInstance("", ""));
                             return true;
                         case R.id.nav_production:
-                            //openFragment(ProductionDashboard.newInstance("", ""));
+                            openFragment(ProductionDashboard.newInstance("", ""));
                             return true;
                         case R.id.navigation_ask:
-                            //openFragment(NotificationFragment.newInstance("", ""));
+                            openFragment(AskForHelp.newInstance("", ""));
                             return true;
                     }
                     return false;
