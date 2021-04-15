@@ -2,12 +2,18 @@ package com.example.bismapp.ui.modifyTeams;
 
 import androidx.fragment.app.Fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.Image;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
@@ -56,6 +62,16 @@ public class TeamInfoFragment extends Fragment {
 
         textView.setAdapter(adapter);
 
+        // does touch not work with emulator, or is my code not working?
+        textView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                closeKeyboard(view);
+                Log.w(TAG, "keyboard closed!");
+                return false;
+            }
+        });
+
         ImageButton clearName_btn =(ImageButton) view.findViewById(R.id.clearName_btn);
         clearName_btn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
@@ -76,6 +92,7 @@ public class TeamInfoFragment extends Fragment {
                     newTeamMemberName
                             +" has been added to the team", Toast.LENGTH_SHORT);
             toast.show();
+            closeKeyboard(view);
         });
 
         return view;
@@ -99,6 +116,18 @@ public class TeamInfoFragment extends Fragment {
     public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
         if (c != null && list != null) {
             list.addAll(c);
+        }
+    }
+
+    private void closeKeyboard(View view) {
+//        View view = this.getView();
+        // Coding in Flow video said this.getCurrentFocus(), but that doesn't exist :/
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getContext()
+                    .getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(
+                    view.getWindowToken(), 0);
         }
     }
 }

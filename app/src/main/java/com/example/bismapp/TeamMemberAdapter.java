@@ -94,19 +94,17 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
 //            view.setOnClickListener(this);
 
             ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
-            remove_member_btn.setOnClickListener(new View.OnClickListener() {
-//            ?.startAnimation(MainActivity.buttonClick);
-                @Override
-                public void onClick(View v) {
-                    Toast toast = Toast.makeText(v.getContext(),
-                            teamMembers.get(getAdapterPosition()).getName()
-                                    + " has been removed from team", Toast.LENGTH_SHORT);
-                    toast.show();
+            remove_member_btn.setOnClickListener((View.OnClickListener) btnview  -> {
+                btnview.startAnimation(MainActivity.buttonClick);
+                Toast toast = Toast.makeText(btnview.getContext(),
+                        teamMembers.get(getAdapterPosition()).getName()
+                                + " has been removed from team", Toast.LENGTH_SHORT);
+                toast.show();
 //                    clickListener.onItemClick(getAdapterPosition(), v);
-                    teamMembers.remove(getAdapterPosition());
-                    notifyDataSetChanged();
+                teamMembers.remove(getAdapterPosition());
+                notifyDataSetChanged();
 //                    ((CreateTeam) requireActivity()).updateInfoAdapter();
-                }
+// Delete things at end of TeamMRFragment?
             });
         }
 
@@ -114,6 +112,5 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             name.setText(teamMember.getName());
             id.setText(teamMember.getId());
         }
-
     }
 }
