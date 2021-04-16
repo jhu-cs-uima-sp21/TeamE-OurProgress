@@ -30,7 +30,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TeamInfoFragment extends Fragment {
 
@@ -40,6 +42,7 @@ public class TeamInfoFragment extends Fragment {
     private static final String TAG = "dbref at YourTeams: ";
     public List<String> namesAndIDs;
     public ArrayAdapter<String> adapter;
+    private Set<String> currTeamMembers = new HashSet<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,12 +53,18 @@ public class TeamInfoFragment extends Fragment {
         dbref = mdbase.getReference();
 
         CreateTeam activity = (CreateTeam)requireActivity();
+        // do we have to remove this line bc it draws from the dummy team members
         namesAndIDs = activity.getTeamMemberNames();
         addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, namesAndIDs);
 
         updateMemberSearch();
+
+        String[] tempTeamMembers = ((CreateTeam) requireActivity()).teamRoster.getTeamMemberAdapter().getTeamMemberNames();
+        for (int i = 0; i < tempTeamMembers.length; i++) {
+            currTeamMembers.add(tempTeamMembers[i]);
+        }
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 view.findViewById(R.id.enterNames);
@@ -83,15 +92,23 @@ public class TeamInfoFragment extends Fragment {
             btnView.startAnimation(MainActivity.buttonClick);
             String newTeamMemberName = textView.getText().toString();
             try {
+                if (currTeamMembers.contains(newTeamMemberName)) {
+                    Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                            newTeamMemberName
+                                    +" is already on the team", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
                 TeamMember newMember = MainActivity.getTeamMember(newTeamMemberName);
                 ((CreateTeam) requireActivity()).teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                currTeamMembers.add(newTeamMemberName);
+                Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                        newTeamMemberName
+                                +" has been added to the team", Toast.LENGTH_SHORT);
+                toast.show();
             } catch (Exception e) {
                 System.out.println("NULL TEAM MEMBER");
             }
-            Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
-                    newTeamMemberName
-                            +" has been added to the team", Toast.LENGTH_SHORT);
-            toast.show();
             closeKeyboard(view);
         });
 
@@ -130,4 +147,13 @@ public class TeamInfoFragment extends Fragment {
                     view.getWindowToken(), 0);
         }
     }
+
+    public Set<String> getCurrTeamMembers() {
+        return currTeamMembers;
+    }
+
+    public void setCurrTeamMembers(Set<String> currTeamMembers) {
+        this.currTeamMembers = currTeamMembers;
+    }
+
 }
