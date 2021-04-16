@@ -69,6 +69,11 @@ public class CreateTeam extends AppCompatActivity {
         try {
             dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
                     .toString());
+            if (dailyGoal == 0) {
+                ((EditText) findViewById(R.id.enterDailyGoal)).setText("");
+                makeToast("Daily goal cannot be 0");
+                return;
+            }
         } catch (NumberFormatException e) {
             makeToast("Please enter a daily goal");
             return;
