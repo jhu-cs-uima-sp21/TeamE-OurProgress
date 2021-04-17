@@ -12,7 +12,7 @@
 
     <stroke
         android:color="@color/bism_blue"
-        android:width="7dp"
+        android:width="3dp"
         />
 
 </shape>

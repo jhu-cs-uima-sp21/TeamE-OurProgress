@@ -3,10 +3,7 @@ package com.example.bismapp.ui.modifyTeams;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.Image;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,13 +20,13 @@ import com.example.bismapp.CreateTeam;
 import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
 import com.example.bismapp.TeamMember;
-import com.example.bismapp.TeamMemberAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,9 +37,9 @@ public class TeamInfoFragment extends Fragment {
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at YourTeams: ";
-    public List<String> namesAndIDs;
+    public ArrayList<String> namesAndIDs;
     public ArrayAdapter<String> adapter;
-    private Set<String> currTeamMembers = new HashSet<>();
+    HashSet<String> currTeamMembers;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,40 +50,38 @@ public class TeamInfoFragment extends Fragment {
         dbref = mdbase.getReference();
 
         CreateTeam activity = (CreateTeam)requireActivity();
+        currTeamMembers = activity.membersOnList;
+
         // do we have to remove this line bc it draws from the dummy team members
         namesAndIDs = activity.getTeamMemberNames();
         addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, namesAndIDs);
-
         updateMemberSearch();
 
-        String[] tempTeamMembers = ((CreateTeam) requireActivity()).teamRoster.getTeamMemberAdapter().getTeamMemberNames();
-        for (int i = 0; i < tempTeamMembers.length; i++) {
-            currTeamMembers.add(tempTeamMembers[i]);
-        }
-
+        /*String[] tempTeamMembers = ((CreateTeam) requireActivity()).teamRoster
+                .getTeamMemberAdapter().getTeamMemberNames();
+        */
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 view.findViewById(R.id.enterNames);
-
         textView.setAdapter(adapter);
-
         // does touch not work with emulator, or is my code not working?
         textView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 closeKeyboard(view);
-                Log.w(TAG, "keyboard closed!");
                 return false;
             }
         });
 
+        // clear text in member search
         ImageButton clearName_btn =(ImageButton) view.findViewById(R.id.clearName_btn);
         clearName_btn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
             textView.setText("");
         });
 
+        // add a member from search
         ImageButton enterNames_btn = (ImageButton) view.findViewById(R.id.enterNames_btn);
         enterNames_btn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
@@ -100,8 +95,9 @@ public class TeamInfoFragment extends Fragment {
                     return;
                 }
                 TeamMember newMember = MainActivity.getTeamMember(newTeamMemberName);
-                ((CreateTeam) requireActivity()).teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
                 currTeamMembers.add(newTeamMemberName);
+                currTeamMembers.add(newMember.getId());
                 Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
                         newTeamMemberName
                                 +" has been added to the team", Toast.LENGTH_SHORT);
@@ -128,6 +124,7 @@ public class TeamInfoFragment extends Fragment {
         namesAndIDs = activity.getTeamMemberNames();
         addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter.notifyDataSetChanged();
+
     }
 
     public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
@@ -146,14 +143,16 @@ public class TeamInfoFragment extends Fragment {
             imm.hideSoftInputFromWindow(
                     view.getWindowToken(), 0);
         }
+        Log.w(TAG, "keyboard closed!");
     }
 
+/*  TODO: possibly remove unused functions
     public Set<String> getCurrTeamMembers() {
         return currTeamMembers;
     }
 
     public void setCurrTeamMembers(Set<String> currTeamMembers) {
         this.currTeamMembers = currTeamMembers;
-    }
+    }*/
 
 }

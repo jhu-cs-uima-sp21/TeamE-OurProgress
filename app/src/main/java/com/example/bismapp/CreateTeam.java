@@ -22,11 +22,14 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class CreateTeam extends AppCompatActivity {
-    private TeamInfoFragment teamInfo;
+    public TeamInfoFragment teamInfo;
     public TeamMRFragment teamRoster;
     private OkCancelFragment okCancel;
+    public HashSet<String> membersOnList;
 
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
@@ -41,6 +44,7 @@ public class CreateTeam extends AppCompatActivity {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        membersOnList = new HashSet<>();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -115,6 +119,7 @@ public class CreateTeam extends AppCompatActivity {
         teamInfo.updateMemberSearch();
     }
 
+    //public void removeMemberFromInfo()
 
     public ArrayList<String> getTeamMemberNames() {
         ArrayList<String> teamMemberNames = new ArrayList<>();

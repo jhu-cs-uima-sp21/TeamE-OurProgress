@@ -8,21 +8,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
+import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
 
 import java.util.ArrayList;
 
 public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.ViewHolder> {
     public ArrayList<TeamMember> teamMembers;
-    private static ClickListener clickListener;
+    private TeamMRFragment activity;
 
-    public TeamMemberAdapter(FragmentActivity activity, ArrayList<TeamMember> teamMembers) {
-        LayoutInflater inflater = LayoutInflater.from(activity);
+    public TeamMemberAdapter(Fragment activity, ArrayList<TeamMember> teamMembers) {
+        //TODO: maybe remove below
+        // LayoutInflater inflater = LayoutInflater.from(activity.getContext());
         this.teamMembers = teamMembers;
+        this.activity = (TeamMRFragment) activity;
     }
 
     @NonNull
@@ -50,11 +52,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public void removeTeamMembers(TeamMember newTeamMember) {
-        teamMembers.remove(newTeamMember);
-        notifyDataSetChanged();
-    }
-
+    /* TODO: figure out if need remove these unused functions
     public String[] getTeamMemberNames() {
         String[] names = new String[teamMembers.size()];
         for (int i = 0; i < teamMembers.size(); i++) {
@@ -69,19 +67,10 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             ids[i] = teamMembers.get(i).getId();
         }
         return ids;
-    }
+    }*/
 
     @Override
     public int getItemCount() { return teamMembers.size(); }
-
-    /** Clickable implementation **/
-    public interface ClickListener {
-        void onItemClick(int position, View v);
-    }
-
-    public void setOnItemClickListener(ClickListener clickListener) {
-        TeamMemberAdapter.clickListener = clickListener;
-    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
@@ -92,9 +81,6 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             super(view);
             this.name = name;
             this.id = id;
-            // make view clickable
-//            view.setClickable(true);
-//            view.setOnClickListener(this);
 
             ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
             remove_member_btn.setOnClickListener((View.OnClickListener) btnview  -> {
@@ -103,10 +89,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
                         teamMembers.get(getAdapterPosition()).getName()
                                 + " has been removed from team", Toast.LENGTH_SHORT);
                 toast.show();
-//                    clickListener.onItemClick(getAdapterPosition(), v);
-                teamMembers.remove(getAdapterPosition());
-                notifyDataSetChanged();
-//                    ((CreateTeam) requireActivity()).updateInfoAdapter();
+                ((TeamMRFragment)activity).removeTeamMember(getAdapterPosition());
 // Delete things at end of TeamMRFragment?
             });
         }

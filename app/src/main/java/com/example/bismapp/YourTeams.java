@@ -99,7 +99,6 @@ public class YourTeams extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
-
                 ArrayList<Team> tmp_teams = new ArrayList<>();
                 Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
                 for (DataSnapshot i : teamsShots) {

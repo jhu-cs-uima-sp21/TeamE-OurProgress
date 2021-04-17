@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
-import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
 import com.example.bismapp.TeamMember;
 import com.example.bismapp.TeamMemberAdapter;
@@ -34,37 +31,8 @@ public class TeamMRFragment extends Fragment {
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new TeamMemberAdapter(getActivity(), new ArrayList<TeamMember>());
+        adapter = new TeamMemberAdapter(this, new ArrayList<TeamMember>());
         teamRoster.setAdapter(adapter);
-
-        // make clickable
-//        adapter.setOnItemClickListener(new TeamMemberAdapter.ClickListener() {
-//            @Override
-//            public void onItemClick(int position, View v) {
-//                Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
-//                        adapter.teamMembers.get(position).getName()
-//                                +" has been removed from team", Toast.LENGTH_SHORT);
-//                toast.show();
-//                adapter.teamMembers.remove(position);
-//                adapter.notifyDataSetChanged();
-//                ((CreateTeam)requireActivity()).updateInfoAdapter();
-//            }
-//        });
-
-//        ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
-//        remove_member_btn.setOnClickListener(btnView -> {
-//            btnView.startAnimation(MainActivity.buttonClick);
-//            @Override
-//            public void onItemClick(int position, View v) {
-//                Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
-//                        adapter.teamMembers.get(position).getName()
-//                                + " has been removed from team", Toast.LENGTH_SHORT);
-//                toast.show();
-//                adapter.teamMembers.remove(position);
-//                adapter.notifyDataSetChanged();
-//                ((CreateTeam) requireActivity()).updateInfoAdapter();
-//            }
-//        });
 
         return view;
     }
@@ -73,6 +41,7 @@ public class TeamMRFragment extends Fragment {
         return adapter.getTeamMembers();
     }
 
+    /* Unused functionms
     public String[] getTeamMemberNames() {
         return adapter.getTeamMemberNames();
     }
@@ -83,10 +52,18 @@ public class TeamMRFragment extends Fragment {
 
     public void clearMembers() {
         adapter.teamMembers.clear();
-    }
+    }*/
 
     public TeamMemberAdapter getTeamMemberAdapter() {
         return adapter;
+    }
+
+    public void removeTeamMember(int index) {
+        TeamMember member = adapter.teamMembers.get(index);
+        ((CreateTeam)requireActivity()).teamInfo.currTeamMembers.remove(member.getId());
+        ((CreateTeam)requireActivity()).teamInfo.currTeamMembers.remove(member.getName());
+        adapter.teamMembers.remove(index);
+        adapter.notifyDataSetChanged();
     }
 }
 
