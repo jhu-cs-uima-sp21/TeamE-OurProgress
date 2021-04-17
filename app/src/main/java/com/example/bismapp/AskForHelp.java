@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -85,15 +87,13 @@ public class AskForHelp extends Fragment {
         names = new ArrayList<>();
         getTeamMemberNames();
         //namesAndIDs = activity.getTeamMemberNames();
-        //addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                android.R.layout.simple_list_item_1, names);
+                R.layout.hint_item, names);
 
         // TODO: If the search function fails, uncomment this!
         //updateMemberSearch();
 
-        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.enterNames);
-
+        AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
         textView.setAdapter(adapter);
 
         return view;
@@ -181,4 +181,6 @@ public class AskForHelp extends Fragment {
         });
 
     }
+
+
 }

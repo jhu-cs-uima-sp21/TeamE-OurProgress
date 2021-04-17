@@ -40,7 +40,7 @@ public class AssociateNavigationActivity extends AppCompatActivity {
                             openFragment(AssociateProductionDash.newInstance("", ""));
                             return true;
                         case R.id.navigation_ask:
-                            //openFragment(NotificationFragment.newInstance("", ""));
+                            openFragment(AskForHelp.newInstance("", ""));
                             return true;
                     }
                     return false;
