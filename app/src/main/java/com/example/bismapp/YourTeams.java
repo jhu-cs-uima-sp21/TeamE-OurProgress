@@ -33,40 +33,32 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class YourTeams extends AppCompatActivity {
 
-    FirebaseDatabase mdbase;
-    DatabaseReference dbref;
+    private DatabaseReference dbref;
     private static final String TAG = "dbref at YourTeams: ";
-    RecyclerView team_list;
-    TeamListAdapter adapter;
-    ArrayList<Team> teams; //TODO: Private? Static?
-    private SharedPreferences myPrefs;
+
+    private TeamListAdapter adapter;
+    private ArrayList<Team> teams;
+    public static HashSet<String> teamNames = new HashSet<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_teams);
-        mdbase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        // Dummy list of teams
-        /*for (int i = 0; i < 10; i++) {
-            teams.add(new Team("Team #" + i, "", (i+94)*(i+7),
-                    (i+736)*(54*i), null));
-        }*/
-        teams = new ArrayList<Team>();
+        teams = new ArrayList<>();
         genLocalTeams();
-        //genLocalTeams();
+
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,
                 LinearLayoutManager.VERTICAL, false);
         adapter = new TeamListAdapter(teams, getApplicationContext());
 
-        //genLocalTeams();
-
-        team_list = findViewById(R.id.team_list);
-        //team_list.setHasFixedSize(true);
+        RecyclerView team_list = findViewById(R.id.team_list);
         team_list.setLayoutManager(layoutManager);
         team_list.setAdapter(adapter);
 
@@ -87,7 +79,7 @@ public class YourTeams extends AppCompatActivity {
 
     private void genLocalTeams() {
         //ArrayList<Team> tmp_teams = new ArrayList<>();
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String manager_id = myPrefs.getString("ID", "");
 
         // Fetch all teams managed by user
@@ -109,6 +101,7 @@ public class YourTeams extends AppCompatActivity {
                         Integer daily_goal = i.child("daily_goal").getValue(Integer.class);
                         System.out.println(name);
                         tmp_teams.add(new Team(name, managed_by, units_produced, daily_goal, null));
+                        teamNames.add(name);
                     }
                     //System.out.println(i.getKey());
                     //System.out.println(i.getValue(Team.class));
@@ -118,7 +111,6 @@ public class YourTeams extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 teams.clear();
-
                 teams.addAll(tmp_teams);
 
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());

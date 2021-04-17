@@ -69,6 +69,17 @@ public class CreateTeam extends AppCompatActivity {
         // form new team with user input
         String teamName = ((EditText)findViewById(R.id.create_teams)).getText().toString();
         String managerID = myPrefs.getString("ID", "N/A");
+        ArrayList<TeamMember> members = teamRoster.getTeamMembers();
+
+        // if any information is missing, do not make team
+        if (teamName.equals("")) {
+            makeToast("Please enter a team name");
+            Log.d(TEAM_TAG, "team name");
+            return;
+        } else if (YourTeams.teamNames.contains(teamName)) {
+            makeToast("Team \"" + teamName + "\" has already been created");
+            return;
+        }
         Integer dailyGoal;
         try {
             dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
@@ -80,15 +91,6 @@ public class CreateTeam extends AppCompatActivity {
             }
         } catch (NumberFormatException e) {
             makeToast("Please enter a daily goal");
-            return;
-        }
-        ArrayList<TeamMember> members = teamRoster.getTeamMembers();
-
-        // if any information is missing, do not make team
-        boolean invalidTeam = false;
-        if (teamName.equals("")) {
-            makeToast("Please enter a team name");
-            Log.d(TEAM_TAG, "team name");
             return;
         }
         if (members == null || members.size() < 1) {

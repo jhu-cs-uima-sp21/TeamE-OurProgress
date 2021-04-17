@@ -94,7 +94,15 @@ public class TeamInfoFragment extends Fragment {
                     toast.show();
                     return;
                 }
-                TeamMember newMember = MainActivity.getTeamMember(newTeamMemberName);
+                TeamMember newMember;
+                try {
+                    newMember = MainActivity.getTeamMember(newTeamMemberName);
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                            "Can not find member: " + newTeamMemberName, Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
                 activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
                 currTeamMembers.add(newTeamMemberName);
                 currTeamMembers.add(newMember.getId());
