@@ -32,15 +32,11 @@ import java.util.List;
  */
 public class AskForHelp extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "dbref at AskForHelp: ";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
     private ArrayList<TeamMember> namesAndIDs;
@@ -72,10 +68,6 @@ public class AskForHelp extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -85,27 +77,24 @@ public class AskForHelp extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
         namesAndIDs = new ArrayList<>();
         names = new ArrayList<>();
+
+        //KEIDAI + CHIAMAKA LOOK HERE!
         getTeamMemberNames();
-        //namesAndIDs = activity.getTeamMemberNames();
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.hint_item, names);
-
-        // TODO: If the search function fails, uncomment this!
-        //updateMemberSearch();
-
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
         textView.setAdapter(adapter);
 
         return view;
     }
 
+    //Is the function that connects it to firebase!
     private void getTeamMemberNames() {
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String manager_id = myPrefs.getString("ID", "");
 
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        System.out.println("Hellow");
         // Fetch all teams managed by user
         // calling add value event listener method
         // for getting the values from database.
@@ -147,30 +136,6 @@ public class AskForHelp extends Fragment {
 
                 names.clear();
                 names.addAll(userNames);
-
-                /*ArrayList<Team> tmp_teams = new ArrayList<>();
-                Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
-                for (DataSnapshot i : teamsShots) {
-                    String managed_by = i.child("managed_by").getValue(String.class);
-                    if(managed_by.equals(manager_id)) {
-                        String name = i.child("name").getValue(String.class);
-                        Integer units_produced = i.child("units_produced").getValue(Integer.class);
-                        Integer daily_goal = i.child("daily_goal").getValue(Integer.class);
-                        System.out.println(name);
-                        tmp_teams.add(new Team(name, managed_by, units_produced, daily_goal, null));
-                    }
-                    //System.out.println(i.getKey());
-                    //System.out.println(i.getValue(Team.class));
-                }
-
-                adapter.updateDataSet(tmp_teams);
-                adapter.notifyDataSetChanged();
-
-                teams.clear();
-
-                teams.addAll(tmp_teams);
-
-                Log.d(TAG, "Children count: " + snapshot.getChildrenCount());*/
             }
 
             @Override
