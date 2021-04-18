@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
@@ -66,11 +67,10 @@ public class TeamInfoFragment extends Fragment {
                 view.findViewById(R.id.enterNames);
         textView.setAdapter(adapter);
         // does touch not work with emulator, or is my code not working?
-        textView.setOnTouchListener(new View.OnTouchListener() {
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                closeKeyboard(view);
-                return false;
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                closeKeyboard(textView);
             }
         });
 
