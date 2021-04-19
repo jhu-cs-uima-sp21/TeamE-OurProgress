@@ -71,9 +71,35 @@ public class TeamInfoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 closeKeyboard(textView);
+                String newTeamMemberName = textView.getText().toString();
+                try {
+                    if (currTeamMembers.contains(newTeamMemberName)) {
+                        Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
+                                newTeamMemberName
+                                        + " is already on the team", Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+                    TeamMember newMember;
+                    try {
+                        newMember = activity.getAssociate(newTeamMemberName);
+                    } catch (Exception e) {
+                        Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
+                                "Can not find member, " + newTeamMemberName, Toast.LENGTH_SHORT);
+                        toast.show();
+                        return;
+                    }
+                    activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                    currTeamMembers.add(newTeamMemberName);
+                    currTeamMembers.add(newMember.getId());
+                    Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
+                            newTeamMemberName
+                                    + " has been added to the team", Toast.LENGTH_SHORT);
+                    toast.show();
+                } catch (Exception e) {
+                    System.out.println("NULL TEAM MEMBER");
+                }
             }
-
-
         });
 
         // clear text in member search
