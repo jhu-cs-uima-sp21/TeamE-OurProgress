@@ -1,6 +1,8 @@
 package com.example.bismapp;
 
+
         import android.os.Bundle;
+        import android.util.Log;
         import android.view.MenuItem;
 
         import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -11,6 +13,9 @@ package com.example.bismapp;
 
 
 public class AssociateNavigationActivity extends AppCompatActivity {
+
+    private static final String TAG = "AssocNav";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +25,8 @@ public class AssociateNavigationActivity extends AppCompatActivity {
         openFragment(new AssociateProductionDash());
 
         //open to production dashboard
+
+        Log.d(TAG, "OnCreate ");
     }
 
     public void openFragment(Fragment fragment) {

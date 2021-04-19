@@ -33,8 +33,8 @@ public class CreateTeam extends AppCompatActivity {
     public ArrayList<TeamMember> associates;
     public ArrayList<String> associatesNames;
 
-    FirebaseDatabase mdbase;
-    DatabaseReference dbref;
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
