@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button login_btn = (Button)findViewById(R.id.login_b);
         login_btn.setOnClickListener((View.OnClickListener) view -> { // switch to Your Teams activity
-            view.startAnimation(buttonClick);
+            //view.startAnimation(buttonClick);
             EditText id = (EditText) findViewById(R.id.eid_field);
             String entered_id = id.getText().toString();
 
@@ -90,39 +90,25 @@ public class MainActivity extends AppCompatActivity {
                     // do something with snapshot values
                     boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
                     boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
-                    Context context = getApplicationContext();  // app level storage
+                    //Context context = getApplicationContext();  // app level storage
 
                     //store associate/manager in shared preferences
                     //TODO: Might need to uncomment if this fails!
                    // myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
                     //SharedPreferences.Editor peditor = myPrefs.edit();
 
-
+                    peditor.putBoolean("MANAGER", isManager);
+                    peditor.putBoolean("ASSOCIATE", isAssociate);
                     if (isManager) {
                         Log.w(TAG, "This user is a Manager");
-                        peditor.putBoolean("MANAGER", isManager);
                         peditor.putString("ID", entered_id);
                         peditor.apply();
-                        Intent intent = new Intent(getApplicationContext(), YourTeams.class);
-                        startActivity(intent);
                     } else if (isAssociate) {
                         String teamID = snapshot.child("users").child("associates").child(entered_id).child("team").getValue(String.class);
-                        peditor.putBoolean("MANAGER", isManager);
                         peditor.putString("ID", entered_id);
                         peditor.putString("TEAM", teamID);
                         peditor.apply();
                         Log.w(TAG, "This user is a Associate");
-                        Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
-                        startActivity(intent);
-                    } else {
-                        //TODO: See if we can make the toast larger
-                        context = getApplicationContext();
-                        CharSequence text = "Please enter a valid employee id";
-                        int duration = Toast.LENGTH_LONG;
-
-                        Toast toast = Toast.makeText(context, text, duration);
-                        toast.show();
-                        Log.w(TAG, "Invalid Employee ID");
                     }
 
 
@@ -135,6 +121,26 @@ public class MainActivity extends AppCompatActivity {
                     Log.w(TAG, "Failed to read value.", error.toException());
                 }
             });
+
+            boolean isManager = myPrefs.getBoolean("MANAGER", false);
+            boolean isAssociate = myPrefs.getBoolean("ASSOCIATE", false);
+
+            if (isManager) {
+                Intent intent = new Intent(getApplicationContext(), YourTeams.class);
+                startActivity(intent);
+            } else if (isAssociate) {
+                Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
+                startActivity(intent);
+            } else {
+                 //TODO: SEE IF WE CAN MAKE TOAST LARGER
+
+                CharSequence text = "Please enter a valid employee id";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                toast.show();
+                Log.w(TAG, "Invalid Employee ID");
+            }
         });
 
         CheckBox checkBox = findViewById(R.id.checkBox);

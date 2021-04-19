@@ -31,8 +31,8 @@ public class CreateTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     public HashSet<String> membersOnList;
 
-    FirebaseDatabase mdbase;
-    DatabaseReference dbref;
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";

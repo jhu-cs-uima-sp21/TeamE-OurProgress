@@ -3,13 +3,15 @@
     package="com.example.bismapp">
 
     <application
+        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BISMApp.NoActionBar">
-        <activity android:name=".AssociateNavigationActivity"></activity>
+        <activity android:name=".AskConfirmation"></activity>
+        <activity android:name=".AssociateNavigationActivity" />
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation" />

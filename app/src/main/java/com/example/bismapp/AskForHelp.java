@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -10,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,11 +40,12 @@ public class AskForHelp extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "dbref at AskForHelp: ";
 
-    FirebaseDatabase mdbase;
-    DatabaseReference dbref;
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
     private ArrayList<TeamMember> namesAndIDs;
     public ArrayAdapter<String> adapter;
     private ArrayList<String> names;
+    //private AssociateNavigationActivity assocNav;
 
     public AskForHelp() {
         // Required empty public constructor
@@ -73,17 +77,32 @@ public class AskForHelp extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
         namesAndIDs = new ArrayList<>();
         names = new ArrayList<>();
 
-        //KEIDAI + CHIAMAKA LOOK HERE!
+        //TODO: KEIDAI + CHIAMAKA LOOK HERE!
+        //TODO: Fix layout of the adapter for the AutoCompleteTextView
         getTeamMemberNames();
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
         textView.setAdapter(adapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View arg1, int pos,
+                                    long id) {
+                String name = textView.getText().toString();
+                Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
+                intent.putExtra("NAME", name);
+                startActivity(intent);
+                textView.setText("");
+            }
+        });
+
 
         return view;
     }
@@ -146,6 +165,4 @@ public class AskForHelp extends Fragment {
         });
 
     }
-
-
 }
