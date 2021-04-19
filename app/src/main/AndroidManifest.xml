@@ -3,22 +3,25 @@
     package="com.example.bismapp">
 
     <application
-        android:screenOrientation="portrait"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BISMApp.NoActionBar">
-        <activity android:name=".AskConfirmation"></activity>
+        <activity android:name=".AskConfirmation">
+            android:screenOrientation="portrait"
+        </activity>
         <activity android:name=".AssociateNavigationActivity" />
         <activity
             android:name=".NavigationActivity"
-            android:label="@string/title_activity_navigation" />
+            android:label="@string/title_activity_navigation"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.BISMApp.NoActionBar">
+            android:theme="@style/Theme.BISMApp.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,13 +32,15 @@
             android:name=".YourTeams"
             android:label="@string/your_teams"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.BISMApp.NoActionBar" />
+            android:theme="@style/Theme.BISMApp.NoActionBar"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CreateTeam"
             android:label="@string/create_team"
             android:parentActivityName=".YourTeams"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing" />
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

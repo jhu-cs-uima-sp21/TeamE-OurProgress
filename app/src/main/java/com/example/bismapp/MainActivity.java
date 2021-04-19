@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             EditText id = (EditText) findViewById(R.id.eid_field);
             String entered_id = id.getText().toString();
 
-            System.out.println("hello");
+            System.out.println("hello, the entered ID is: " + entered_id);
 
             // TODO: DO we need this?
             //boolean isAssociate;
@@ -92,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
                     boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
                     boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
                     //Context context = getApplicationContext();  // app level storage
-
+                    System.out.println("isManager is " + isManager);
+                    System.out.println("isAssociate is " + isAssociate);
                     //store associate/manager in shared preferences
                     //TODO: Might need to uncomment if this fails!
                    // myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -100,17 +101,18 @@ public class MainActivity extends AppCompatActivity {
 
                     peditor.putBoolean("MANAGER", isManager);
                     peditor.putBoolean("ASSOCIATE", isAssociate);
+
                     if (isManager) {
                         Log.w(TAG, "This user is a Manager");
                         peditor.putString("ID", entered_id);
-                        peditor.apply();
                     } else if (isAssociate) {
                         String teamID = snapshot.child("users").child("associates").child(entered_id).child("team").getValue(String.class);
                         peditor.putString("ID", entered_id);
                         peditor.putString("TEAM", teamID);
-                        peditor.apply();
                         Log.w(TAG, "This user is a Associate");
                     }
+                    peditor.apply();
+
 
 
                     Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
@@ -125,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
 
             boolean isManager = myPrefs.getBoolean("MANAGER", false);
             boolean isAssociate = myPrefs.getBoolean("ASSOCIATE", false);
+
+            System.out.println("Shared Prefs Manager is: " + myPrefs.getBoolean("MANAGER", false));
+            System.out.println("Shared Prefs Associate is: " + myPrefs.getBoolean("ASSOCIATE", false));
 
             if (isManager) {
                 Intent intent = new Intent(getApplicationContext(), YourTeams.class);
