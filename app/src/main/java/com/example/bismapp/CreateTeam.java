@@ -30,6 +30,8 @@ public class CreateTeam extends AppCompatActivity {
     public TeamMRFragment teamRoster;
     private OkCancelFragment okCancel;
     public HashSet<String> membersOnList;
+    public ArrayList<TeamMember> associates;
+    public ArrayList<String> associatesNames;
 
     FirebaseDatabase mdbase;
     DatabaseReference dbref;
@@ -45,6 +47,8 @@ public class CreateTeam extends AppCompatActivity {
         dbref = mdbase.getReference();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         membersOnList = new HashSet<>();
+        associates = new ArrayList<>();
+        associatesNames = new ArrayList<>();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -123,23 +127,63 @@ public class CreateTeam extends AppCompatActivity {
 
     //public void removeMemberFromInfo()
 
-    public ArrayList<String> getTeamMemberNames() {
-        ArrayList<String> teamMemberNames = new ArrayList<>();
-        ArrayList<TeamMember> currRoster = MainActivity.teamMembers;
-
-        for (int i = 0; i < currRoster.size(); i++) {
-            teamMemberNames.add(currRoster.get(i).getName());
-        }
-        return teamMemberNames;
+    /*public ArrayList<String> getTeamMemberNames() {
+        MainActivity mainActivity = (MainActivity)(getParent().getParent());
+        mainActivity.getAllAssociates();
+        return mainActivity.associatesNames;
     }
 
-    public  ArrayList<String> getTeamMembersIDs() {
-        ArrayList<String> teamMemberIDs = new ArrayList<>();
-        ArrayList<TeamMember> currRoster = MainActivity.teamMembers;
+    public TeamMember getAssociate(String name) throws Exception {
+        MainActivity mainActivity = (MainActivity)(getParent().getParent());
+        return mainActivity.getAssociate(name);
+    }*/
+    public void getAllAssociates() {
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        associates.clear();
+        associatesNames.clear();
 
-        for (int i = 0; i < currRoster.size(); i++) {
-            teamMemberIDs.add(currRoster.get(i).getId());
+        // Fetch all associates
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                // do something with snapshot values
+                Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
+                System.out.println("Fetching all associates ...");
+                for (DataSnapshot i : usersShots) {
+                    String userName = i.child("Name").getValue(String.class);
+                    String userID = i.child("id").getValue(String.class);
+                    associates.add(new TeamMember(userName, userID));
+                    associatesNames.add(userName);
+
+                    System.out.printf("\tMember: %s ID: %s\n", userName, userID);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    public TeamMember getAssociate(String name) throws Exception {
+        TeamMember theMember = null;
+        TeamMember currMember;
+
+        for (int i = 0; i < associates.size(); i++) {
+            currMember = associates.get(i);
+            if (currMember.getName().equals(name)) {
+                theMember = currMember;
+                break;
+            }
         }
-        return teamMemberIDs;
+        if (theMember == null) {
+            throw new Exception("Null team member");
+        }
+        return theMember;
     }
 }

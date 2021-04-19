@@ -34,11 +34,11 @@ import java.util.Set;
 
 public class TeamInfoFragment extends Fragment {
 
+    /* TODO: remove?
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
-    private SharedPreferences myPrefs;
+    private SharedPreferences myPrefs;*/
     private static final String TAG = "dbref at YourTeams: ";
-    public ArrayList<String> namesAndIDs;
     public ArrayAdapter<String> adapter;
     HashSet<String> currTeamMembers;
 
@@ -47,17 +47,17 @@ public class TeamInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_info, container, false);
+        /* TODO: possibly rmeove
         mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();
+        dbref = mdbase.getReference();*/
 
-        CreateTeam activity = (CreateTeam)requireActivity();
+        CreateTeam activity = (CreateTeam) requireActivity();
         currTeamMembers = activity.membersOnList;
 
         // do we have to remove this line bc it draws from the dummy team members
-        namesAndIDs = activity.getTeamMemberNames();
-        addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
+        activity.getAllAssociates();
         adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_list_item_1, namesAndIDs);
+                android.R.layout.simple_list_item_1, activity.associatesNames);
         updateMemberSearch();
 
         /*String[] tempTeamMembers = ((CreateTeam) requireActivity()).teamRoster
@@ -72,10 +72,12 @@ public class TeamInfoFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 closeKeyboard(textView);
             }
+
+
         });
 
         // clear text in member search
-        ImageButton clearName_btn =(ImageButton) view.findViewById(R.id.clearName_btn);
+        ImageButton clearName_btn = (ImageButton) view.findViewById(R.id.clearName_btn);
         clearName_btn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
             textView.setText("");
@@ -88,17 +90,17 @@ public class TeamInfoFragment extends Fragment {
             String newTeamMemberName = textView.getText().toString();
             try {
                 if (currTeamMembers.contains(newTeamMemberName)) {
-                    Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                    Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
                             newTeamMemberName
-                                    +" is already on the team", Toast.LENGTH_SHORT);
+                                    + " is already on the team", Toast.LENGTH_SHORT);
                     toast.show();
                     return;
                 }
                 TeamMember newMember;
                 try {
-                    newMember = MainActivity.getTeamMember(newTeamMemberName);
+                    newMember = activity.getAssociate(newTeamMemberName);
                 } catch (Exception e) {
-                    Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                    Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
                             "Can not find member: " + newTeamMemberName, Toast.LENGTH_SHORT);
                     toast.show();
                     return;
@@ -106,9 +108,9 @@ public class TeamInfoFragment extends Fragment {
                 activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
                 currTeamMembers.add(newTeamMemberName);
                 currTeamMembers.add(newMember.getId());
-                Toast toast = Toast.makeText(((CreateTeam)requireActivity()),
+                Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
                         newTeamMemberName
-                                +" has been added to the team", Toast.LENGTH_SHORT);
+                                + " has been added to the team", Toast.LENGTH_SHORT);
                 toast.show();
             } catch (Exception e) {
                 System.out.println("NULL TEAM MEMBER");
@@ -117,8 +119,6 @@ public class TeamInfoFragment extends Fragment {
         });
 
         return view;
-
-        // TODO: actually add member
     }
 
     @Override
@@ -128,21 +128,13 @@ public class TeamInfoFragment extends Fragment {
     }
 
     public void updateMemberSearch() {
-        CreateTeam activity = (CreateTeam)requireActivity();
-        namesAndIDs = activity.getTeamMemberNames();
-        addAllIfNotNull(namesAndIDs, activity.getTeamMembersIDs());
+        CreateTeam activity = (CreateTeam) requireActivity();
+        activity.getAllAssociates();
         adapter.notifyDataSetChanged();
 
     }
 
-    public static <E> void addAllIfNotNull(List<E> list, Collection<? extends E> c) {
-        if (c != null && list != null) {
-            list.addAll(c);
-        }
-    }
-
     private void closeKeyboard(View view) {
-//        View view = this.getView();
         // Coding in Flow video said this.getCurrentFocus(), but that doesn't exist :/
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getContext()
@@ -153,14 +145,4 @@ public class TeamInfoFragment extends Fragment {
         }
         Log.w(TAG, "keyboard closed!");
     }
-
-/*  TODO: possibly remove unused functions
-    public Set<String> getCurrTeamMembers() {
-        return currTeamMembers;
-    }
-
-    public void setCurrTeamMembers(Set<String> currTeamMembers) {
-        this.currTeamMembers = currTeamMembers;
-    }*/
-
 }

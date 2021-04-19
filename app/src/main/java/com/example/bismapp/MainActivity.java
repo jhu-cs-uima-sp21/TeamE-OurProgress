@@ -30,12 +30,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
-    public static ArrayList<TeamMember> teamMembers = makeMembers();
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private static final String TAG = "dbref: ";
@@ -178,35 +179,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private static ArrayList<TeamMember> makeMembers() {
-        // Dummy list of team members
-        ArrayList<TeamMember> members = new ArrayList<>(5);
-        for (int i = 1; i < 6; i++) {
-            TeamMember member = new TeamMember("Member #" + i,
-                    String.valueOf(i * 82345679 % 10000000), "Station " + (6 - i));
-            members.add(member);
-        }
-        return members;
-    }
-
-    public static TeamMember getTeamMember(String name) throws Exception {
-        TeamMember theMember = null;
-        TeamMember currMember;
-
-        for (int i = 0; i < teamMembers.size(); i++) {
-            currMember = teamMembers.get(i);
-            if (currMember.getName().equals(name)) {
-                theMember = currMember;
-                break;
-            }
-        }
-        if (theMember == null) {
-            throw new Exception("Null teammber");
-        }
-        return theMember;
-    }
-
-    @Override
+        @Override
     protected void onResume() {
         super.onResume();
 
