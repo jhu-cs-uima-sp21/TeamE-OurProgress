@@ -76,7 +76,6 @@ public class YourTeams extends AppCompatActivity {
 
     }
 
-
     private void genLocalTeams() {
         //ArrayList<Team> tmp_teams = new ArrayList<>();
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

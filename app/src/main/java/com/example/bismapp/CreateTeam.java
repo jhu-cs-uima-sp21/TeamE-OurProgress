@@ -155,7 +155,9 @@ public class CreateTeam extends AppCompatActivity {
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
-                    associates.add(new TeamMember(userName, userID));
+                    String station = i.child("station").getValue(String.class);
+                    boolean onTeam = (!(i.child("team").getValue(String.class).equals("N/A")));
+                    associates.add(new TeamMember(userName, userID, station, onTeam));
                     associatesNames.add(userName);
 
                     System.out.printf("\tMember: %s ID: %s\n", userName, userID);
@@ -185,5 +187,30 @@ public class CreateTeam extends AppCompatActivity {
             throw new Exception("Null team member");
         }
         return theMember;
+    }
+
+    public String getAssociateTeam(String associateName) {
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        final String[] teamName = new String[1];
+
+        // Fetch all associates
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                // do something with snapshot values
+                teamName[0] = (String) snapshot.child("users").child("associates").child(associateName).child("team").getValue();
+                System.out.printf("\tThe associate, %s, is on Team %s\n", associateName, teamName[0]);
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return teamName[0];
     }
 }

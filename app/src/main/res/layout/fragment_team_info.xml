@@ -53,48 +53,19 @@
             android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
-        <LinearLayout
+        <AutoCompleteTextView
+            android:id="@+id/enterNames"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <AutoCompleteTextView
-                android:id="@+id/enterNames"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/rectangle"
-                android:ems="10"
-                android:fontFamily="@font/montserrat"
-                android:hint="@string/enter_names"
-                android:inputType="text"
-                android:paddingLeft="15dp"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:layout_marginRight="5dp"
-                android:windowSoftInputMode="adjustPan|adjustResize"
-                android:layout_weight=".66"/>
-
-            <ImageButton
-                android:id="@+id/clearName_btn"
-                android:layout_width="72dp"
-                android:layout_height="48dp"
-                android:background="@drawable/circle_inverted"
-                app:srcCompat="@drawable/ic_clear_bismblue_24_mini"
-                android:layout_marginLeft="2dp"
-                android:layout_marginRight="4dp"
-                android:layout_weight=".12"/>
-
-            <ImageButton
-                android:id="@+id/enterNames_btn"
-                android:layout_width="108dp"
-                android:layout_height="48dp"
-                android:background="@drawable/bk_rndrec_bblue"
-                app:srcCompat="@drawable/ic_baseline_done_24_mini"
-                android:layout_marginLeft="2dp"
-                android:layout_weight=".22"/>
-
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:background="@drawable/rectangle"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:hint="@string/enter_names"
+            android:inputType="text"
+            android:paddingLeft="15dp"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:windowSoftInputMode="adjustPan|adjustResize" />
 
     </LinearLayout>
 

@@ -60,8 +60,8 @@ public class TeamMRFragment extends Fragment {
 
     public void removeTeamMember(int index) {
         TeamMember member = adapter.teamMembers.get(index);
-        ((CreateTeam)requireActivity()).teamInfo.currTeamMembers.remove(member.getId());
-        ((CreateTeam)requireActivity()).teamInfo.currTeamMembers.remove(member.getName());
+        member.setOnTeam(false);
+        ((CreateTeam)requireActivity()).associatesNames.add(member.getName());
         adapter.teamMembers.remove(index);
         adapter.notifyDataSetChanged();
     }
