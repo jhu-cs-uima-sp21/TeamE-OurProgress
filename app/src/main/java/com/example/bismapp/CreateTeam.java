@@ -219,7 +219,7 @@ public class CreateTeam extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // Fetch all associates
+        // Fetch associate
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -239,8 +239,7 @@ public class CreateTeam extends AppCompatActivity {
             }
         });
 
-        while (done[0] == false) {
-        }
+        // fix me!!
 
         System.out.println("This method is returning teamName[0], which says: " + teamName[0]);
         return teamName[0];
