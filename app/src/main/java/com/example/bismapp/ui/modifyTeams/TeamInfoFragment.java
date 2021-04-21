@@ -70,18 +70,21 @@ public class TeamInfoFragment extends Fragment {
                 closeKeyboard(textView);
                 String newTeamMemberName = textView.getText().toString();
                 TeamMember newTeamMember;
+                String newTeamMemberTeam[] = {null};
                 try {
-                    newTeamMember = ((CreateTeam)requireActivity()).getAssociate(newTeamMemberName);
-                    if (newTeamMember.isOnTeam()) {
-                        String newTeamMemberTeam = ((CreateTeam)requireActivity()).getAssociateTeam(newTeamMemberName);
+                    newTeamMemberTeam[0] = ((CreateTeam) requireActivity()).getAssociateTeam(newTeamMemberName);
+
+                    if (!newTeamMemberTeam[0].equals("N/A")) {
                         Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
                                 newTeamMemberName
                                         + " is already on Team "
-                                + newTeamMemberTeam, Toast.LENGTH_SHORT);
+                                        + newTeamMemberTeam[0], Toast.LENGTH_SHORT);
                         toast.show();
+                        System.out.println("The toast said that the team was: " + newTeamMemberTeam);
                         textView.setText("");
                         return;
                     }
+
                     TeamMember newMember;
                     try {
                         newMember = activity.getAssociate(newTeamMemberName);

@@ -189,10 +189,35 @@ public class CreateTeam extends AppCompatActivity {
         return theMember;
     }
 
+    public String getAssociateID(String name) throws Exception {
+        TeamMember theMember = null;
+        TeamMember currMember;
+
+        for (int i = 0; i < associates.size(); i++) {
+            currMember = associates.get(i);
+            if (currMember.getName().equals(name)) {
+                theMember = currMember;
+                break;
+            }
+        }
+        if (theMember == null) {
+            throw new Exception("Null team member");
+        }
+        return theMember.getId();
+    }
+
     public String getAssociateTeam(String associateName) {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        final String[] teamName = new String[1];
+        String[] teamName = new String[1];
+        String[] associateID = new String[1];
+        boolean[] done = {false};
+
+        try {
+            associateID[0] = getAssociateID(associateName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Fetch all associates
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -201,16 +226,23 @@ public class CreateTeam extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
-                teamName[0] = (String) snapshot.child("users").child("associates").child(associateName).child("team").getValue();
-                System.out.printf("\tThe associate, %s, is on Team %s\n", associateName, teamName[0]);
+                teamName[0] = (String) snapshot.child("users").child("associates").child(associateID[0]).child("team").getValue();
+                System.out.printf("\tThe associate, %s, with ID, %s, is on Team %s\n", associateName, associateID[0], teamName[0]);
+                done[0] = true;
             }
 
             @Override
             public void onCancelled(@NotNull DatabaseError error) {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
+                done[0] = true;
             }
         });
+
+        while (done[0] == false) {
+        }
+
+        System.out.println("This method is returning teamName[0], which says: " + teamName[0]);
         return teamName[0];
     }
 }
