@@ -32,6 +32,7 @@
     <string name="Manager">Manager</string>
     <string name="search">  SEARCH...  </string>
     <string name="askheader">Ask for Help!</string>
+    <string name="confirm">Ask for help from </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

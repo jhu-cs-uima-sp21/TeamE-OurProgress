@@ -40,6 +40,8 @@ public class OkCancelFragment extends Fragment {
             btnView.startAnimation(MainActivity.buttonClick);
             if (getActivity() instanceof CreateTeam) {
                 ((CreateTeam) getActivity()).okButtonClicked();
+            } else if (getActivity() instanceof AskConfirmation) {
+                ((AskConfirmation) getActivity()).okButtonClicked();
             }
         });
 
@@ -48,6 +50,8 @@ public class OkCancelFragment extends Fragment {
             btnView.startAnimation(MainActivity.buttonClick);
             if (getActivity() instanceof CreateTeam) {
                 ((CreateTeam) getActivity()).cancelButtonClicked();
+            } else if (getActivity() instanceof AskConfirmation) {
+                ((AskConfirmation) getActivity()).cancelButtonClicked();
             }
         });
 

@@ -26,7 +26,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,9 +44,12 @@ public class AskForHelp extends Fragment {
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
-    private ArrayList<TeamMember> namesAndIDs;
+    private HashMap<String, String> namesAndIDs;
     public ArrayAdapter<String> adapter;
     private ArrayList<String> names;
+    private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
+
     //private AssociateNavigationActivity assocNav;
 
     public AskForHelp() {
@@ -80,12 +85,19 @@ public class AskForHelp extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
-        namesAndIDs = new ArrayList<>();
-        names = new ArrayList<>();
+        namesAndIDs = new HashMap<>();
+        Set<String> keySet = namesAndIDs.keySet();
+
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        peditor = myPrefs.edit();
 
         //TODO: KEIDAI + CHIAMAKA LOOK HERE!
         //TODO: Fix layout of the adapter for the AutoCompleteTextView
         getTeamMemberNames();
+        names = new ArrayList<String>(keySet);
+        System.out.println("names and ids:" + namesAndIDs.toString());
+        System.out.println("names:" + names.toString());
+
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
@@ -98,12 +110,12 @@ public class AskForHelp extends Fragment {
                 String name = textView.getText().toString();
                 Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
                 intent.putExtra("NAME", name);
+                intent.putExtra("RECIEVERID", namesAndIDs.get(name));
+                intent.putExtra("ISTEAM", false);
                 startActivity(intent);
                 textView.setText("");
             }
         });
-
-
         return view;
     }
 
@@ -124,15 +136,14 @@ public class AskForHelp extends Fragment {
                 // whenever data at this location is updated.
                 // do something with snapshot values
 
-                ArrayList<TeamMember> users = new ArrayList<>();
-                ArrayList<String> userNames = new ArrayList<>();
+                //TODO: Hashmap isn't working, try inserting into namesAndIDs directly, not temps
+                HashMap<String, String> users = new HashMap<>();
                 Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
 
-                    users.add(new TeamMember(userName, userID));
-                    userNames.add(userName);
+                    users.put(userName, userID);
 
                     System.out.println(userName);
                     System.out.println(userID);
@@ -143,18 +154,14 @@ public class AskForHelp extends Fragment {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
 
-                    users.add(new TeamMember(userName, userID));
-                    userNames.add(userName);
+                    users.put(userName, userID);
 
                     System.out.println(userName);
                     System.out.println(userID);
                 }
 
                 namesAndIDs.clear();
-                namesAndIDs.addAll(users);
-
-                names.clear();
-                names.addAll(userNames);
+                namesAndIDs.putAll(users);
             }
 
             @Override
