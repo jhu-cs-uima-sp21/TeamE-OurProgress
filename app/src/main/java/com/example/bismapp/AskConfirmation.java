@@ -5,9 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,6 +27,8 @@ public class AskConfirmation extends AppCompatActivity {
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
+    private Request newReq;
+    private String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +37,16 @@ public class AskConfirmation extends AppCompatActivity {
         okCancel = new OkCancelFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Intent intent = getIntent();
         name = intent.getStringExtra("NAME");
         recieverID = intent.getStringExtra("RECIEVERID");
         isTeam = intent.getBooleanExtra("ISTEAM", false);
+        id = myPrefs.getString("ID", "");
+        newReq = new Request(id, recieverID, isTeam);
+
 
         TextView nameView = (TextView) findViewById(R.id.name);
         nameView.setText(name);
@@ -44,20 +55,21 @@ public class AskConfirmation extends AppCompatActivity {
     public void okButtonClicked() {
         //TODO: Open request + push notification
         // Fetch all associates
-        dbref.addValueEventListener(new ValueEventListener() {
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
-
                 //increment numrequests
                 Integer numRequests = snapshot.child("numRequests").getValue(Integer.class);
                 System.out.println(numRequests);
-                numRequests = numRequests++;
+                if (numRequests == Integer.MAX_VALUE - 1) {
+                    numRequests = 0;
+                } else {
+                    numRequests++;
+                }
                 dbref.child("numRequests").setValue(numRequests);
-
-                Request newReq = new Request(myPrefs.getString("ID", ""), recieverID, isTeam);
                 dbref.child("requests").child(numRequests.toString()).setValue(newReq);
             }
 
@@ -68,6 +80,11 @@ public class AskConfirmation extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(this, "Request has been sent!", duration);
+        toast.show();
+
+        finish();
     }
 
     public void cancelButtonClicked() {

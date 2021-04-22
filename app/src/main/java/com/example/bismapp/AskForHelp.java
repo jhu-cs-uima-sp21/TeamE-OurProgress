@@ -82,22 +82,17 @@ public class AskForHelp extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
         namesAndIDs = new HashMap<>();
-        Set<String> keySet = namesAndIDs.keySet();
-
+        names = new ArrayList<>();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         peditor = myPrefs.edit();
 
-        //TODO: KEIDAI + CHIAMAKA LOOK HERE!
-        //TODO: Fix layout of the adapter for the AutoCompleteTextView
         getTeamMemberNames();
-        names = new ArrayList<String>(keySet);
         System.out.println("names and ids:" + namesAndIDs.toString());
         System.out.println("names:" + names.toString());
 
+        //TODO: Fix layout of the adapter for the AutoCompleteTextView
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
@@ -119,7 +114,9 @@ public class AskForHelp extends Fragment {
         return view;
     }
 
-    //Is the function that connects it to firebase!
+
+    //TODO: KEIDAI + CHIAMAKA LOOK HERE!
+    //Reads users from firebase, then adds them to namesAndIDs, names!
     private void getTeamMemberNames() {
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String manager_id = myPrefs.getString("ID", "");
@@ -135,33 +132,25 @@ public class AskForHelp extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
-
-                //TODO: Hashmap isn't working, try inserting into namesAndIDs directly, not temps
-                HashMap<String, String> users = new HashMap<>();
+                namesAndIDs.clear();
+                names.clear();
                 Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
-
-                    users.put(userName, userID);
-
-                    System.out.println(userName);
-                    System.out.println(userID);
+                    namesAndIDs.put(userName, userID);
+                    names.add(userName);
+                    System.out.println("name:" + userName + " ID:" + userID);
                 }
 
                 usersShots = snapshot.child("users").child("managers").getChildren();
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
-
-                    users.put(userName, userID);
-
-                    System.out.println(userName);
-                    System.out.println(userID);
+                    namesAndIDs.put(userName, userID);
+                    names.add(userName);
+                    System.out.println("name:" + userName + " ID:" + userID);
                 }
-
-                namesAndIDs.clear();
-                namesAndIDs.putAll(users);
             }
 
             @Override
@@ -170,6 +159,5 @@ public class AskForHelp extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
     }
 }

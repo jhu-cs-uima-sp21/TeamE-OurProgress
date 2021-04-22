@@ -11,4 +11,28 @@ public class Request {
         this.recieverID = recieverID;
         this.isTeam = isTeam;
     }
+
+    public String getSenderID() {
+        return senderID;
+    }
+
+    public void setSenderID(String senderID) {
+        this.senderID = senderID;
+    }
+
+    public String getRecieverID() {
+        return recieverID;
+    }
+
+    public void setRecieverID(String recieverID) {
+        this.recieverID = recieverID;
+    }
+
+    public boolean isTeam() {
+        return isTeam;
+    }
+
+    public void setTeam(boolean team) {
+        isTeam = team;
+    }
 }
