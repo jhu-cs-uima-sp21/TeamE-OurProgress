@@ -62,7 +62,7 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/team"
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_margin="10dp"
@@ -75,13 +75,13 @@
                 tools:textSize="36sp" />
 
             <Button
-                android:id="@+id/button5"
+                android:id="@+id/supervisor"
                 android:layout_width="wrap_content"
                 android:layout_height="250dp"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/Manager"
+                android:text="@string/supervisor"
                 android:textAllCaps="false"
                 android:textSize="36sp" />
 

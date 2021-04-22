@@ -29,7 +29,7 @@
 
     <!--ASK FOR HELP SCREEN-->
     <string name="team">Team</string>
-    <string name="Manager">Manager</string>
+    <string name="supervisor">Supervisor</string>
     <string name="search">  SEARCH...  </string>
     <string name="askheader">Ask for Help!</string>
     <string name="confirm">Ask for help from </string>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +8,7 @@
     <TextView
         android:id="@+id/ask_for_help2"
         android:layout_width="match_parent"
-        android:layout_height="98dp"
+        android:layout_height="120dp"
         android:background="@color/whitesmoke"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
@@ -19,40 +18,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/bism_blue"
+        android:background="@drawable/bluerectangle"
         android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ask_for_help2">
 
         <AutoCompleteTextView
+            android:id="@+id/search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/search"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="50dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginBottom="50dp"
             android:background="@drawable/button_background"
             android:ems="10"
-            android:textColor="@color/black"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center_horizontal"
+            android:hint="@string/search"
             android:inputType="textPersonName"
             android:letterSpacing="0.05"
-            android:hint="@string/search"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textAllCaps="false"
-            android:textSize="40sp"/>
-
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="40sp" />
 
 
         <LinearLayout
@@ -62,28 +62,36 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:id="@+id/team"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:drawableTop="@drawable/group"
+                android:drawablePadding="0dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:foregroundGravity="fill_horizontal"
-                android:gravity="left|center_vertical"
+                android:gravity="center_horizontal|top"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
                 android:text="@string/team"
                 android:textAllCaps="false"
-                tools:textSize="36sp" />
+                android:textSize="24sp"
+                tools:textSize="24sp" />
 
             <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="250dp"
+                android:id="@+id/supervisor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
+                android:drawableTop="@drawable/adminstration"
+                android:drawablePadding="0dp"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="@string/Manager"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
+                android:text="@string/supervisor"
                 android:textAllCaps="false"
-                android:textSize="36sp" />
+                android:textSize="22sp" />
 
         </LinearLayout>
     </LinearLayout>
