@@ -52,5 +52,6 @@
     <string name="enter_member_info">Enter member info...</string>
     <string name="enter_names">Enter names...</string>
     <string name="has_made">Your team has made</string>
+    <string name="text_not_found">404: Text not found</string>
 
 </resources>

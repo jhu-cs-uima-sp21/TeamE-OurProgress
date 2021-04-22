@@ -3,8 +3,10 @@ package com.example.bismapp.ui.modifyTeams;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -67,14 +69,24 @@ public class TeamInfoFragment extends Fragment {
                 try {
                     newMember = activity.getAssociate(newTeamMemberName);
                     newTeamMemberTeam = newMember.getTeam();
-                    if (!newTeamMemberTeam.equals("N/A")) {
-                        System.out.println("The toast said that the team was: " + newTeamMemberTeam);
-                        if (newTeamMemberTeam.equals("TBD")) {
-                            makeToast(newTeamMemberName + " has already been added to this team");
-                        } else {
-                            makeToast(newTeamMemberName + " is already on Team " + newTeamMemberTeam);
-                        }
+                    if (newTeamMemberTeam.equals("TBD")) {
+                        makeToast(newTeamMemberName + " has already been added to this team");
                     } else {
+                        if (!newTeamMemberTeam.equals("N/A")) { // change the team member's team
+                            Intent intent = new Intent(getActivity(), ChangeMemberTeam.class);
+                            intent.putExtra("Name", newTeamMemberName);
+                            intent.putExtra("Team", newTeamMemberTeam);
+                            intent.putExtra("Method", "change");
+                            startActivity(intent);
+                            System.out.println("MEMBER TEAM NOT N/A");
+                            // makeToast(newTeamMemberName + " is already on Team " + newTeamMemberTeam);
+                            /*if (!ChangeMemberTeamann.didMemberChangeTeam()) {
+                                textView.setText("");
+                                return;
+                            }*/
+                        } else {
+                            System.out.println("whyyyyyyyy");
+                        }
                         newMember.setTeam("TBD");
                         adapter.remove(newMember.getName());
                         adapter.notifyDataSetChanged();
@@ -85,7 +97,6 @@ public class TeamInfoFragment extends Fragment {
                 } catch (Exception e) {
                     System.out.println("NULL TEAM MEMBER");
                     makeToast("Can not find member, " + newTeamMemberName);
-                    return;
                 }
                 textView.setText("");
             }

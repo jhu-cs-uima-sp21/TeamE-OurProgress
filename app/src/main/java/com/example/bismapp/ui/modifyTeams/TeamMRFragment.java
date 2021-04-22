@@ -42,16 +42,6 @@ public class TeamMRFragment extends Fragment {
         return adapter.getTeamMembers();
     }
 
-    /* Unused functionms
-    public String[] getTeamMemberNames() {
-        return adapter.getTeamMemberNames();
-    }
-
-    public  String[] getTeamMemberIDs() {
-        return adapter.getTeamMemberIDs();
-    }
-    */
-
     public TeamMemberAdapter getTeamMemberAdapter() {
         return adapter;
     }

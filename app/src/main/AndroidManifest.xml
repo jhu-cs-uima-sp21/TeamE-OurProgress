@@ -41,6 +41,12 @@
             android:theme="@style/Theme.BISMApp.NoActionBar"
             android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.modifyTeams.ChangeMemberTeam"
+            android:label="Change the team of the selected member"
+            android:theme="@style/Theme.BISMApp.NoActionBar"
+            android:windowSoftInputMode="adjustNothing"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

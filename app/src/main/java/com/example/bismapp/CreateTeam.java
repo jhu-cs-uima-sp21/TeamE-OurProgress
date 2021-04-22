@@ -1,6 +1,7 @@
 
 package com.example.bismapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
 import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
 import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
 import com.google.firebase.database.DataSnapshot;
@@ -101,11 +103,17 @@ public class CreateTeam extends AppCompatActivity {
             return;
         }
 
-        Team team = new Team(teamName, managerID, 0, dailyGoal, members);
-
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
+                // update team values in firebase
+                for (TeamMember associate : members) {
+                    associate.setTeam(teamName);
+                    dbref.child("users").child("associates").child(associate.getID()).child("team")
+                            .setValue(teamName);
+                    Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
+                }
+                Team team = new Team(teamName, managerID, 0, dailyGoal, members);
                 dbref.child("teams").child(team.getName()).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }
@@ -119,19 +127,6 @@ public class CreateTeam extends AppCompatActivity {
         finish();
     }
 
-
-    //public void removeMemberFromInfo()
-
-    /*public ArrayList<String> getTeamMemberNames() {
-        MainActivity mainActivity = (MainActivity)(getParent().getParent());
-        mainActivity.getAllAssociates();
-        return mainActivity.associatesNames;
-    }
-
-    public TeamMember getAssociate(String name) throws Exception {
-        MainActivity mainActivity = (MainActivity)(getParent().getParent());
-        return mainActivity.getAssociate(name);
-    }*/
     public void getAllAssociates() {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
@@ -175,10 +170,17 @@ public class CreateTeam extends AppCompatActivity {
         throw new Exception("No associate with name " + name + " found");
     }
 
+    public void changeMemberTeam(String teamMemberName, String teamMemberTeam) {
+        Intent intent = new Intent(this, ChangeMemberTeam.class);
+        intent.putExtra("Name", teamMemberName);
+        intent.putExtra("Team", teamMemberTeam);
+        intent.putExtra("Method", "change");
+        startActivity(intent);
+    }
+
     public String getAssociateID(String name) throws Exception {
         return getAssociate(name).getID();
     }
-
 
     public String getAssociateTeam(String name) throws Exception {
         return getAssociate(name).getTeam();
