@@ -19,12 +19,13 @@ public class TeamMRFragment extends Fragment {
 
     private RecyclerView teamRoster;
     private TeamMemberAdapter adapter;
-
+    private CreateTeam activity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_member_roster, container, false);
+        activity = (CreateTeam)requireActivity();
 
         // setting up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
@@ -49,19 +50,20 @@ public class TeamMRFragment extends Fragment {
     public  String[] getTeamMemberIDs() {
         return adapter.getTeamMemberIDs();
     }
-
-    public void clearMembers() {
-        adapter.teamMembers.clear();
-    }*/
+    */
 
     public TeamMemberAdapter getTeamMemberAdapter() {
         return adapter;
     }
 
-    public void removeTeamMember(int index) {
+    public void removeTeamMember(int index, String name) throws Exception {
         TeamMember member = adapter.teamMembers.get(index);
-        member.setOnTeam(false);
-        ((CreateTeam)requireActivity()).associatesNames.add(member.getName());
+        member.setTeam("N/A");
+        // Update AutoCompleteTextView adapter
+        activity.getAssociate(name).setTeam("N/A");
+        activity.teamInfo.adapter.add(name);
+        activity.teamInfo.adapter.notifyDataSetChanged();
+        // Update Roster adapter
         adapter.teamMembers.remove(index);
         adapter.notifyDataSetChanged();
     }

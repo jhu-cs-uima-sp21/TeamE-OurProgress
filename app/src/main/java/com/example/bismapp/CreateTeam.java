@@ -1,7 +1,6 @@
 
 package com.example.bismapp;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -22,7 +21,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class CreateTeam extends AppCompatActivity {
@@ -121,9 +119,6 @@ public class CreateTeam extends AppCompatActivity {
         finish();
     }
 
-    public void updateInfoAdapter() {
-        teamInfo.updateMemberSearch();
-    }
 
     //public void removeMemberFromInfo()
 
@@ -140,11 +135,8 @@ public class CreateTeam extends AppCompatActivity {
     public void getAllAssociates() {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        associates.clear();
-        associatesNames.clear();
-
         // Fetch all associates
-        dbref.addValueEventListener(new ValueEventListener() {
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
@@ -152,15 +144,17 @@ public class CreateTeam extends AppCompatActivity {
                 // do something with snapshot values
                 Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
                 System.out.println("Fetching all associates ...");
+                associates.clear();
+                associatesNames.clear();
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
                     String station = i.child("station").getValue(String.class);
-                    boolean onTeam = (!(i.child("team").getValue(String.class).equals("N/A")));
-                    associates.add(new TeamMember(userName, userID, station, onTeam));
+                    String team = i.child("team").getValue(String.class);
+                    associates.add(new TeamMember(userName, userID, station, team));
                     associatesNames.add(userName);
-
-                    System.out.printf("\tMember: %s ID: %s\n", userName, userID);
+                    System.out.printf("\tMember: %s,  ID: %s,  Station: %s, Team: %s\n", userName,
+                            userID, station, team);
                 }
             }
 
@@ -173,75 +167,20 @@ public class CreateTeam extends AppCompatActivity {
     }
 
     public TeamMember getAssociate(String name) throws Exception {
-        TeamMember theMember = null;
-        TeamMember currMember;
-
-        for (int i = 0; i < associates.size(); i++) {
-            currMember = associates.get(i);
-            if (currMember.getName().equals(name)) {
-                theMember = currMember;
-                break;
+        for (TeamMember curr : associates) {
+            if (curr.getName().equals(name)) {
+                return curr;
             }
         }
-        if (theMember == null) {
-            throw new Exception("Null team member");
-        }
-        return theMember;
+        throw new Exception("No associate with name " + name + " found");
     }
 
     public String getAssociateID(String name) throws Exception {
-        TeamMember theMember = null;
-        TeamMember currMember;
-
-        for (int i = 0; i < associates.size(); i++) {
-            currMember = associates.get(i);
-            if (currMember.getName().equals(name)) {
-                theMember = currMember;
-                break;
-            }
-        }
-        if (theMember == null) {
-            throw new Exception("Null team member");
-        }
-        return theMember.getId();
+        return getAssociate(name).getID();
     }
 
-    public String getAssociateTeam(String associateName) {
-        mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();
-        String[] teamName = new String[1];
-        String[] associateID = new String[1];
-        boolean[] done = {false};
 
-        try {
-            associateID[0] = getAssociateID(associateName);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Fetch associate
-        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                // do something with snapshot values
-                teamName[0] = (String) snapshot.child("users").child("associates").child(associateID[0]).child("team").getValue();
-                System.out.printf("\tThe associate, %s, with ID, %s, is on Team %s\n", associateName, associateID[0], teamName[0]);
-                done[0] = true;
-            }
-
-            @Override
-            public void onCancelled(@NotNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-                done[0] = true;
-            }
-        });
-
-        // fix me!!
-
-        System.out.println("This method is returning teamName[0], which says: " + teamName[0]);
-        return teamName[0];
+    public String getAssociateTeam(String name) throws Exception {
+        return getAssociate(name).getTeam();
     }
 }

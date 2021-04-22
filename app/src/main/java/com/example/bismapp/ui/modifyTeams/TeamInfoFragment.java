@@ -39,6 +39,7 @@ public class TeamInfoFragment extends Fragment {
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;*/
     private static final String TAG = "dbref at YourTeams: ";
+    private CreateTeam activity;
     public ArrayAdapter<String> adapter;
 
     @Override
@@ -46,82 +47,50 @@ public class TeamInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_info, container, false);
-        /* TODO: possibly rmeove
-        mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();*/
+        activity = (CreateTeam) requireActivity();
 
-        CreateTeam activity = (CreateTeam) requireActivity();
-
+        // Get String list of associate names
         activity.getAllAssociates();
         adapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1, activity.associatesNames);
-        updateMemberSearch();
 
-        /*String[] tempTeamMembers = ((CreateTeam) requireActivity()).teamRoster
-                .getTeamMemberAdapter().getTeamMemberNames();
-        */
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 view.findViewById(R.id.enterNames);
         textView.setAdapter(adapter);
-        // does touch not work with emulator, or is my code not working?
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 closeKeyboard(textView);
                 String newTeamMemberName = textView.getText().toString();
-                TeamMember newTeamMember;
-                String newTeamMemberTeam[] = {null};
+                TeamMember newMember;
+                String newTeamMemberTeam;
                 try {
-                    newTeamMemberTeam[0] = ((CreateTeam) requireActivity()).getAssociateTeam(newTeamMemberName);
-
-                    if (!newTeamMemberTeam[0].equals("N/A")) {
-                        Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
-                                newTeamMemberName
-                                        + " is already on Team "
-                                        + newTeamMemberTeam[0], Toast.LENGTH_SHORT);
-                        toast.show();
+                    newMember = activity.getAssociate(newTeamMemberName);
+                    newTeamMemberTeam = newMember.getTeam();
+                    if (!newTeamMemberTeam.equals("N/A")) {
                         System.out.println("The toast said that the team was: " + newTeamMemberTeam);
-                        textView.setText("");
-                        return;
+                        if (newTeamMemberTeam.equals("TBD")) {
+                            makeToast(newTeamMemberName + " has already been added to this team");
+                        } else {
+                            makeToast(newTeamMemberName + " is already on Team " + newTeamMemberTeam);
+                        }
+                    } else {
+                        newMember.setTeam("TBD");
+                        adapter.remove(newMember.getName());
+                        adapter.notifyDataSetChanged();
+                        // add member to roster
+                        activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                        makeToast(newTeamMemberName + " has been added to the team");
                     }
-
-                    TeamMember newMember;
-                    try {
-                        newMember = activity.getAssociate(newTeamMemberName);
-                    } catch (Exception e) {
-                        Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
-                                "Can not find member, " + newTeamMemberName, Toast.LENGTH_SHORT);
-                        toast.show();
-                        return;
-                    }
-                    activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
-                    newMember.setOnTeam(true);
-                    activity.associatesNames.remove(newTeamMemberName);
-                    Toast toast = Toast.makeText(((CreateTeam) requireActivity()),
-                            newTeamMemberName
-                                    + " has been added to the team", Toast.LENGTH_SHORT);
-                    toast.show();
-                    textView.setText("");
                 } catch (Exception e) {
                     System.out.println("NULL TEAM MEMBER");
+                    makeToast("Can not find member, " + newTeamMemberName);
+                    return;
                 }
+                textView.setText("");
             }
         });
-
         return view;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateMemberSearch();
-    }
-
-    public void updateMemberSearch() {
-        CreateTeam activity = (CreateTeam) requireActivity();
-        activity.getAllAssociates();
-        adapter.notifyDataSetChanged();
-
     }
 
     private void closeKeyboard(View view) {
@@ -134,5 +103,10 @@ public class TeamInfoFragment extends Fragment {
                     view.getWindowToken(), 0);
         }
         Log.w(TAG, "keyboard closed!");
+    }
+
+    private void makeToast(String msg) {
+        Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
