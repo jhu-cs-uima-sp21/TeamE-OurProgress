@@ -9,7 +9,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
@@ -89,14 +88,19 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
                         teamMembers.get(getAdapterPosition()).getName()
                                 + " has been removed from team", Toast.LENGTH_SHORT);
                 toast.show();
-                ((TeamMRFragment)activity).removeTeamMember(getAdapterPosition());
+                try {
+                    ((TeamMRFragment)activity).removeTeamMember(getAdapterPosition(),
+                            name.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 // Delete things at end of TeamMRFragment?
             });
         }
 
         public void setData(TeamMember teamMember) {
             name.setText(teamMember.getName());
-            id.setText(teamMember.getId());
+            id.setText(teamMember.getID());
         }
     }
 }

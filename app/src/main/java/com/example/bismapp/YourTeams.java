@@ -102,8 +102,6 @@ public class YourTeams extends AppCompatActivity {
                         tmp_teams.add(new Team(name, managed_by, units_produced, daily_goal, null));
                         teamNames.add(name);
                     }
-                    //System.out.println(i.getKey());
-                    //System.out.println(i.getValue(Team.class));
                 }
 
                 adapter.updateDataSet(tmp_teams);
