@@ -21,11 +21,16 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -131,12 +136,43 @@ public class ProductionDashboard extends Fragment {
             @Override
             public void onClick(View view) { // switch to Your Teams activity
                 view.startAnimation(buttonClick);
-                //TODO: MAKE THIS ON CLICK LEAD BACK TO EDIT TEAMAS
-                //Intent intent = new Intent(myView.getApplicationContext(), YourTeams.class);
-                //startActivity(intent);
+                Intent intent = new Intent(getActivity(), EditTeam.class);
+                intent.putExtra("Name", teamID);
+                intent.putExtra("Goal", daily_goal);
+                intent.putExtra("Members", getTeamMembers(teamID));
+                startActivity(intent);
             }
         });
 
         return myView;
+    }
+
+    // Read from database to get list of team members
+    private ArrayList<TeamMember> getTeamMembers(String teamName) {
+        ArrayList<TeamMember> associates = new ArrayList<>();
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Iterable<DataSnapshot> teamMembers = snapshot.child("teams").child(teamName)
+                        .child("team_members").getChildren();
+                System.out.printf("Fetching all associates from team %s...\n", teamName);
+                for (DataSnapshot i : teamMembers) {
+                    String userName = i.child("name").getValue(String.class);
+                    String userID = i.child("id").getValue(String.class);
+                    String station = i.child("station").getValue(String.class);
+                    String team = i.child("team").getValue(String.class);
+                    associates.add(new TeamMember(userName, userID, station, team));
+                    System.out.printf("\tMember: %s,  ID: %s,  Station: %s, Team: %s\n", userName,
+                            userID, station, team);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+        return associates;
     }
 }

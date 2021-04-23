@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-public class CreateTeam extends AppCompatActivity {
+public class EditTeam extends AppCompatActivity {
     public TeamInfoFragment teamInfo;
     public TeamMRFragment teamRoster;
     private OkCancelFragment okCancel;
@@ -35,6 +35,9 @@ public class CreateTeam extends AppCompatActivity {
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
 
+    private EditText editName;
+    private EditText editGoal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class CreateTeam extends AppCompatActivity {
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
+        editName = ((EditText) findViewById(R.id.edit_team_name));
+        editGoal = ((EditText) findViewById(R.id.enterDailyGoal)); // TODO: Fix why this is null ref
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -53,6 +58,14 @@ public class CreateTeam extends AppCompatActivity {
                 .replace(R.id.team_roster_frag, teamRoster)
                 .replace(R.id.team_info_frag, teamInfo)
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
+
+        /** Pre-populate information **/
+        // getting the bundle back from the android
+        Bundle bundle = getIntent().getExtras();
+        editName.setText(bundle.getString("Name"));
+        editGoal.setText(String.valueOf(bundle.getInt("Goal")));
+        teamRoster.getTeamMemberAdapter().teamMembers = bundle.getParcelableArrayList("Members");
+        teamRoster.getTeamMemberAdapter().notifyDataSetChanged();
     }
 
     public void makeToast(CharSequence text) {
@@ -67,7 +80,7 @@ public class CreateTeam extends AppCompatActivity {
 
     public void okButtonClicked() {
         // form new team with user input
-        String teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
+        String teamName = editName.getText().toString();
         String managerID = myPrefs.getString("ID", "N/A");
         ArrayList<TeamMember> members = teamRoster.getTeamMembers();
 
@@ -86,8 +99,7 @@ public class CreateTeam extends AppCompatActivity {
         }
         Integer dailyGoal;
         try {
-            dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
-                    .toString());
+            dailyGoal = Integer.parseInt(editGoal.getText().toString());
             if (dailyGoal == 0) {
                 ((EditText) findViewById(R.id.enterDailyGoal)).setText("");
                 makeToast("Daily goal cannot be 0");
@@ -104,6 +116,7 @@ public class CreateTeam extends AppCompatActivity {
         }
 
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            // TODO: Update list of teams
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // update team values in firebase
@@ -142,7 +155,7 @@ public class CreateTeam extends AppCompatActivity {
                 associates.clear();
                 associatesNames.clear();
                 for (DataSnapshot i : usersShots) {
-                    String userName = i.child("name").getValue(String.class);
+                    String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
                     String station = i.child("station").getValue(String.class);
                     String team = i.child("team").getValue(String.class);

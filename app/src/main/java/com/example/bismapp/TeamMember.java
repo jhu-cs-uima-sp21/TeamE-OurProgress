@@ -1,6 +1,9 @@
 package com.example.bismapp;
 
-public class TeamMember extends User {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class TeamMember extends User implements Parcelable {
     private String name;
     private String id;
     private String station = "N/A"; // default
@@ -13,10 +16,17 @@ public class TeamMember extends User {
         this.team = team;
     }
 
-    public TeamMember(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
+    public static final Creator<TeamMember> CREATOR = new Creator<TeamMember>() {
+        @Override
+        public TeamMember createFromParcel(Parcel in) {
+            return new TeamMember(in);
+        }
+
+        @Override
+        public TeamMember[] newArray(int size) {
+            return new TeamMember[size];
+        }
+    };
 
     public String getName() {return name;}
 
@@ -26,13 +36,27 @@ public class TeamMember extends User {
 
     public void setStation (String newStation) { this.station = newStation; }
 
-    /*
-    public boolean isOnTeam() { return onTeam; }
-
-    public void setOnTeam(boolean onTeam) { this.onTeam = onTeam; }
-    */
-
     public String getTeam() { return team; }
 
     public void setTeam(String team) { this.team = team; }
+
+    protected TeamMember(Parcel in) {
+        name = in.readString();
+        id = in.readString();
+        station = in.readString();
+        team = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(id);
+        dest.writeString(station);
+        dest.writeString(team);
+    }
 }

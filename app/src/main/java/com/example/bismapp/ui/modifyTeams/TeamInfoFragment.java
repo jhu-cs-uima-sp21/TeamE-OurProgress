@@ -72,9 +72,8 @@ public class TeamInfoFragment extends Fragment {
                     } else {
                         if (!newTeamMemberTeam.equals("N/A")) { // change the team member's team
                             Intent intent = new Intent(getActivity(), ChangeMemberTeam.class);
-                            intent.putExtra("Name", newTeamMemberName);
-                            intent.putExtra("Team", newTeamMemberTeam);
                             intent.putExtra("Method", "change");
+                            intent.putExtra("Member", newMember);
                             changedMember = newMember;
                             startActivityForResult(intent, LAUNCH_CHANGE_TEAM);
                         } else {

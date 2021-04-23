@@ -39,11 +39,12 @@ public class TeamMRFragment extends Fragment {
         activity = (CreateTeam)requireActivity();
 
         // setting up RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
+                LinearLayoutManager.VERTICAL, false);
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new TeamMemberAdapter(this, new ArrayList<TeamMember>());
+        adapter = new TeamMemberAdapter(this, new ArrayList<>());
         teamRoster.setAdapter(adapter);
 
         return view;
@@ -60,8 +61,7 @@ public class TeamMRFragment extends Fragment {
     public void checkToRemoveTeamMember(int index, TeamMember member) {
         Intent intent = new Intent(getActivity(), ChangeMemberTeam.class);
         intent.putExtra("Method", "remove");
-        intent.putExtra("Name", member.getName());
-        intent.putExtra("Station", member.getStation());
+        intent.putExtra("Member", member);
         changedIndex = index;
         changedMember = member;
         startActivityForResult(intent, LAUNCH_REMOVE_MEMBER);

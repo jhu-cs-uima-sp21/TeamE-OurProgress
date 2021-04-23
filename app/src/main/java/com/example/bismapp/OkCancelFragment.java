@@ -46,6 +46,8 @@ public class OkCancelFragment extends Fragment {
                 ((AskConfirmation) getActivity()).okButtonClicked();
             } else if (getActivity() instanceof ChangeMemberTeam) {
                 ((ChangeMemberTeam) getActivity()).okButtonClicked();
+            } else if (getActivity() instanceof EditTeam) {
+                ((EditTeam) getActivity()).okButtonClicked();
             }
         });
 
@@ -58,6 +60,8 @@ public class OkCancelFragment extends Fragment {
                 ((AskConfirmation) getActivity()).cancelButtonClicked();
             } else if (getActivity() instanceof ChangeMemberTeam) {
                 ((ChangeMemberTeam) getActivity()).cancelButtonClicked();
+            } else if (getActivity() instanceof EditTeam) {
+                ((EditTeam) getActivity()).cancelButtonClicked();
             }
         });
 

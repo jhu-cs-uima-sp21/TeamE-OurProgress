@@ -43,9 +43,6 @@ import java.util.ArrayList;
 public class ChangeMemberTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     String method = "N/A";
-    String name = "N/A";
-    String team = "N/A";
-    String station = "N/A";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +57,14 @@ public class ChangeMemberTeam extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         method = bundle.getString("Method");
-        if (intent.hasExtra("Name")) {
-            name = bundle.getString("Name");
-        }
-        if (intent.hasExtra("Team")) {
-            team = bundle.getString("Team");
-        }
-        if (intent.hasExtra("Station")) {
-            station = bundle.getString("Station");
-        }
-        printMessage(method, name, team, station);
+        printMessage((TeamMember)bundle.get("Member"));
     }
 
-    private void printMessage(String method, String associateName, String associateTeam,
-                              String associateStation) {
+    private void printMessage(TeamMember member) {
         String message;
+        String associateName = member.getName();
+        String associateTeam = member.getTeam();
+        String associateStation = member.getStation();
         TextView textView = findViewById(R.id.change_text);
         int bismBlue = ContextCompat.getColor(this, R.color.bism_blue);
         int black = ContextCompat.getColor(this, R.color.black);
