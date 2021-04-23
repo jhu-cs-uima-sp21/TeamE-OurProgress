@@ -34,8 +34,6 @@
     <string name="askheader">Ask for Help!</string>
     <string name="confirm">Ask for help from </string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_navigation">MainActivity</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
@@ -53,5 +51,11 @@
     <string name="enter_names">Enter names...</string>
     <string name="has_made">Your team has made</string>
     <string name="text_not_found">404: Text not found</string>
+
+    <!--GIVE HELP SCREEN-->
+    <string name="help_someone">Help someone</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
