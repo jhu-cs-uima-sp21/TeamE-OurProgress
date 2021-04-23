@@ -14,8 +14,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
+import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,16 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AskForHelp#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AskForHelp extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -49,6 +44,8 @@ public class AskForHelp extends Fragment {
     private ArrayList<String> names;
     private SharedPreferences myPrefs;
     private SharedPreferences.Editor peditor;
+    private String supervisorID, teamName;
+
 
     //private AssociateNavigationActivity assocNav;
 
@@ -86,7 +83,10 @@ public class AskForHelp extends Fragment {
         namesAndIDs = new HashMap<>();
         names = new ArrayList<>();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
         peditor = myPrefs.edit();
+        teamName = myPrefs.getString("TEAM", "");
 
         getTeamMemberNames();
         System.out.println("names and ids:" + namesAndIDs.toString());
@@ -111,21 +111,57 @@ public class AskForHelp extends Fragment {
                 textView.setText("");
             }
         });
+
+        //team button
+        Button teamBtn = (Button) view.findViewById(R.id.team);
+        teamBtn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
+            intent.putExtra("NAME", teamName);
+            intent.putExtra("RECIEVERID", teamName);
+            intent.putExtra("ISTEAM", true);
+            startActivity(intent);
+        });
+
+        //supervisor button
+        Button supBtn = (Button) view.findViewById(R.id.supervisor);
+        teamBtn.setOnClickListener(btnView -> {
+            btnView.startAnimation(MainActivity.buttonClick);
+            getSupervisor();
+            Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
+            intent.putExtra("NAME", "Supervisor");
+            intent.putExtra("RECIEVERID", supervisorID);
+            intent.putExtra("ISTEAM", false);
+            startActivity(intent);
+        });
+
+
         return view;
+    }
+
+    private void getSupervisor() {
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
+                for (DataSnapshot i : teamsShots) {
+                    if (i.child("name").getValue(String.class).equals(teamName)){
+                        supervisorID = i.child("managed_by").getValue(String.class);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 
 
     //TODO: KEIDAI + CHIAMAKA LOOK HERE!
     //Reads users from firebase, then adds them to namesAndIDs, names!
     private void getTeamMemberNames() {
-        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        String manager_id = myPrefs.getString("ID", "");
-
-        mdbase = FirebaseDatabase.getInstance();
-        dbref = mdbase.getReference();
-        // Fetch all teams managed by user
-        // calling add value event listener method
-        // for getting the values from database.
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -160,4 +196,6 @@ public class AskForHelp extends Fragment {
             }
         });
     }
+
+
 }

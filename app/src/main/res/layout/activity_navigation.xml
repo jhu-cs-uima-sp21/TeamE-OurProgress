@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="104dp"
         android:background="@color/bism_blue"
-        app:itemIconSize="75dp"
+        app:itemIconSize="67dp"
         app:itemIconTint="@color/white"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"

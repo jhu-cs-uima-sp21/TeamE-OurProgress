@@ -47,7 +47,6 @@ public class AskConfirmation extends AppCompatActivity {
         id = myPrefs.getString("ID", "");
         newReq = new Request(id, recieverID, isTeam);
 
-
         TextView nameView = (TextView) findViewById(R.id.name);
         nameView.setText(name);
     }
@@ -58,9 +57,6 @@ public class AskConfirmation extends AppCompatActivity {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                // do something with snapshot values
                 //increment numrequests
                 Integer numRequests = snapshot.child("numRequests").getValue(Integer.class);
                 System.out.println(numRequests);
@@ -72,8 +68,6 @@ public class AskConfirmation extends AppCompatActivity {
                 dbref.child("numRequests").setValue(numRequests);
                 dbref.child("requests").child(numRequests.toString()).setValue(newReq);
             }
-
-
             @Override
             public void onCancelled(@NotNull DatabaseError error) {
                 // Failed to read value
