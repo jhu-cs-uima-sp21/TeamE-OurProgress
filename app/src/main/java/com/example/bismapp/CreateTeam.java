@@ -60,24 +60,29 @@ public class CreateTeam extends AppCompatActivity {
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
     }
 
-    public void cancelButtonClicked() {
-        finish();
-    }
-
     public void makeToast(CharSequence text) {
         int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
     }
+
+    public void cancelButtonClicked() {
+        finish();
+    }
+
     public void okButtonClicked() {
         // form new team with user input
-        String teamName = ((EditText)findViewById(R.id.create_teams)).getText().toString();
+        String teamName = ((EditText) findViewById(R.id.create_teams)).getText().toString();
         String managerID = myPrefs.getString("ID", "N/A");
         ArrayList<TeamMember> members = teamRoster.getTeamMembers();
 
         // if any information is missing, do not make team
         if (teamName.equals("")) {
             makeToast("Please enter a team name");
+            Log.d(TEAM_TAG, "team name");
+            return;
+        } else if (teamName.equals("N/A") || teamName.equals("TBD")) {
+            makeToast("Please enter a team name that is not \"N/A\" or \"TBD\"");
             Log.d(TEAM_TAG, "team name");
             return;
         } else if (YourTeams.teamNames.contains(teamName)) {
@@ -168,14 +173,6 @@ public class CreateTeam extends AppCompatActivity {
             }
         }
         throw new Exception("No associate with name " + name + " found");
-    }
-
-    public void changeMemberTeam(String teamMemberName, String teamMemberTeam) {
-        Intent intent = new Intent(this, ChangeMemberTeam.class);
-        intent.putExtra("Name", teamMemberName);
-        intent.putExtra("Team", teamMemberTeam);
-        intent.putExtra("Method", "change");
-        startActivity(intent);
     }
 
     public String getAssociateID(String name) throws Exception {

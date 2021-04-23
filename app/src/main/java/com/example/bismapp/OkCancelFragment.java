@@ -19,11 +19,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.view.Change;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +44,8 @@ public class OkCancelFragment extends Fragment {
                 ((CreateTeam) getActivity()).okButtonClicked();
             } else if (getActivity() instanceof AskConfirmation) {
                 ((AskConfirmation) getActivity()).okButtonClicked();
+            } else if (getActivity() instanceof ChangeMemberTeam) {
+                ((ChangeMemberTeam) getActivity()).okButtonClicked();
             }
         });
 
@@ -52,6 +56,8 @@ public class OkCancelFragment extends Fragment {
                 ((CreateTeam) getActivity()).cancelButtonClicked();
             } else if (getActivity() instanceof AskConfirmation) {
                 ((AskConfirmation) getActivity()).cancelButtonClicked();
+            } else if (getActivity() instanceof ChangeMemberTeam) {
+                ((ChangeMemberTeam) getActivity()).cancelButtonClicked();
             }
         });
 

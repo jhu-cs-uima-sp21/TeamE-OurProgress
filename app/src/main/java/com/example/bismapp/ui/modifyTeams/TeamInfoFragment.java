@@ -1,5 +1,6 @@
 package com.example.bismapp.ui.modifyTeams;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
@@ -35,14 +36,11 @@ import java.util.List;
 import java.util.Set;
 
 public class TeamInfoFragment extends Fragment {
-
-    /* TODO: remove?
-    private FirebaseDatabase mdbase;
-    private DatabaseReference dbref;
-    private SharedPreferences myPrefs;*/
     private static final String TAG = "dbref at YourTeams: ";
     private CreateTeam activity;
     public ArrayAdapter<String> adapter;
+    private final int LAUNCH_CHANGE_TEAM = 1;
+    private TeamMember changedMember = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,22 +75,16 @@ public class TeamInfoFragment extends Fragment {
                             intent.putExtra("Name", newTeamMemberName);
                             intent.putExtra("Team", newTeamMemberTeam);
                             intent.putExtra("Method", "change");
-                            startActivity(intent);
-                            System.out.println("MEMBER TEAM NOT N/A");
-                            // makeToast(newTeamMemberName + " is already on Team " + newTeamMemberTeam);
-                            /*if (!ChangeMemberTeamann.didMemberChangeTeam()) {
-                                textView.setText("");
-                                return;
-                            }*/
+                            changedMember = newMember;
+                            startActivityForResult(intent, LAUNCH_CHANGE_TEAM);
                         } else {
-                            System.out.println("whyyyyyyyy");
+                            newMember.setTeam("TBD");
+                            adapter.remove(newMember.getName());
+                            adapter.notifyDataSetChanged();
+                            // add member to roster
+                            activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                            makeToast(newTeamMemberName + " has been added to the team");
                         }
-                        newMember.setTeam("TBD");
-                        adapter.remove(newMember.getName());
-                        adapter.notifyDataSetChanged();
-                        // add member to roster
-                        activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
-                        makeToast(newTeamMemberName + " has been added to the team");
                     }
                 } catch (Exception e) {
                     System.out.println("NULL TEAM MEMBER");
@@ -108,10 +100,8 @@ public class TeamInfoFragment extends Fragment {
         // Coding in Flow video said this.getCurrentFocus(), but that doesn't exist :/
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getContext()
-                    .getSystemService(
-                            Activity.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(
-                    view.getWindowToken(), 0);
+                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
         Log.w(TAG, "keyboard closed!");
     }
@@ -119,5 +109,25 @@ public class TeamInfoFragment extends Fragment {
     private void makeToast(String msg) {
         Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (changedMember == null) { return; }
+
+        if (requestCode == LAUNCH_CHANGE_TEAM) {
+            if (resultCode == Activity.RESULT_OK) {
+                changedMember.setTeam("TBD");
+                adapter.remove(changedMember.getName());
+                adapter.notifyDataSetChanged();
+                // add member to roster
+                activity.teamRoster.getTeamMemberAdapter().addTeamMembers(changedMember);
+                makeToast(changedMember.getName() + " has been added to the team");
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                makeToast(changedMember.getName() + " was not added to the team");
+            }
+        }
     }
 }

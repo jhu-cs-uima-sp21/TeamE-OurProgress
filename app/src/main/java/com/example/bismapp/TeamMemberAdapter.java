@@ -20,8 +20,6 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
     private TeamMRFragment activity;
 
     public TeamMemberAdapter(Fragment activity, ArrayList<TeamMember> teamMembers) {
-        //TODO: maybe remove below
-        // LayoutInflater inflater = LayoutInflater.from(activity.getContext());
         this.teamMembers = teamMembers;
         this.activity = (TeamMRFragment) activity;
     }
@@ -51,30 +49,13 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         notifyDataSetChanged();
     }
 
-    /* TODO: figure out if need remove these unused functions
-    public String[] getTeamMemberNames() {
-        String[] names = new String[teamMembers.size()];
-        for (int i = 0; i < teamMembers.size(); i++) {
-            names[i] = teamMembers.get(i).getName();
-        }
-        return names;
-    }
-
-    public String[] getTeamMemberIDs() {
-        String[] ids = new String[teamMembers.size()];
-        for (int i = 0; i < teamMembers.size(); i++) {
-            ids[i] = teamMembers.get(i).getId();
-        }
-        return ids;
-    }*/
-
     @Override
     public int getItemCount() { return teamMembers.size(); }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
         private TextView id;
-
+        private TeamMember member;
 
         public ViewHolder(View view, TextView name, TextView id) {
             super(view);
@@ -89,18 +70,17 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
                                 + " has been removed from team", Toast.LENGTH_SHORT);
                 toast.show();
                 try {
-                    ((TeamMRFragment)activity).removeTeamMember(getAdapterPosition(),
-                            name.getText().toString());
+                    activity.checkToRemoveTeamMember(getAdapterPosition(), member);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-// Delete things at end of TeamMRFragment?
             });
         }
 
         public void setData(TeamMember teamMember) {
             name.setText(teamMember.getName());
             id.setText(teamMember.getID());
+            member = teamMember;
         }
     }
 }

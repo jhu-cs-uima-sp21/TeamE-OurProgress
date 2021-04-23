@@ -18,12 +18,12 @@
             android:id="@+id/change_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".75"
+            android:layout_weight="1"
             android:fontFamily="@font/montserrat"
-            android:padding="12dp"
+            android:padding="24dp"
             android:text="@string/text_not_found"
             android:textColor="@color/black"
-            android:textSize="24sp" />
+            android:textSize="36sp" />
 
         <FrameLayout
             android:id="@+id/change_okay_cancel"
