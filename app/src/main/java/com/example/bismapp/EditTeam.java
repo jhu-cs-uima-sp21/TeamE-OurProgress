@@ -28,15 +28,13 @@ public class EditTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     public ArrayList<TeamMember> associates;
     public ArrayList<String> associatesNames;
+    public Bundle bundle;
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
-
-    private EditText editName;
-    private EditText editGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +45,8 @@ public class EditTeam extends AppCompatActivity {
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
-        editName = ((EditText) findViewById(R.id.edit_team_name));
-        editGoal = ((EditText) findViewById(R.id.enterDailyGoal)); // TODO: Fix why this is null ref
+        // getting the bundle back from the android
+        bundle = getIntent().getExtras();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -59,13 +57,10 @@ public class EditTeam extends AppCompatActivity {
                 .replace(R.id.team_info_frag, teamInfo)
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
 
-        /** Pre-populate information **/
-        // getting the bundle back from the android
-        Bundle bundle = getIntent().getExtras();
+        // pre-populate
+        EditText editName = ((EditText) findViewById(R.id.edit_team_name));
         editName.setText(bundle.getString("Name"));
-        editGoal.setText(String.valueOf(bundle.getInt("Goal")));
-        teamRoster.getTeamMemberAdapter().teamMembers = bundle.getParcelableArrayList("Members");
-        teamRoster.getTeamMemberAdapter().notifyDataSetChanged();
+
     }
 
     public void makeToast(CharSequence text) {
@@ -80,7 +75,7 @@ public class EditTeam extends AppCompatActivity {
 
     public void okButtonClicked() {
         // form new team with user input
-        String teamName = editName.getText().toString();
+        String teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
         String managerID = myPrefs.getString("ID", "N/A");
         ArrayList<TeamMember> members = teamRoster.getTeamMembers();
 
@@ -99,7 +94,8 @@ public class EditTeam extends AppCompatActivity {
         }
         Integer dailyGoal;
         try {
-            dailyGoal = Integer.parseInt(editGoal.getText().toString());
+            dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
+                    .toString());
             if (dailyGoal == 0) {
                 ((EditText) findViewById(R.id.enterDailyGoal)).setText("");
                 makeToast("Daily goal cannot be 0");

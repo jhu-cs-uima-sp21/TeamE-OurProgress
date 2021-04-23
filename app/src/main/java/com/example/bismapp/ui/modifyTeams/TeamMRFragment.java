@@ -11,20 +11,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
+import com.example.bismapp.EditTeam;
 import com.example.bismapp.R;
 import com.example.bismapp.TeamMember;
 import com.example.bismapp.TeamMemberAdapter;
 
 import java.util.ArrayList;
+import java.util.concurrent.RunnableScheduledFuture;
 
 public class TeamMRFragment extends Fragment {
 
     private RecyclerView teamRoster;
     private TeamMemberAdapter adapter;
-    private CreateTeam activity;
     private final int LAUNCH_REMOVE_MEMBER = 2;
 
     // for the Intent
@@ -36,7 +38,6 @@ public class TeamMRFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_member_roster, container, false);
-        activity = (CreateTeam)requireActivity();
 
         // setting up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
@@ -44,7 +45,13 @@ public class TeamMRFragment extends Fragment {
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new TeamMemberAdapter(this, new ArrayList<>());
+        // pre-populate roster if EditTeam
+        if (getActivity() instanceof EditTeam) {
+            adapter = new TeamMemberAdapter(this, ((EditTeam)getActivity()).bundle
+                    .getParcelableArrayList("Members"));
+        } else {
+            adapter = new TeamMemberAdapter(this, new ArrayList<>());
+        }
         teamRoster.setAdapter(adapter);
 
         return view;
@@ -91,16 +98,25 @@ public class TeamMRFragment extends Fragment {
         TeamMember member = adapter.teamMembers.get(index);
         member.setTeam("N/A");
         // Update AutoCompleteTextView adapter
-        activity.getAssociate(name).setTeam("N/A"); // throws exception
-        activity.teamInfo.adapter.add(name);
-        activity.teamInfo.adapter.notifyDataSetChanged();
+        if (requireActivity() instanceof CreateTeam) {
+            CreateTeam activity = (CreateTeam)requireActivity();
+            activity.getAssociate(name).setTeam("N/A"); // throws exception
+            activity.teamInfo.adapter.add(name);
+            activity.teamInfo.adapter.notifyDataSetChanged();
+        } else if (requireActivity() instanceof EditTeam) {
+            EditTeam activity = (EditTeam)requireActivity();
+            activity.getAssociate(name).setTeam("N/A"); // throws exception
+            activity.teamInfo.adapter.add(name);
+            activity.teamInfo.adapter.notifyDataSetChanged();
+        }
+
         // Update Roster adapter
         adapter.teamMembers.remove(index);
         adapter.notifyDataSetChanged();
     }
 
     private void makeToast(String msg) {
-        Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 }

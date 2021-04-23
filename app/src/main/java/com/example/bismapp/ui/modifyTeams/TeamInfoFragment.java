@@ -1,13 +1,16 @@
 package com.example.bismapp.ui.modifyTeams;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,10 +20,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
+import com.example.bismapp.EditTeam;
 import com.example.bismapp.MainActivity;
 import com.example.bismapp.R;
 import com.example.bismapp.TeamMember;
@@ -37,7 +42,6 @@ import java.util.Set;
 
 public class TeamInfoFragment extends Fragment {
     private static final String TAG = "dbref at YourTeams: ";
-    private CreateTeam activity;
     public ArrayAdapter<String> adapter;
     private final int LAUNCH_CHANGE_TEAM = 1;
     private TeamMember changedMember = null;
@@ -47,12 +51,24 @@ public class TeamInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_info, container, false);
-        activity = (CreateTeam) requireActivity();
 
         // Get String list of associate names
-        activity.getAllAssociates();
-        adapter = new ArrayAdapter<String>(getContext(),
-                android.R.layout.simple_list_item_1, activity.associatesNames);
+        if (getActivity() instanceof CreateTeam) {
+            CreateTeam activity = (CreateTeam)getActivity();
+            activity.getAllAssociates();
+            adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1, activity.associatesNames);
+        } else if (getActivity() instanceof EditTeam) {
+            EditTeam activity = (EditTeam)getActivity();
+            activity.getAllAssociates();
+            adapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1, activity.associatesNames);
+            // pre-populate goal
+            if (getActivity() instanceof EditTeam) {
+                EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
+                editGoal.setText(String.valueOf(((EditTeam)getActivity()).bundle.getInt("Goal")));
+            }
+        }
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 view.findViewById(R.id.enterNames);
@@ -64,9 +80,23 @@ public class TeamInfoFragment extends Fragment {
                 String newTeamMemberName = textView.getText().toString();
                 TeamMember newMember;
                 String newTeamMemberTeam;
+                Activity activity = getActivity();
                 try {
-                    newMember = activity.getAssociate(newTeamMemberName);
+                    if (activity instanceof CreateTeam) {
+                        newMember = ((CreateTeam)activity).getAssociate(newTeamMemberName);
+                    } else { // EditTeam activity
+                        newMember = ((EditTeam)activity).getAssociate(newTeamMemberName);
+                    }
                     newTeamMemberTeam = newMember.getTeam();
+                    if (activity instanceof EditTeam) {
+                        String teamName = ((EditText)activity.findViewById(R.id.edit_team_name))
+                                .getText().toString();
+                        if (newTeamMemberTeam.equals(teamName)) {
+                            makeToast(newTeamMemberName + " is already on this team");
+                            textView.setText("");
+                            return;
+                        }
+                    }
                     if (newTeamMemberTeam.equals("TBD")) {
                         makeToast(newTeamMemberName + " has already been added to this team");
                     } else {
@@ -81,7 +111,13 @@ public class TeamInfoFragment extends Fragment {
                             adapter.remove(newMember.getName());
                             adapter.notifyDataSetChanged();
                             // add member to roster
-                            activity.teamRoster.getTeamMemberAdapter().addTeamMembers(newMember);
+                            if (activity instanceof CreateTeam) {
+                                ((CreateTeam)activity).teamRoster.getTeamMemberAdapter()
+                                        .addTeamMembers(newMember);
+                            } else { // EditTeam activity
+                                ((EditTeam)activity).teamRoster.getTeamMemberAdapter()
+                                        .addTeamMembers(newMember);
+                            }
                             makeToast(newTeamMemberName + " has been added to the team");
                         }
                     }
@@ -106,7 +142,7 @@ public class TeamInfoFragment extends Fragment {
     }
 
     private void makeToast(String msg) {
-        Toast toast = Toast.makeText(activity, msg, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
@@ -122,7 +158,13 @@ public class TeamInfoFragment extends Fragment {
                 adapter.remove(changedMember.getName());
                 adapter.notifyDataSetChanged();
                 // add member to roster
-                activity.teamRoster.getTeamMemberAdapter().addTeamMembers(changedMember);
+                if (getActivity() instanceof CreateTeam) {
+                    ((CreateTeam)getActivity()).teamRoster.getTeamMemberAdapter()
+                            .addTeamMembers(changedMember);
+                } else {
+                    ((EditTeam)getActivity()).teamRoster.getTeamMemberAdapter()
+                            .addTeamMembers(changedMember);
+                }
                 makeToast(changedMember.getName() + " has been added to the team");
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 makeToast(changedMember.getName() + " was not added to the team");
