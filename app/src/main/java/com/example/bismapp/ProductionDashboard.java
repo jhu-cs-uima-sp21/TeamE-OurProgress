@@ -139,7 +139,7 @@ public class ProductionDashboard extends Fragment {
                 Intent intent = new Intent(getActivity(), EditTeam.class);
                 intent.putExtra("Name", teamID);
                 intent.putExtra("Goal", daily_goal);
-                intent.putExtra("Members", getTeamMembers(teamID));
+                intent.putParcelableArrayListExtra("Members", getTeamMembers(teamID));
                 startActivity(intent);
             }
         });

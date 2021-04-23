@@ -49,6 +49,9 @@ public class TeamMRFragment extends Fragment {
         if (getActivity() instanceof EditTeam) {
             adapter = new TeamMemberAdapter(this, ((EditTeam)getActivity()).bundle
                     .getParcelableArrayList("Members"));
+            ArrayList<TeamMember> test = ((EditTeam)getActivity()).bundle
+                    .getParcelableArrayList("Members");
+//            System.out.println("got the team member, " + test.get(0));
         } else {
             adapter = new TeamMemberAdapter(this, new ArrayList<>());
         }
