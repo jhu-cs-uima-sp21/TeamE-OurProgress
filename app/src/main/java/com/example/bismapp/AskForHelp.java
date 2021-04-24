@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,15 +54,6 @@ public class AskForHelp extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AskForHelp.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AskForHelp newInstance(String param1, String param2) {
         AskForHelp fragment = new AskForHelp();
         Bundle args = new Bundle();
@@ -91,6 +83,9 @@ public class AskForHelp extends Fragment {
         getTeamMemberNames();
         System.out.println("names and ids:" + namesAndIDs.toString());
         System.out.println("names:" + names.toString());
+        getSupervisor();
+        System.out.print("Team: " + teamName + " Managed by: " + supervisorID);
+
 
         //TODO: Fix layout of the adapter for the AutoCompleteTextView
         adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
@@ -105,7 +100,7 @@ public class AskForHelp extends Fragment {
                 String name = textView.getText().toString();
                 Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
                 intent.putExtra("NAME", name);
-                intent.putExtra("RECIEVERID", namesAndIDs.get(name));
+                intent.putExtra("RECEIVERID", namesAndIDs.get(name));
                 intent.putExtra("ISTEAM", false);
                 startActivity(intent);
                 textView.setText("");
@@ -118,7 +113,7 @@ public class AskForHelp extends Fragment {
             btnView.startAnimation(MainActivity.buttonClick);
             Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
             intent.putExtra("NAME", teamName);
-            intent.putExtra("RECIEVERID", teamName);
+            intent.putExtra("RECEIVERID", teamName);
             intent.putExtra("ISTEAM", true);
             startActivity(intent);
         });
@@ -127,10 +122,9 @@ public class AskForHelp extends Fragment {
         Button supBtn = (Button) view.findViewById(R.id.supervisor);
         supBtn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
-            getSupervisor();
             Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
             intent.putExtra("NAME", "Supervisor");
-            intent.putExtra("RECIEVERID", supervisorID);
+            intent.putExtra("RECEIVERID", supervisorID);
             intent.putExtra("ISTEAM", false);
             startActivity(intent);
         });

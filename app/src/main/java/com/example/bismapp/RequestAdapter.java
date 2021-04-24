@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     public ArrayList<Request> requests;
-    private RequestFrag activity;
 
     public RequestAdapter(ArrayList<Request> requests, Context cntx) {
         this.requests = requests;
@@ -84,4 +83,15 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             req = request;
         }
     }
+
+    public void updateDataSet(ArrayList<Request> data) {
+        // clear old list
+        requests.clear();
+
+        requests.addAll(data);
+
+        // notify adapter
+        notifyDataSetChanged();
+    }
+
 }

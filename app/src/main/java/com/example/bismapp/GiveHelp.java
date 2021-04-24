@@ -13,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
-import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.core.Context;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -31,8 +33,8 @@ public class GiveHelp extends Fragment {
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     public ArrayList<Request> requests;
-    public RequestFrag requestList;
     private RequestAdapter adapter;
+    private static final String TAG = "dbref at YourTeams: ";
 
 
     public GiveHelp() {
@@ -61,12 +63,11 @@ public class GiveHelp extends Fragment {
         //setContentView(R.layout.fragment_give_help);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        //myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         requests = new ArrayList<>();
-        requests.add(new Request("12", "34", false));
-
-        requestList = new RequestFrag();
-
+        getRequests();
+        System.out.print("LOOK HERE FOR FIRST SENDER ID: " + requests.get(0).getSenderID());
+        //requests.add(new Request("12", "34", false));
 
         // set up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
@@ -74,6 +75,7 @@ public class GiveHelp extends Fragment {
         adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
 
         RecyclerView request_list = view.findViewById(R.id.request_list);
+
         request_list.setLayoutManager(layoutManager);
         request_list.setAdapter(adapter);
 
@@ -89,4 +91,38 @@ public class GiveHelp extends Fragment {
         return view;
 
     }
+
+    private void getRequests() {
+        dbref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("You are in on data change");
+                requests.clear();
+                Iterable<DataSnapshot> requestShots = snapshot.child("requests").getChildren();
+                for (DataSnapshot i : requestShots) {
+                    String receiverID = i.child("receiverID").getValue(String.class);
+                    String senderID = i.child("senderID").getValue(String.class);
+                    boolean team = i.child("team").getValue(Boolean.class);
+                    //check if this users ID matches receiverID
+                    if (receiverID.equals(myPrefs.getString("TEAM", "")) || receiverID.equals(myPrefs.getString("ID", ""))) {
+                        requests.add(new Request(senderID, receiverID, team));
+                    }
+                }
+
+                System.out.println("LOOK HERE FOR NUM REQUESTS: " + requests.size());
+
+                adapter.updateDataSet(requests);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+
+
+    }
+
 }

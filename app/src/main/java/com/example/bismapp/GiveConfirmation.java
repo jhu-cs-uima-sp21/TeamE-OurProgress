@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-public class AskConfirmation extends AppCompatActivity {
+public class GiveConfirmation extends AppCompatActivity {
     private static final String TAG = "tag?";
     private String name, id, receiverID;
     private boolean isTeam;

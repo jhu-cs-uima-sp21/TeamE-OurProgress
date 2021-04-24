@@ -1,15 +1,15 @@
 package com.example.bismapp;
 
 public class Request {
-    private String senderID, recieverID; //these fiels are necessary
-    private boolean isTeam;
+    private String senderID, receiverID; //these fiels are necessary
+    private boolean team;
     //constructor for request for one individual (team member or supervisor)
 
     //if team is true, then receiver id isnt an id -- it's a team name
-    public Request(String senderID, String recieverID, boolean isTeam) {
+    public Request(String senderID, String receiverID, boolean team) {
         this.senderID = senderID;
-        this.recieverID = recieverID;
-        this.isTeam = isTeam;
+        this.receiverID = receiverID;
+        this.team = team;
     }
 
     public String getSenderID() {
@@ -20,19 +20,19 @@ public class Request {
         this.senderID = senderID;
     }
 
-    public String getRecieverID() {
-        return recieverID;
+    public String getReceiverID() {
+        return receiverID;
     }
 
-    public void setRecieverID(String recieverID) {
-        this.recieverID = recieverID;
+    public void setReceiverID(String receiverID) {
+        this.receiverID = receiverID;
     }
 
     public boolean isTeam() {
-        return isTeam;
+        return team;
     }
 
     public void setTeam(boolean team) {
-        isTeam = team;
+        this.team = team;
     }
 }

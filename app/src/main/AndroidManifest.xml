@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BISMApp.NoActionBar">
+        <activity android:name=".GiveConfirmation"></activity>
         <activity android:name=".AskConfirmation">
             android:screenOrientation="portrait"
         </activity>
@@ -16,12 +17,12 @@
         <activity
             android:name=".NavigationActivity"
             android:label="@string/title_activity_navigation"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BISMApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,27 +33,27 @@
             android:name=".YourTeams"
             android:label="@string/your_teams"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.BISMApp.NoActionBar" />
         <activity
             android:name=".CreateTeam"
             android:label="@string/create_team"
             android:parentActivityName=".YourTeams"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".EditTeam"
-            android:label="Edit the selected team's information"
+            android:label="Edit the selected team&apos;s information"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".ui.modifyTeams.ChangeMemberTeam"
             android:label="Change the team of the selected member"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BISMApp.NoActionBar"
-            android:windowSoftInputMode="adjustNothing"
-            android:screenOrientation="portrait"/>
+            android:windowSoftInputMode="adjustNothing" />
 
         <meta-data
             android:name="preloaded_fonts"
