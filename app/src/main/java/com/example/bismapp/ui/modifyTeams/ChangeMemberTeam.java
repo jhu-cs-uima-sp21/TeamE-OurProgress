@@ -43,6 +43,7 @@ import java.util.ArrayList;
 public class ChangeMemberTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     String method = "N/A";
+    TeamMember member;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +58,11 @@ public class ChangeMemberTeam extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         method = bundle.getString("Method");
-        printMessage((TeamMember)bundle.get("Member"));
+        member = (TeamMember)bundle.get("Member");
+        printMessage();
     }
 
-    private void printMessage(TeamMember member) {
+    private void printMessage() {
         String message;
         String associateName = member.getName();
         String associateTeam = member.getTeam();
@@ -95,11 +97,11 @@ public class ChangeMemberTeam extends AppCompatActivity {
             text.setSpan(new ForegroundColorSpan(black), associateName.length() + 8,
                     associateName.length() + 19, 0);
             // station is blue
-            text.setSpan(new ForegroundColorSpan(bismBlue), associateName.length() + 20,
+            text.setSpan(new ForegroundColorSpan(bismBlue), associateName.length() + 19,
                     associateName.length() + 20 + associateStation.length(), 0);
             // "?" is black
-            text.setSpan(new ForegroundColorSpan(black), associateName.length()
-                            + associateStation.length() + 22, message.length(), 0);
+            text.setSpan(new ForegroundColorSpan(black),message.length() - 1,
+                    message.length(), 0);
             textView.setText(text);
         }
     }

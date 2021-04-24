@@ -1,6 +1,8 @@
 
 package com.example.bismapp;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,7 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EditTeam extends AppCompatActivity {
     public TeamInfoFragment teamInfo;
@@ -28,13 +32,20 @@ public class EditTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     public ArrayList<TeamMember> associates;
     public ArrayList<String> associatesNames;
+    public HashMap<String, String> associatesToTeamChange;
+
     public Bundle bundle;
+    private String preName;
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
+
+    private String teamName, managerID;
+    private Integer unitsProduced, dailyGoal;
+    private ArrayList<TeamMember> members;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +56,8 @@ public class EditTeam extends AppCompatActivity {
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
+        associatesToTeamChange = new HashMap<>();
+
         // getting the bundle back from the android
         bundle = getIntent().getExtras();
 
@@ -58,8 +71,9 @@ public class EditTeam extends AppCompatActivity {
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
 
         // pre-populate
+        preName = bundle.getString("Name");
         EditText editName = ((EditText) findViewById(R.id.edit_team_name));
-        editName.setText(bundle.getString("Name"));
+        editName.setText(preName);
 
     }
 
@@ -70,14 +84,15 @@ public class EditTeam extends AppCompatActivity {
     }
 
     public void cancelButtonClicked() {
+        setResult(Activity.RESULT_CANCELED, new Intent());
         finish();
     }
 
     public void okButtonClicked() {
         // form new team with user input
-        String teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
-        String managerID = myPrefs.getString("ID", "N/A");
-        ArrayList<TeamMember> members = teamRoster.getTeamMembers();
+        teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
+        managerID = myPrefs.getString("ID", "N/A");
+        members = teamRoster.getTeamMembers();
 
         // if any information is missing, do not make team
         if (teamName.equals("")) {
@@ -88,11 +103,11 @@ public class EditTeam extends AppCompatActivity {
             makeToast("Please enter a team name that is not \"N/A\" or \"TBD\"");
             Log.d(TEAM_TAG, "team name");
             return;
-        } else if (YourTeams.teamNames.contains(teamName)) {
+        } else if (!preName.equals(teamName) && YourTeams.teamNames.contains(teamName)) {
             makeToast("Team \"" + teamName + "\" has already been created");
+            makeToast(teamName + " is not the same as " + preName);
             return;
         }
-        Integer dailyGoal;
         try {
             dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
                     .toString());
@@ -110,19 +125,25 @@ public class EditTeam extends AppCompatActivity {
             Log.d(TEAM_TAG, "team members");
             return;
         }
-
+        // Update values of team
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             // TODO: Update list of teams
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
-                // update team values in firebase
+                // get team's progress
+                unitsProduced = snapshot.child("teams").child(teamName).child("units_produced")
+                        .getValue(Integer.class);
+                // update team values of members in firebase
                 for (TeamMember associate : members) {
                     associate.setTeam(teamName);
                     dbref.child("users").child("associates").child(associate.getID()).child("team")
                             .setValue(teamName);
                     Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
                 }
-                Team team = new Team(teamName, managerID, 0, dailyGoal, members);
+                // update values of the team's branch on firebase
+                dbref.child("teams").child(preName).removeValue();
+                // replace with new edited
+                Team team = new Team(teamName, managerID, unitsProduced, dailyGoal, members);
                 dbref.child("teams").child(team.getName()).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }
@@ -133,6 +154,12 @@ public class EditTeam extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        changeOldTeams();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("Name", teamName);
+        returnIntent.putExtra("Goal", dailyGoal);
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
@@ -179,11 +206,46 @@ public class EditTeam extends AppCompatActivity {
         throw new Exception("No associate with name " + name + " found");
     }
 
-    public String getAssociateID(String name) throws Exception {
-        return getAssociate(name).getID();
+    public void removeAssociateFromOldTeam(TeamMember member) {
+        associatesToTeamChange.put(member.getID(), member.getTeam());
     }
 
-    public String getAssociateTeam(String name) throws Exception {
-        return getAssociate(name).getTeam();
+    public void notRemoveAssociateFromOldTeam(String id) {
+        associatesToTeamChange.remove(id);
+    }
+
+    private void changeOldTeams() {
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        // Fetch all associates
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("Removing team members from their previous teams...");
+                for (String i : associatesToTeamChange.keySet()) {
+                    String teamName = associatesToTeamChange.get(i);
+                    ArrayList<HashMap<String, String>> teamMembers = (ArrayList<HashMap<String, String>>)
+                            snapshot.child("teams").child(teamName).child("team_members").getValue();
+                    for (HashMap<String, String> member : teamMembers) {
+                        if (member.get("id").equals(i)) {
+                            teamMembers.remove(member);
+                            break;
+                        }
+                    }
+                    if (teamMembers.isEmpty()) {
+                        dbref.child("teams").child(teamName).removeValue();
+                    } else {
+                        dbref.child("teams")
+                                .child(teamName).child("team_members").setValue(teamMembers);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 }

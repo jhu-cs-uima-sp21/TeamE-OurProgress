@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.http.SslCertificate;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,17 +19,29 @@ import android.widget.Toast;
 import com.example.bismapp.CreateTeam;
 import com.example.bismapp.EditTeam;
 import com.example.bismapp.R;
+import com.example.bismapp.Team;
 import com.example.bismapp.TeamMember;
 import com.example.bismapp.TeamMemberAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.RunnableScheduledFuture;
 
 public class TeamMRFragment extends Fragment {
-
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
     private RecyclerView teamRoster;
+    private Activity activity;
     private TeamMemberAdapter adapter;
     private final int LAUNCH_REMOVE_MEMBER = 2;
+    private static final String TAG = "dbref at TeamMRF: ";
 
     // for the Intent
     private int changedIndex = -1;
@@ -38,6 +52,10 @@ public class TeamMRFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_member_roster, container, false);
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        activity = getActivity();
+        adapter = new TeamMemberAdapter(this, new ArrayList<>());
 
         // setting up RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
@@ -45,19 +63,52 @@ public class TeamMRFragment extends Fragment {
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
+
         // pre-populate roster if EditTeam
         if (getActivity() instanceof EditTeam) {
-            adapter = new TeamMemberAdapter(this, ((EditTeam)getActivity()).bundle
-                    .getParcelableArrayList("Members"));
-            ArrayList<TeamMember> test = ((EditTeam)getActivity()).bundle
-                    .getParcelableArrayList("Members");
-//            System.out.println("got the team member, " + test.get(0));
-        } else {
-            adapter = new TeamMemberAdapter(this, new ArrayList<>());
+            prePopulatedTeamMembers();
         }
-        teamRoster.setAdapter(adapter);
 
+        teamRoster.setAdapter(adapter);
         return view;
+    }
+
+    // Read from database to get list of team members
+    private void prePopulatedTeamMembers() {
+        String teamName = String.valueOf(((EditTeam)activity).bundle.getString("Name"));
+
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                ArrayList<TeamMember> associates = new ArrayList<>();
+                Iterable<DataSnapshot> teamMembers = snapshot.child("teams").child(teamName)
+                        .child("team_members").getChildren();
+                System.out.printf("Fetching associates from team %s...\n", teamName);
+                for (DataSnapshot i : teamMembers) {
+                    String userName = i.child("name").getValue(String.class);
+                    String userID = i.child("id").getValue(String.class);
+                    String station = i.child("station").getValue(String.class);
+                    String team = i.child("team").getValue(String.class);
+                    associates.add(new TeamMember(userName, userID, station, team));
+                    System.out.printf("\tMember: %s,  ID: %s,  Station: %s, Team: %s\n", userName,
+                            userID, station, team);
+                }
+                setAdapter(associates);
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    private void setAdapter(ArrayList<TeamMember> associates) {
+        adapter = new TeamMemberAdapter(this, associates);
+        teamRoster.setAdapter(adapter);
     }
 
     public ArrayList<TeamMember> getTeamMembers() {
@@ -86,6 +137,13 @@ public class TeamMRFragment extends Fragment {
         if (requestCode == LAUNCH_REMOVE_MEMBER) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
+                    if (isFromATeam()) {
+                        if (activity instanceof CreateTeam) {
+                            ((CreateTeam)activity).notRemoveAssociateFromOldTeam(changedMember.getID());
+                        } else { // instanceof EditTeam
+                            ((EditTeam)activity).notRemoveAssociateFromOldTeam(changedMember.getID());
+                        }
+                    }
                     removeTeamMember(changedIndex, changedMember.getName());
                 } catch (Exception e) {
                     makeToast("Error occurred: Was not able to remove associate from roster");
@@ -94,6 +152,14 @@ public class TeamMRFragment extends Fragment {
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 makeToast(changedMember.getName() + " was not removed from the team");
             }
+        }
+    }
+
+    private boolean isFromATeam() {
+        if (activity instanceof CreateTeam) {
+            return ((CreateTeam)activity).associatesToTeamChange.containsKey(changedMember.getID());
+        } else { // instanceof EditTeam
+            return ((EditTeam)activity).associatesToTeamChange.containsKey(changedMember.getID());
         }
     }
 
@@ -116,6 +182,8 @@ public class TeamMRFragment extends Fragment {
         // Update Roster adapter
         adapter.teamMembers.remove(index);
         adapter.notifyDataSetChanged();
+
+        makeToast(name + " has been removed from the roster");
     }
 
     private void makeToast(String msg) {

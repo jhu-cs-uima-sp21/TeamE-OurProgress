@@ -65,10 +65,6 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
             ImageButton remove_member_btn = (ImageButton) view.findViewById(R.id.remove_member_btn);
             remove_member_btn.setOnClickListener((View.OnClickListener) btnview  -> {
                 btnview.startAnimation(MainActivity.buttonClick);
-                Toast toast = Toast.makeText(btnview.getContext(),
-                        teamMembers.get(getAdapterPosition()).getName()
-                                + " has been removed from team", Toast.LENGTH_SHORT);
-                toast.show();
                 try {
                     activity.checkToRemoveTeamMember(getAdapterPosition(), member);
                 } catch (Exception e) {

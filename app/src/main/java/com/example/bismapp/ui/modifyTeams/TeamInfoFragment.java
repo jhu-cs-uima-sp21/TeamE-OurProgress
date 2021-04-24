@@ -64,10 +64,8 @@ public class TeamInfoFragment extends Fragment {
             adapter = new ArrayAdapter<String>(getContext(),
                     android.R.layout.simple_list_item_1, activity.associatesNames);
             // pre-populate goal
-            if (getActivity() instanceof EditTeam) {
-                EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
-                editGoal.setText(String.valueOf(((EditTeam)getActivity()).bundle.getInt("Goal")));
-            }
+            EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
+            editGoal.setText(String.valueOf(((EditTeam)getActivity()).bundle.getInt("Goal")));
         }
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
@@ -149,20 +147,25 @@ public class TeamInfoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        Activity activity = getActivity();
         if (changedMember == null) { return; }
 
         if (requestCode == LAUNCH_CHANGE_TEAM) {
             if (resultCode == Activity.RESULT_OK) {
+                if (activity instanceof CreateTeam) {
+                    ((CreateTeam)activity).removeAssociateFromOldTeam(changedMember);
+                } else { // instanceof EditTeam
+                    ((EditTeam)activity).removeAssociateFromOldTeam(changedMember);
+                }
                 changedMember.setTeam("TBD");
                 adapter.remove(changedMember.getName());
                 adapter.notifyDataSetChanged();
                 // add member to roster
-                if (getActivity() instanceof CreateTeam) {
-                    ((CreateTeam)getActivity()).teamRoster.getTeamMemberAdapter()
+                if (activity instanceof CreateTeam) {
+                    ((CreateTeam)activity).teamRoster.getTeamMemberAdapter()
                             .addTeamMembers(changedMember);
                 } else {
-                    ((EditTeam)getActivity()).teamRoster.getTeamMemberAdapter()
+                    ((EditTeam)activity).teamRoster.getTeamMemberAdapter()
                             .addTeamMembers(changedMember);
                 }
                 makeToast(changedMember.getName() + " has been added to the team");

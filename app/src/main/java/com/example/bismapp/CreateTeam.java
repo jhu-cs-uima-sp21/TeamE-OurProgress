@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CreateTeam extends AppCompatActivity {
     public TeamInfoFragment teamInfo;
@@ -28,6 +29,7 @@ public class CreateTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     public ArrayList<TeamMember> associates;
     public ArrayList<String> associatesNames;
+    public HashMap<String, String> associatesToTeamChange; // map id to old team
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
@@ -44,6 +46,7 @@ public class CreateTeam extends AppCompatActivity {
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
+        associatesToTeamChange = new HashMap<>();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -142,7 +145,7 @@ public class CreateTeam extends AppCompatActivity {
                 associates.clear();
                 associatesNames.clear();
                 for (DataSnapshot i : usersShots) {
-                    String userName = i.child("name").getValue(String.class);
+                    String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
                     String station = i.child("station").getValue(String.class);
                     String team = i.child("team").getValue(String.class);
@@ -170,11 +173,11 @@ public class CreateTeam extends AppCompatActivity {
         throw new Exception("No associate with name " + name + " found");
     }
 
-    public String getAssociateID(String name) throws Exception {
-        return getAssociate(name).getID();
+    public void removeAssociateFromOldTeam(TeamMember member) {
+        associatesToTeamChange.put(member.getID(), member.getTeam());
     }
 
-    public String getAssociateTeam(String name) throws Exception {
-        return getAssociate(name).getTeam();
+    public void notRemoveAssociateFromOldTeam(String id) {
+        associatesToTeamChange.remove(id);
     }
 }
