@@ -20,8 +20,11 @@ import java.util.ArrayList;
 
 public class RequestFrag extends Fragment {
     private RecyclerView teamRoster;
-    private RequestAdapter adapter;
+    //private RequestAdapter adapter;
     private NavigationActivity activity;
+    public ArrayList<Request> requests;
+    public RequestFrag requestList;
+    private RequestAdapter adapter;
 
     // for the Intent
     private int changedIndex = -1;
@@ -34,14 +37,29 @@ public class RequestFrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_team_member_roster, container, false);
         activity = (NavigationActivity) requireActivity();
 
+        requests = new ArrayList<>();
+        requests.add(new Request("12", "34", false));
+
+        requestList = new RequestFrag();
+
+
+        // set up RecyclerView
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
+                LinearLayoutManager.VERTICAL, false);
+        adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
+
+        RecyclerView request_list = view.findViewById(R.id.request_list);
+        request_list.setLayoutManager(layoutManager);
+        request_list.setAdapter(adapter);
+
         // setting up RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
+        /*LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.VERTICAL, false);
         teamRoster = (RecyclerView) view.findViewById(R.id.team_member_recycler);
         teamRoster.setHasFixedSize(true);
         teamRoster.setLayoutManager(layoutManager);
-        adapter = new RequestAdapter(this, new ArrayList<>());
-        teamRoster.setAdapter(adapter);
+       adapter = new RequestAdapter(this, new ArrayList<>());
+        teamRoster.setAdapter(adapter);*/
 
         return view;
     }

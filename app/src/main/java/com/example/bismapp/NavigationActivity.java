@@ -37,7 +37,7 @@ public class NavigationActivity extends AppCompatActivity{
                 @Override public boolean onNavigationItemSelected( MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_give:
-                            //openFragment(HomeFragment.newInstance("", ""));
+                            openFragment(GiveHelp.newInstance("", ""));
                             return true;
                         case R.id.nav_production:
                             openFragment(ProductionDashboard.newInstance("", ""));

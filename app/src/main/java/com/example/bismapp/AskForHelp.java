@@ -125,7 +125,7 @@ public class AskForHelp extends Fragment {
 
         //supervisor button
         Button supBtn = (Button) view.findViewById(R.id.supervisor);
-        teamBtn.setOnClickListener(btnView -> {
+        supBtn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
             getSupervisor();
             Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);

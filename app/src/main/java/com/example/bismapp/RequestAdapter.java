@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
     public ArrayList<Request> requests;
     private RequestFrag activity;
 
-    public RequestAdapter(Fragment activity, ArrayList<Request> requests) {
+    public RequestAdapter(ArrayList<Request> requests, Context cntx) {
         this.requests = requests;
-        this.activity = (RequestFrag) activity;
+       //this.activity = (RequestFrag) activity;
     }
 
     @NonNull

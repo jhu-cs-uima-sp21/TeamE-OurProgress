@@ -4,8 +4,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +32,7 @@ public class GiveHelp extends Fragment {
     private SharedPreferences myPrefs;
     public ArrayList<Request> requests;
     public RequestFrag requestList;
+    private RequestAdapter adapter;
 
 
     public GiveHelp() {
@@ -59,8 +63,23 @@ public class GiveHelp extends Fragment {
         dbref = mdbase.getReference();
         //myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         requests = new ArrayList<>();
+        requests.add(new Request("12", "34", false));
 
         requestList = new RequestFrag();
+
+
+        // set up RecyclerView
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
+                LinearLayoutManager.VERTICAL, false);
+        adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
+
+        RecyclerView request_list = view.findViewById(R.id.request_list);
+        request_list.setLayoutManager(layoutManager);
+        request_list.setAdapter(adapter);
+
+        // set up individual team clickListener
+       /* adapter.setOnItemClickListener((position, v) ->
+                Log.d("Team", "onItemClick position: " + position));*/
 
         /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.team_roster_frag, teamRoster)

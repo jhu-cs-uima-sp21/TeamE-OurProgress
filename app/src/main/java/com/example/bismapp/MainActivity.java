@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             //boolean isAssociate;
 
             //READ FROM DATABASE TO CHECK IF MANAGER
-            dbref.addValueEventListener(new ValueEventListener() {
+            dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
                     System.out.println("hello");
