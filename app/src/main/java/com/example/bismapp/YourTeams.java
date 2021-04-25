@@ -44,6 +44,8 @@ public class YourTeams extends AppCompatActivity {
     private ArrayList<Team> teams;
     public static HashSet<String> teamNames = new HashSet<>();
 
+    private ValueEventListener valueEventListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class YourTeams extends AppCompatActivity {
         // Fetch all teams managed by user
         // calling add value event listener method
         // for getting the values from database.
-        dbref.addValueEventListener(new ValueEventListener() {
+        valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
@@ -118,7 +120,8 @@ public class YourTeams extends AppCompatActivity {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
+        };
+        dbref.addValueEventListener(valueEventListener);
 
     }
 
@@ -126,23 +129,8 @@ public class YourTeams extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         genLocalTeams();
-        //adapter.updateDataSet(teams);
         adapter.notifyDataSetChanged();
-        /*LinearLayoutManager layoutManager = new LinearLayoutManager(this,
-                LinearLayoutManager.VERTICAL, false);
-        adapter = new TeamListAdapter(teams, getApplicationContext());
-
-        team_list = findViewById(R.id.team_list);
-        team_list.setHasFixedSize(true);
-        team_list.setLayoutManager(layoutManager);
-        team_list.setAdapter(adapter);*/
     }
-
-    /*@Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -154,4 +142,9 @@ public class YourTeams extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        dbref.removeEventListener(valueEventListener);
+    }
 }
