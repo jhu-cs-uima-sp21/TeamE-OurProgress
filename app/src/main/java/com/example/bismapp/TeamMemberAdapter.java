@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,7 +29,7 @@ public class TeamMemberAdapter extends RecyclerView.Adapter<TeamMemberAdapter.Vi
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_team_member, parent, false);
         TextView name = view.findViewById(R.id.member_name);
-        TextView id = view.findViewById(R.id.member_id);
+        TextView id = view.findViewById(R.id.station);
         return new ViewHolder(view, name, id);
     }
 

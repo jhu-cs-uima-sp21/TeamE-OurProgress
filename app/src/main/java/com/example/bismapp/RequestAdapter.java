@@ -9,18 +9,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
 
 import java.util.ArrayList;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     public ArrayList<Request> requests;
+    private static Context cntx;
 
     public RequestAdapter(ArrayList<Request> requests, Context cntx) {
         this.requests = requests;
+        this.cntx = cntx;
        //this.activity = (RequestFrag) activity;
     }
 
@@ -30,8 +29,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_request, parent, false);
         TextView name = view.findViewById(R.id.member_name);
-        TextView id = view.findViewById(R.id.member_id);
-        return new ViewHolder(view, name, id);
+        TextView station = view.findViewById(R.id.station);
+        return new ViewHolder(view, name, station);
     }
 
     @Override
@@ -55,13 +54,13 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView name;
-        private TextView id;
+        private TextView station;
         private Request req;
 
-        public ViewHolder(View view, TextView name, TextView id) {
+        public ViewHolder(View view, TextView name, TextView station) {
             super(view);
             this.name = name;
-            this.id = id;
+            this.station = station;
 
             ImageButton remove_request_btn = (ImageButton) view.findViewById(R.id.remove_request_btn);
             remove_request_btn.setOnClickListener((View.OnClickListener) btnview  -> {
@@ -79,7 +78,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         }
 
         public void setData(Request request) {
-            id.setText(request.getSenderID());
+            station.setText(request.getSenderID());
             req = request;
         }
     }

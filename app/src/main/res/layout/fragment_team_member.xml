@@ -30,7 +30,7 @@
             tools:layout_marginRight="5dp" />
 
         <TextView
-            android:id="@+id/member_id"
+            android:id="@+id/station"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"

@@ -16,7 +16,7 @@
         android:layout_marginEnd="1dp"
         android:visibility="visible"
         android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@drawable/scrollbar_bblue"
+        android:scrollbarThumbVertical="@drawable/scrollbar_blue"
         android:scrollbarSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
