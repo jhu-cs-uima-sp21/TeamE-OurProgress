@@ -77,26 +77,25 @@ public class AssociateProductionDash extends Fragment {
         assocNav = (AssociateNavigationActivity) getActivity();
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
-        myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
-        cntx = assocNav.getApplicationContext();
+        myView = inflater.inflate(R.layout.fragment_production_dashboard, container, false);
+        Context cntx = assocNav.getApplicationContext();
 
         buttonClick.setDuration(100);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        String teamID = myPrefs.getString("TEAM", "");
-        //ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
-        //READ FROM DATABASE TO CHECK IF MANAGER
-        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+        String teamID = myPrefs.getString("TEAM", "A");
+
+        dbref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
-                cntx = assocNav.getApplicationContext();
-                ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
                 daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
                 units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
                 percent = (int) (((double) units_produced / daily_goal) * 100);
+                ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
+
                 Drawable draw;
                 if (percent < 10) {
                     draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
@@ -107,7 +106,8 @@ public class AssociateProductionDash extends Fragment {
                 } else  {
                     draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
                 }
-                
+
+                //TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
                 progressBar.setProgressDrawable(draw);
                 progressBar.setSecondaryProgress(percent);
                 TextView per_text = (TextView) myView.findViewById(R.id.textView);
@@ -117,7 +117,9 @@ public class AssociateProductionDash extends Fragment {
                     per_text.setTextSize(42);
                     progressBar.setSecondaryProgress(100);
                 }
+
                 prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
+                //team_name_txt.setText("Team " + teamID + " has made");
 
             }
 

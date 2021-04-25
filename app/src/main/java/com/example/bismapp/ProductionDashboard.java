@@ -39,6 +39,7 @@ import java.util.ArrayList;
  */
 public class ProductionDashboard extends Fragment {
     private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
     public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
@@ -81,7 +82,8 @@ public class ProductionDashboard extends Fragment {
         buttonClick.setDuration(100);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        String teamID = myPrefs.getString("TEAM", "A");
+        peditor = myPrefs.edit();
+        //String teamID = myPrefs.getString("TEAM", "A");
 
         //READ FROM DATABASE TO CHECK IF MANAGER
         dbref.addValueEventListener(new ValueEventListener() {
@@ -90,7 +92,14 @@ public class ProductionDashboard extends Fragment {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
+                String teamID = myPrefs.getString("TEAM", "A");
+                System.out.println(snapshot.child("teams").child(teamID).exists());
+                System.out.println("ProductionDash: THis is the teamID " + teamID);
+                DataSnapshot first = snapshot.child("teams").child(teamID);
+                System.out.println("Production DashBoard first" + first.toString());
+                System.out.println("Production DashBoard DataSnap" + first.child("daily_goal").toString());
                 daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
+                peditor.putInt("DAILY_GOAL", daily_goal);
                 units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
                 percent = (int) (((double) units_produced / daily_goal) * 100);
                 ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
@@ -137,9 +146,8 @@ public class ProductionDashboard extends Fragment {
             public void onClick(View view) { // switch to Your Teams activity
                 view.startAnimation(buttonClick);
                 Intent intent = new Intent(getActivity(), EditTeam.class);
-                intent.putExtra("Name", teamID);
-                intent.putExtra("Goal", daily_goal);
-                intent.putParcelableArrayListExtra("Members", getTeamMembers(teamID));
+                //intent.putExtra("Name", teamID);
+                //intent.putExtra("Goal", daily_goal);
                 startActivity(intent);
             }
         });
@@ -147,32 +155,5 @@ public class ProductionDashboard extends Fragment {
         return myView;
     }
 
-    // Read from database to get list of team members
-    private ArrayList<TeamMember> getTeamMembers(String teamName) {
-        ArrayList<TeamMember> associates = new ArrayList<>();
-        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                Iterable<DataSnapshot> teamMembers = snapshot.child("teams").child(teamName)
-                        .child("team_members").getChildren();
-                System.out.printf("Fetching all associates from team %s...\n", teamName);
-                for (DataSnapshot i : teamMembers) {
-                    String userName = i.child("name").getValue(String.class);
-                    String userID = i.child("id").getValue(String.class);
-                    String station = i.child("station").getValue(String.class);
-                    String team = i.child("team").getValue(String.class);
-                    associates.add(new TeamMember(userName, userID, station, team));
-                    System.out.printf("\tMember: %s,  ID: %s,  Station: %s, Team: %s\n", userName,
-                            userID, station, team);
-                }
-            }
 
-            @Override
-            public void onCancelled(@NotNull DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-        return associates;
-    }
 }

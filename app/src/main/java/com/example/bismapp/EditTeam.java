@@ -34,12 +34,13 @@ public class EditTeam extends AppCompatActivity {
     public ArrayList<String> associatesNames;
     public HashMap<String, String> associatesToTeamChange;
 
-    public Bundle bundle;
+    //public Bundle bundle;
     private String preName;
 
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
 
@@ -54,12 +55,16 @@ public class EditTeam extends AppCompatActivity {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        peditor = myPrefs.edit();
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
         associatesToTeamChange = new HashMap<>();
 
+        Intent intent = getIntent();
+        //intent.getStringExtra();
+        //intent.getExtra();
+
         // getting the bundle back from the android
-        bundle = getIntent().getExtras();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -71,10 +76,9 @@ public class EditTeam extends AppCompatActivity {
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
 
         // pre-populate
-        preName = bundle.getString("Name");
+        preName = myPrefs.getString("TEAM", "A");
         EditText editName = ((EditText) findViewById(R.id.edit_team_name));
         editName.setText(preName);
-
     }
 
     public void makeToast(CharSequence text) {
@@ -131,7 +135,8 @@ public class EditTeam extends AppCompatActivity {
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // get team's progress
-                unitsProduced = snapshot.child("teams").child(teamName).child("units_produced")
+                System.out.println("This is the team name:" + preName);
+                unitsProduced = snapshot.child("teams").child(preName).child("units_produced")
                         .getValue(Integer.class);
                 // update team values of members in firebase
                 for (TeamMember associate : members) {
@@ -141,11 +146,23 @@ public class EditTeam extends AppCompatActivity {
                     Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
                 }
                 // update values of the team's branch on firebase
-                dbref.child("teams").child(preName).removeValue();
+                if (!preName.equals(teamName)) {
+                    //dbref.child("teams").child(preName).setValue(teamName);
+                }
+
+                peditor.putString("TEAM", preName);
+                peditor.apply();
+
+                System.out.println("This is the team name:" + teamName);
+                System.out.println("This is the manager ID:" + managerID);
+                System.out.println("This is the units produced:" + unitsProduced);
+                System.out.println("This is the daily goal:" + dailyGoal);
+
                 // replace with new edited
                 Team team = new Team(teamName, managerID, unitsProduced, dailyGoal, members);
-                dbref.child("teams").child(team.getName()).setValue(team);
+                dbref.child("teams").child(preName).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
+                //finish();
             }
 
             @Override
@@ -156,10 +173,10 @@ public class EditTeam extends AppCompatActivity {
         });
 
         changeOldTeams();
-        Intent returnIntent = new Intent();
-        returnIntent.putExtra("Name", teamName);
-        returnIntent.putExtra("Goal", dailyGoal);
-        setResult(Activity.RESULT_OK, returnIntent);
+        //Intent returnIntent = new Intent();
+        //returnIntent.putExtra("Name", teamName);
+        //returnIntent.putExtra("Goal", dailyGoal);
+        //setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 
