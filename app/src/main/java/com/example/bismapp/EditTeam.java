@@ -163,12 +163,12 @@ public class EditTeam extends AppCompatActivity {
 
                 // replace with new edited
                 Team team = new Team(teamName, managerID, unitsProduced, dailyGoal, members);
-                dbref.child("teams").child(preName).setValue(team);
+                dbref.child("teams").child(teamName).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
 
                 // update values of the team's branch on firebase
                 if (!preName.equals(teamName)) {
-                    //dbref.child("teams").child(preName).removeValue();
+                   dbref.child("teams").child(preName).removeValue();
                 }
                 peditor.putString("TEAM", teamName);
                 peditor.apply();
@@ -238,6 +238,10 @@ public class EditTeam extends AppCompatActivity {
     private void changeOldTeams() {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
+        if (associatesToTeamChange.isEmpty()) {
+            System.out.println("\tNo team members with previous teams");
+            return;
+        }
         // Fetch all associates
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
