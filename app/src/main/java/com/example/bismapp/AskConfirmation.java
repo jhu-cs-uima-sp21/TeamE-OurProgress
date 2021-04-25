@@ -50,7 +50,6 @@ public class AskConfirmation extends AppCompatActivity {
         nameView.setText(name);
     }
 
-
     //THIS PUTS REQUEST IN FIREBASE!
     public void okButtonClicked() {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {

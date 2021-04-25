@@ -1,6 +1,10 @@
 package com.example.bismapp;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +13,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
 public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHolder> {
     public ArrayList<Request> requests;
     private static Context cntx;
+    private static final String TAG = "tag";
+    private FirebaseDatabase mdbase;
+    private DatabaseReference dbref;
+
+
 
     public RequestAdapter(ArrayList<Request> requests, Context cntx) {
         this.requests = requests;
         this.cntx = cntx;
-       //this.activity = (RequestFrag) activity;
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
     }
 
     @NonNull
@@ -56,6 +75,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         private TextView name;
         private TextView station;
         private Request req;
+        private String sname;
 
         public ViewHolder(View view, TextView name, TextView station) {
             super(view);
@@ -65,22 +85,52 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             ImageButton remove_request_btn = (ImageButton) view.findViewById(R.id.remove_request_btn);
             remove_request_btn.setOnClickListener((View.OnClickListener) btnview  -> {
                 btnview.startAnimation(MainActivity.buttonClick);
-                Toast toast = Toast.makeText(btnview.getContext(),
-                        requests.get(getAdapterPosition()).getSenderID()
-                                + " has been removed from team", Toast.LENGTH_SHORT);
-                toast.show();
+                Intent intent = new Intent(cntx.getApplicationContext(), GiveConfirmation.class);
+                intent.putExtra("NAME", sname);
+                intent.putExtra("RECEIVERID", req.getReceiverID());
+                intent.putExtra("ISTEAM", req.isTeam());
+                cntx.startActivity(intent);
+
                 //try {
                 //    activity.checkToRemoveTeamMember(getAdapterPosition(), member);
                 //} catch (Exception e) {
                 //    e.printStackTrace();
                 //}
             });
+
         }
 
         public void setData(Request request) {
-            station.setText(request.getSenderID());
+            dbref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
+                    for (DataSnapshot i : usersShots) {
+                        if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
+                            sname = i.child("Name").getValue(String.class);
+                            name.setText(sname);
+                            station.setText(i.child("team").getValue(String.class));
+                        }
+                    }
+                    usersShots = snapshot.child("users").child("managers").getChildren();
+                    for (DataSnapshot i : usersShots) {
+                        if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
+                            sname = i.child("Name").getValue(String.class);
+                            name.setText(sname);
+                            station.setText(i.child("id").getValue(String.class));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NotNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
+                }
+            });
             req = request;
         }
+
     }
 
     public void updateDataSet(ArrayList<Request> data) {
