@@ -7,8 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.http.SslCertificate;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,8 @@ public class TeamMRFragment extends Fragment {
     private DatabaseReference dbref;
     private RecyclerView teamRoster;
     private Activity activity;
+    private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
     private TeamMemberAdapter adapter;
     private final int LAUNCH_REMOVE_MEMBER = 2;
     private static final String TAG = "dbref at TeamMRF: ";
@@ -54,6 +58,8 @@ public class TeamMRFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_team_member_roster, container, false);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        peditor = myPrefs.edit();
         activity = getActivity();
         adapter = new TeamMemberAdapter(this, new ArrayList<>());
 
@@ -75,7 +81,7 @@ public class TeamMRFragment extends Fragment {
 
     // Read from database to get list of team members
     private void prePopulatedTeamMembers() {
-        String teamName = String.valueOf(((EditTeam)activity).bundle.getString("Name"));
+        String teamName =  myPrefs.getString("TEAM", "A");
 
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();

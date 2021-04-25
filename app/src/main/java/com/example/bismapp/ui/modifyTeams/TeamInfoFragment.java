@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,12 +46,16 @@ public class TeamInfoFragment extends Fragment {
     public ArrayAdapter<String> adapter;
     private final int LAUNCH_CHANGE_TEAM = 1;
     private TeamMember changedMember = null;
+    private SharedPreferences myPrefs;
+    private SharedPreferences.Editor peditor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_team_info, container, false);
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        peditor = myPrefs.edit();
 
         // Get String list of associate names
         if (getActivity() instanceof CreateTeam) {
@@ -65,7 +70,7 @@ public class TeamInfoFragment extends Fragment {
                     android.R.layout.simple_list_item_1, activity.associatesNames);
             // pre-populate goal
             EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
-            editGoal.setText(String.valueOf(((EditTeam)getActivity()).bundle.getInt("Goal")));
+            editGoal.setText(String.valueOf(myPrefs.getInt("DAILY_GOAL", 1)));
         }
 
         AutoCompleteTextView textView = (AutoCompleteTextView)
