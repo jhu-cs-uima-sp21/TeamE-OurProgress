@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -34,6 +35,8 @@ public class GiveHelp extends Fragment {
     private SharedPreferences myPrefs;
     public ArrayList<Request> requests;
     private RequestAdapter adapter;
+    private View view;
+    private Context cntx;
     private static final String TAG = "dbref at YourTeams: ";
 
 
@@ -57,27 +60,28 @@ public class GiveHelp extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        cntx = getActivity().getApplicationContext();
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_give_help, container, false);
+        view = inflater.inflate(R.layout.fragment_give_help, container, false);
 
         //setContentView(R.layout.fragment_give_help);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         requests = new ArrayList<>();
         getRequests();
-        System.out.print("LOOK HERE FOR FIRST SENDER ID: " + requests.get(0).getSenderID());
+        //System.out.print("LOOK HERE FOR FIRST SENDER ID: " + requests.get(0).getSenderID());
         //requests.add(new Request("12", "34", false));
 
         // set up RecyclerView
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
-                LinearLayoutManager.VERTICAL, false);
-        adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
+        //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
+                //LinearLayoutManager.VERTICAL, false);
+        /*adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
 
         RecyclerView request_list = view.findViewById(R.id.request_list);
 
         request_list.setLayoutManager(layoutManager);
-        request_list.setAdapter(adapter);
+        request_list.setAdapter(adapter);*/
 
         // set up individual team clickListener
        /* adapter.setOnItemClickListener((position, v) ->
@@ -106,13 +110,27 @@ public class GiveHelp extends Fragment {
                     //check if this users ID matches receiverID
                     if (receiverID.equals(myPrefs.getString("TEAM", "")) || receiverID.equals(myPrefs.getString("ID", ""))) {
                         requests.add(new Request(senderID, receiverID, team));
+                        System.out.println(senderID);
                     }
                 }
 
                 System.out.println("LOOK HERE FOR NUM REQUESTS: " + requests.size());
 
-                adapter.updateDataSet(requests);
-                adapter.notifyDataSetChanged();
+
+               // adapter.updateDataSet(requests);
+               // adapter.notifyDataSetChanged();
+                for(Request r: requests) {
+                    System.out.println(r.getReceiverID());
+                }
+
+                LinearLayoutManager layoutManager = new LinearLayoutManager(cntx,
+                        LinearLayoutManager.VERTICAL, false);
+                adapter = new RequestAdapter(requests, cntx);
+
+                RecyclerView request_list = view.findViewById(R.id.request_list);
+
+                request_list.setLayoutManager(layoutManager);
+                request_list.setAdapter(adapter);
             }
 
             @Override
