@@ -70,7 +70,7 @@ public class TeamInfoFragment extends Fragment {
                     android.R.layout.simple_list_item_1, activity.associatesNames);
             // pre-populate goal
             EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
-            editGoal.setText(String.valueOf(myPrefs.getInt("DAILY_GOAL", 1)));
+            editGoal.setText(String.valueOf(myPrefs.getInt("DAILY_GOAL", 999)));
         }
 
         AutoCompleteTextView textView = (AutoCompleteTextView)

@@ -4,13 +4,16 @@ package com.example.bismapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
 import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
@@ -34,16 +37,14 @@ public class EditTeam extends AppCompatActivity {
     public ArrayList<String> associatesNames;
     public HashMap<String, String> associatesToTeamChange;
 
-    //public Bundle bundle;
-    private String preName;
-
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private SharedPreferences myPrefs;
-    private SharedPreferences.Editor peditor;
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
 
+    private SharedPreferences.Editor peditor;
+    private String preName;
     private String teamName, managerID;
     private Integer unitsProduced, dailyGoal;
     private ArrayList<TeamMember> members;
@@ -54,17 +55,13 @@ public class EditTeam extends AppCompatActivity {
         setContentView(R.layout.activity_create_team);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
+
         myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         peditor = myPrefs.edit();
+
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
         associatesToTeamChange = new HashMap<>();
-
-        Intent intent = getIntent();
-        //intent.getStringExtra();
-        //intent.getExtra();
-
-        // getting the bundle back from the android
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -79,9 +76,22 @@ public class EditTeam extends AppCompatActivity {
         preName = myPrefs.getString("TEAM", "A");
         EditText editName = ((EditText) findViewById(R.id.edit_team_name));
         editName.setText(preName);
+        // disable editing of the name
+        // disableEditText(editName);
     }
 
-    public void makeToast(CharSequence text) {
+    private void disableEditText(EditText editText) {
+        editText.setInputType(InputType.TYPE_NULL);
+        editText.setFocusable(false);
+        editText.setEnabled(false);
+        editText.setCursorVisible(false);
+        editText.setKeyListener(null);
+        editText.setBackgroundColor(Color.TRANSPARENT);
+        editText.setTextColor(ContextCompat.getColor(this, R.color.white));
+        editText.setContentDescription("Name of the team being edited: " + preName);
+    }
+
+    private void makeToast(CharSequence text) {
         int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
@@ -145,13 +155,6 @@ public class EditTeam extends AppCompatActivity {
                             .setValue(teamName);
                     Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
                 }
-                // update values of the team's branch on firebase
-                if (!preName.equals(teamName)) {
-                    //dbref.child("teams").child(preName).setValue(teamName);
-                }
-
-                peditor.putString("TEAM", preName);
-                peditor.apply();
 
                 System.out.println("This is the team name:" + teamName);
                 System.out.println("This is the manager ID:" + managerID);
@@ -162,7 +165,15 @@ public class EditTeam extends AppCompatActivity {
                 Team team = new Team(teamName, managerID, unitsProduced, dailyGoal, members);
                 dbref.child("teams").child(preName).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
-                //finish();
+
+                // update values of the team's branch on firebase
+                if (!preName.equals(teamName)) {
+                    //dbref.child("teams").child(preName).removeValue();
+                }
+                peditor.putString("TEAM", teamName);
+                peditor.apply();
+                changeOldTeams();
+                finish();
             }
 
             @Override
@@ -171,13 +182,6 @@ public class EditTeam extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
-        changeOldTeams();
-        //Intent returnIntent = new Intent();
-        //returnIntent.putExtra("Name", teamName);
-        //returnIntent.putExtra("Goal", dailyGoal);
-        //setResult(Activity.RESULT_OK, returnIntent);
-        finish();
     }
 
     public void getAllAssociates() {

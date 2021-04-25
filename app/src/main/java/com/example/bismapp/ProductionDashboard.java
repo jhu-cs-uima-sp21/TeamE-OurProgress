@@ -43,6 +43,7 @@ public class ProductionDashboard extends Fragment {
     public static AlphaAnimation buttonClick = new AlphaAnimation(1F, 0.5F);
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
+    private ValueEventListener valueEventListener;
     private static final String TAG = "dbref: ";
     private int daily_goal, units_produced, percent;
 
@@ -83,10 +84,9 @@ public class ProductionDashboard extends Fragment {
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         peditor = myPrefs.edit();
-        //String teamID = myPrefs.getString("TEAM", "A");
 
         //READ FROM DATABASE TO CHECK IF MANAGER
-        dbref.addValueEventListener(new ValueEventListener() {
+        valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
@@ -128,8 +128,7 @@ public class ProductionDashboard extends Fragment {
 
                 prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
                 team_name_txt.setText("Team " + teamID + " has made");
-
-
+                peditor.apply();
             }
 
             @Override
@@ -137,9 +136,8 @@ public class ProductionDashboard extends Fragment {
                 // Failed to read value
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
-        });
-
-
+        };
+        dbref.addValueEventListener(valueEventListener);
 
         ImageButton settings_btn = (ImageButton) myView.findViewById(R.id.settingsButton);
         settings_btn.setOnClickListener(new View.OnClickListener() {
@@ -156,5 +154,9 @@ public class ProductionDashboard extends Fragment {
         return myView;
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        dbref.removeEventListener(valueEventListener);
+    }
 }
