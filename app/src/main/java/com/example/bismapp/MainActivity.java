@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
             // TODO: DO we need this?
             //boolean isAssociate;
 
+            //dbref.child("users").child("managers").child(entered_id).exists();
+
             //READ FROM DATABASE TO CHECK IF MANAGER
             dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -99,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                    // myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
                     //SharedPreferences.Editor peditor = myPrefs.edit();
 
-                    peditor.putBoolean("MANAGER", isManager);
-                    peditor.putBoolean("ASSOCIATE", isAssociate);
+                    //peditor.putBoolean("MANAGER", isManager);
+                    //peditor.putBoolean("ASSOCIATE", isAssociate);
 
                     if (isManager) {
                         Log.w(TAG, "This user is a Manager");
@@ -112,6 +114,29 @@ public class MainActivity extends AppCompatActivity {
                         Log.w(TAG, "This user is a Associate");
                     }
                     peditor.apply();
+
+                    //isManager = myPrefs.getBoolean("MANAGER", false);
+                    //boolean isAssociate = myPrefs.getBoolean("ASSOCIATE", false);
+
+                    System.out.println("Shared Prefs Manager is: " + myPrefs.getBoolean("MANAGER", false));
+                    System.out.println("Shared Prefs Associate is: " + myPrefs.getBoolean("ASSOCIATE", false));
+
+                    if (isManager) {
+                        Intent intent = new Intent(getApplicationContext(), YourTeams.class);
+                        startActivity(intent);
+                    } else if (isAssociate) {
+                        Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
+                        startActivity(intent);
+                    } else {
+                        //TODO: SEE IF WE CAN MAKE TOAST LARGER
+
+                        CharSequence text = "Please enter a valid employee id";
+                        int duration = Toast.LENGTH_LONG;
+
+                        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                        toast.show();
+                        Log.w(TAG, "Invalid Employee ID");
+                    }
 
 
 
@@ -125,28 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            boolean isManager = myPrefs.getBoolean("MANAGER", false);
-            boolean isAssociate = myPrefs.getBoolean("ASSOCIATE", false);
 
-            System.out.println("Shared Prefs Manager is: " + myPrefs.getBoolean("MANAGER", false));
-            System.out.println("Shared Prefs Associate is: " + myPrefs.getBoolean("ASSOCIATE", false));
-
-            if (isManager) {
-                Intent intent = new Intent(getApplicationContext(), YourTeams.class);
-                startActivity(intent);
-            } else if (isAssociate) {
-                Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
-                startActivity(intent);
-            } else {
-                 //TODO: SEE IF WE CAN MAKE TOAST LARGER
-
-                CharSequence text = "Please enter a valid employee id";
-                int duration = Toast.LENGTH_LONG;
-
-                Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                toast.show();
-                Log.w(TAG, "Invalid Employee ID");
-            }
         });
 
         CheckBox checkBox = findViewById(R.id.checkBox);
