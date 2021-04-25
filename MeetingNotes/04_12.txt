@@ -1,0 +1,33 @@
+UIMA Team E Scrum meeting  04/12//21
+
+Those in attendance:
+	Samuel
+	Emi
+	Chiamaka
+	Keidai
+
+Agenda: 
+1. Fixing Errors from Sprint 1
+ 
+
+
+Meeting Times:
+4:56 Meeting Start Time
+	Chiamaka will share Emulator
+	Keidai will be setting up the Excel sheet with the current bugs
+5:05 Jacob joins; working to fix bugs
+	Sprint 2 Plans
+		Fix Bugs
+		Ask for Help
+		Give Help
+		Edit Teams
+Complete Create Teams Page
+		Text to Speech
+5:08 Testing Firebase changes with app
+5:09 Device Back Arrow going to unusual places
+	Such as previous Production Dashboard Screens
+5:15 Error with device back button appearing after creating a new Team
+5:23 Maybe making the RecyclerView be a Fragment so that Fragment updates rather than the YourTeams Activity screen
+5:28 Chiamaka is testing to see if adding to a Fragment will help
+	Didn't work
+6:20 Meeting End Time

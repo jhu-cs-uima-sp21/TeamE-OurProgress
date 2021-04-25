@@ -1,0 +1,37 @@
+UIMA Team E Scrum meeting  04/18/21
+
+Those in attendance:
+	Samuel
+	Chiamaka
+        Keidai
+	Emi
+
+Agenda: 
+1. Sprint 2 Updates
+
+Meetings Times:
+7:38 Meeting Start Time
+7:38 AutoCompleteTextView is completed for Ask For Help
+By selecting a name on the dropdown, it takes you to a new activity (Confirmation Activity)
+7:42 Keidai and Chiamaka updates
+	"Can't make 0 daily goal" works
+	"Can't add a member twice" works
+	Toast for invalid member works
+	Working on Talkback feature
+7:45: Landscape mode is still not working
+7:46 TalkBack
+	Content Description
+	Designate a writer and an editor
+7:47 Creating a list of things to talk to Jacob about
+	Landscape issue
+7:50 Removing X and checkmark for the CreateTeam screen
+8:02 Changing the adapter for the AutoCompleteTextView for the AskForHelp screen
+8:04 Meeting End Time
+
+Questions for Jacob
+1) Tap Red X to remove members: button not animating
+2) Landscape is not being stuck in portrait
+
+
+
+

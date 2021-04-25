@@ -1,0 +1,29 @@
+UIMA Team E Scrum meeting  04/05/21
+
+Those in attendance:
+	Samuel
+	Emi
+	Chiamaka
+	Keidai
+
+Agenda: 
+1. Updates after Sprint 1
+ 
+
+Meeting Times:
+5:00 Meeting Start Time
+5:05 Emailing Jacob to see if he is attending the meeting
+5:08 Jacob joins
+	Telling bugs to Jacob
+		Jacob says bugs/error are fine because it is the first sprint
+		They are mainly looking to see that most of the work is done
+5:10 Keidai acting as the driver to show Jacob our issues with Sprint 1
+	Looking into methods to refresh
+		Lifecycle methods?
+		Maybe it's because we create the RecyclerView in onCreate()
+5:18 Trying to generate teams and update teams in onStart() in addition to onResume()
+	Unsuccessful
+5:38 Works successfully on smaller devices
+5:51 Trying this.recreate() in onResume for MainActivity/Login screen
+5:55 Trying this.recreate() in onDataChange for MainActivity/Login screen
+6:20 Meeting End Time

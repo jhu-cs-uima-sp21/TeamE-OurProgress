@@ -1,0 +1,22 @@
+UIMA Team E Scrum meeting  04/11/21
+
+Those in attendance:
+	Samuel
+	Chiamaka
+        Keidai
+
+Agenda: 
+1. Sprint 2 Updates
+2. Things that went wrong with Sprint 1 and Potential Solutions
+3. Partner Switch?
+
+Meetings Times:
+7:53 Meeting Start Time
+	Edit Teams + Create Teams + Speech to Text - K/C
+	Ask for Help and Give Help - E/S 
+7:56 Fixing issues for Sprint 1
+	Splitting up bugs for Sprint 1
+7:58 Same teams
+8:00 Excel sheet for list of running bugs
+	Keidai will set up the sheet 
+8:01 Meeting End Time

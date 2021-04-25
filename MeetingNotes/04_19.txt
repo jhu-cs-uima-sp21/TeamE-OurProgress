@@ -1,0 +1,48 @@
+UIMA Team E Scrum meeting  04/19/21
+
+Those in attendance:
+	Samuel
+	Chiamaka
+	Keidai
+Emi
+
+Agenda: 
+1. Sprint 2 Updates
+ 
+
+Meeting Times:
+5:00 Meeting Start Time
+5:04 Jacob joins the meeting
+	Questions for Jacob
+		  1) Tap Red X to remove members: button not animating
+		     	 Neglect this for now
+		  2) Landscape is not being stuck in portrait	
+		     	 Adding line inAndroid Manifest doesn't work correctly
+			 sensorPortrait for the entire application causes it to switch to landscape mode occasionally
+			 	Maybe we should do it for each activity?
+ 				      This works!
+5:18 Should we include a feature that lets a user know what type of unit is being produced (masks, clothes, etc.)?
+5:24 Scroll view for AutoCompleteTextView?
+     https://stackoverflow.com/questions/3480529/android-autocompletetextview-hint-results-hidden-under-keyboard
+     Put AutoCompleteText inside a ScrollVIew?
+5:34 AutoCompleteTextView is scrollable for AskForHelp screen but not on CreateTeam screen
+5:36 Fix duplicate names in the ArrayList for the AutoCompleteTextView
+5:46 Maybe use a set that checks whether a certain ID is a Manager or an associate
+	Maybe a lifecycle issue
+	SingleValueEventListener
+5:58 Changing "Manager" to "Supervisor"
+6:11 TODO List for Next Sunday
+     Keidai & Chiamaka
+     	    Text to Speech
+	    Create Teams
+	    Edit Teams
+     Emi & Samuel
+     	    Ask for Help
+	    	Team Member
+		Supervisor
+	    Give Help Screen
+6:14 Thursday - Design Day
+6:14 Meeting End Time
+	
+	
+	

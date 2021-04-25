@@ -1,0 +1,39 @@
+Those in Attendance
+Keidai
+Samuel
+Emi
+Chiamaka
+
+Agenda:
+1. Updates for Sprint 1
+
+Meeting minutes:
+4:00 Meeting Start TIme  
+5:15 Complete To-Do List Items before recording & plan presentation 
+To-Do:
+	Test layout on smaller screens
+	     Nexus 1
+	Your teams page
+	     Connecting your teams page to firebase (sam and emi)
+	     Launch team prod dashboard from team recycler view
+	Create and Edit Team page 
+	       Connecting to firebase (saving + suggestions)  (sam and emi)
+	       Associate suggestions (not dropdown)
+	       Buttons 
+	       Toast for editing invalid teams
+	       Toast for leaving data blank
+	Remember me feature
+		 Shared preferences
+	Production dashboard
+		 Connect settings to edit team
+	Add blank screens for Navigation Tabs
+		Fix thumb
+		Add Question Mark
+		Reverse Background Active Bar
+		Add usernames and passwords to README for testing purposes
+		Change managers to "supervisors"
+	TODO FOR NEXT SPRINT:
+	     	Multiple Managers
+6:20 Meeting End Time
+
+

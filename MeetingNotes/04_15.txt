@@ -1,0 +1,38 @@
+UIMA Team E Scrum meeting  04/15/21
+
+Those in attendance:
+	Samuel
+	Emi
+	Chiamaka
+	Keidai
+
+Agenda: 
+1. Sprint 2 Updates
+ 
+
+Meeting Times:
+10:11 Meeting Start Time
+10:13 Ask for Help XML is figured out
+	Working on completing AutoComplete Search Bar
+	Remember Me
+10:14 Keidai and Chiamaka
+	Fixed TeamMember Fragment to properly close them out
+	WIll try to fix member list so it only accesses members that are not in the team
+10:14 Jacob rubric
+	App crashes when you try to make a team of the same name
+	Check for a goal 
+10:15 Try to get Search Bar done by Sunday and Make a Structure that holds current requests
+	Ask Help
+10:17 Keidai and Chiamaka should try to Delete Teams
+	Expandable Action Button?
+	Swiping Teams?
+10:21 Keidai and Chiamaka's Todo List for Sunday
+	Todo List in Google Drive
+10:29 Dumping useful resources in K/C document notes
+10:29 Work on Debugging 
+10:48 Keidai and Chiamaka updating ToDo List
+10:58 Assigned Debugging Tasks
+11:00 Meeting End Time
+	
+	
+	
