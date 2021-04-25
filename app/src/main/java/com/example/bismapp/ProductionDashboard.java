@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -44,8 +47,11 @@ public class ProductionDashboard extends Fragment {
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private ValueEventListener valueEventListener;
+    private DatabaseReference newTeamRef;
+    private ChildEventListener teamEventListener;
     private static final String TAG = "dbref: ";
     private int daily_goal, units_produced, percent;
+    private boolean hasPaused;
 
     public ProductionDashboard() {
 
@@ -70,6 +76,12 @@ public class ProductionDashboard extends Fragment {
         super.onCreate(savedInstanceState);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
+
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+        peditor = myPrefs.edit();
+        newTeamRef =  dbref.child("teams")
+                .child(myPrefs.getString("TEAM", "A"));
+        hasPaused = false;
     }
 
     @Override
@@ -81,9 +93,6 @@ public class ProductionDashboard extends Fragment {
         Context cntx = getActivity().getApplicationContext();
 
         buttonClick.setDuration(100);
-
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        peditor = myPrefs.edit();
 
         //READ FROM DATABASE TO CHECK IF MANAGER
         valueEventListener = new ValueEventListener() {
@@ -145,8 +154,6 @@ public class ProductionDashboard extends Fragment {
             public void onClick(View view) { // switch to Your Teams activity
                 view.startAnimation(buttonClick);
                 Intent intent = new Intent(getActivity(), EditTeam.class);
-                //intent.putExtra("Name", teamID);
-                //intent.putExtra("Goal", daily_goal);
                 startActivity(intent);
             }
         });
@@ -157,6 +164,54 @@ public class ProductionDashboard extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        dbref.removeEventListener(valueEventListener);
+        // dbref.removeEventListener(valueEventListener);
+        /*if (teamEventListener != null) {
+            newTeamRef.removeEventListener(teamEventListener);
+        }
+        hasPaused = true;*/
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        /*if (hasPaused) {
+            // wait till child been fully added
+            newTeamRef = dbref.child("teams")
+                    .child(myPrefs.getString("TEAM", "A"));
+            teamEventListener = new ChildEventListener() {
+                String nameCheck = myPrefs.getString("TEAM", "A");
+
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    if (snapshot.hasChild("name") && snapshot.hasChild("daily_goal")
+                            && snapshot.hasChild("units_produced")) {
+                        dbref.addValueEventListener(valueEventListener);
+                        newTeamRef.removeEventListener(teamEventListener);
+                    }
+                }
+
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Nothing
+                }
+
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                    // Nothing
+                }
+
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    // Nothing
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "onResume-Failed to read value.", error.toException());
+                }
+            };
+            newTeamRef.addChildEventListener(teamEventListener);
+        }*/
     }
 }

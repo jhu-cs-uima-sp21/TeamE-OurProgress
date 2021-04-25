@@ -110,17 +110,9 @@ public class GiveHelp extends Fragment {
                     //check if this users ID matches receiverID
                     if (receiverID.equals(myPrefs.getString("TEAM", "")) || receiverID.equals(myPrefs.getString("ID", ""))) {
                         requests.add(new Request(senderID, receiverID, team));
-                        requests.add(new Request(senderID, receiverID, team));
-                        requests.add(new Request(senderID, receiverID, team));
                         System.out.println(senderID);
                     }
                 }
-
-                System.out.println("LOOK HERE FOR NUM REQUESTS: " + requests.size());
-
-
-               // adapter.updateDataSet(requests);
-               // adapter.notifyDataSetChanged();
                 for(Request r: requests) {
                     System.out.println(r.getReceiverID());
                 }
