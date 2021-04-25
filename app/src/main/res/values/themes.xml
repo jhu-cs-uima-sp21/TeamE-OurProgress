@@ -24,8 +24,10 @@
     <style name="Theme.BISMApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
-    <style name="BottomNavigationTheme" parent="Theme.AppCompat.Light">
+    <style name="BottomNavigationTheme" parent="Widget.Design.BottomNavigationView">
         <item name="colorPrimary">@color/white</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_gravity">bottom</item>
         <item name="android:textColorSecondary">@color/bism_blue</item>
     </style>
 </resources>
