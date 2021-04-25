@@ -164,17 +164,17 @@ public class ProductionDashboard extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        dbref.removeEventListener(valueEventListener);
-        if (teamEventListener != null) {
+        // dbref.removeEventListener(valueEventListener);
+        /*if (teamEventListener != null) {
             newTeamRef.removeEventListener(teamEventListener);
         }
-        hasPaused = true;
+        hasPaused = true;*/
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (hasPaused) {
+        /*if (hasPaused) {
             // wait till child been fully added
             newTeamRef = dbref.child("teams")
                     .child(myPrefs.getString("TEAM", "A"));
@@ -212,6 +212,6 @@ public class ProductionDashboard extends Fragment {
                 }
             };
             newTeamRef.addChildEventListener(teamEventListener);
-        }
+        }*/
     }
 }
