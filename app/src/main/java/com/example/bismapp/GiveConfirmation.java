@@ -10,7 +10,6 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,7 +45,7 @@ public class GiveConfirmation extends AppCompatActivity {
         id = myPrefs.getString("ID", "");
         newReq = new Request(id, receiverID, isTeam);
 
-        TextView nameView = (TextView) findViewById(R.id.name);
+        TextView nameView = (TextView) findViewById(R.id.requester);
         nameView.setText(name);
     }
 
