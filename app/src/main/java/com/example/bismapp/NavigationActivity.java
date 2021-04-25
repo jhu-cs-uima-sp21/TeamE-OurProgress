@@ -11,13 +11,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 public class NavigationActivity extends AppCompatActivity{
+
+    private BottomNavigationView bottomBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        //navView.setBackgroundResource(R.drawable.tabbar_background);
+        navView.setSelectedItemId(R.id.nav_production);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        //openFragment(new ProductionDashboard());
+        //navView.getMenu().findItem(R.id.nav_production).setChecked(true);
+        openFragment(new ProductionDashboard());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.nav_host_fragment, new ProductionDashboard());
         transaction.commit();

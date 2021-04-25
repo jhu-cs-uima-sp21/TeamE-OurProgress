@@ -20,9 +20,15 @@ public class AssociateNavigationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.associate_navigation);
+
         BottomNavigationView navView = findViewById(R.id.nav_view);
+        navView.setSelectedItemId(R.id.nav_production);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        openFragment(new AssociateProductionDash());
+        //navView.getMenu().findItem(R.id.nav_production).setChecked(true);
+        openFragment(new ProductionDashboard());
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.nav_host_fragment, new ProductionDashboard());
+        transaction.commit();
 
         //open to production dashboard
 
