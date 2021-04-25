@@ -83,14 +83,4 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         }
     }
 
-    public void updateDataSet(ArrayList<Request> data) {
-        // clear old list
-        requests.clear();
-
-        requests.addAll(data);
-
-        // notify adapter
-        notifyDataSetChanged();
-    }
-
 }

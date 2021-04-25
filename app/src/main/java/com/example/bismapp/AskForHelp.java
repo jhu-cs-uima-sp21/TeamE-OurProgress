@@ -94,6 +94,7 @@ public class AskForHelp extends Fragment {
         textView.setAdapter(adapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            // Search button
             @Override
             public void onItemClick(AdapterView<?> parent, View arg1, int pos,
                                     long id) {

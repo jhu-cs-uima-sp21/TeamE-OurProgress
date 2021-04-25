@@ -6,33 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".AskConfirmation">
 
-
-    <TextView
-        android:id="@+id/ask_for_help"
-        android:layout_width="match_parent"
-        android:layout_height="98dp"
-        android:background="@color/whitesmoke"
-        android:fontFamily="@font/montserrat_bold"
-        android:gravity="center"
-        android:text="@string/askheader"
-        android:textColor="@color/black"
-        android:textSize="45sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/askFrom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
         android:fontFamily="@font/montserrat"
         android:gravity="center"
         android:text="@string/confirm"
+        android:textColor="@color/black"
         android:textSize="50sp"
-        app:layout_constraintTop_toBottomOf="@+id/ask_for_help"
-        tools:layout_editor_absoluteX="3dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.344" />
 
     <FrameLayout
         android:id="@+id/okay_cancel_frag"
@@ -41,24 +29,40 @@
         android:layout_gravity="bottom|center"
         android:layout_marginTop="16dp"
         android:layout_weight=".25"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name">
+        app:layout_constraintTop_toBottomOf="@+id/name_linear"
+        app:layout_constraintVertical_bias="0.997">
 
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
+        android:id="@+id/name_linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:fontFamily="@font/montserrat"
-        android:text="TextView"
-        android:textColor="@color/bism_blue"
-        android:textSize="60sp"
-        app:layout_constraintBottom_toTopOf="@+id/okay_cancel_frag"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/askFrom" />
+        app:layout_constraintTop_toBottomOf="@+id/askFrom">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:text="TextView"
+            android:textColor="@color/bism_blue"
+            android:textSize="60sp" />
+
+        <TextView
+            android:id="@+id/question_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:textColor="@color/black"
+            android:textSize="60sp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
