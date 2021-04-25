@@ -16,7 +16,6 @@
         android:background="@color/white">
 
         <ProgressBar
-
             android:id="@+id/circularProgressbar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="213dp"
@@ -33,7 +32,8 @@
             app:layout_constraintHorizontal_bias="0.504"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintVertical_bias="0.126"
+            android:labelFor="@id/textView"/>
 
         <TextView
             android:id="@+id/hasMade"

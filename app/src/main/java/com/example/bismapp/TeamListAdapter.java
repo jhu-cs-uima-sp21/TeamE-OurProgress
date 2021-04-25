@@ -43,8 +43,11 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull TeamListAdapter.ViewHolder holder, int position) {
+        int realPosition = position + 1;
         Team team = teams.get(position);
         holder.setData(team);
+        holder.itemView.setContentDescription("Team " + realPosition + ": " +
+                team.getName());
     }
 
     @Override
