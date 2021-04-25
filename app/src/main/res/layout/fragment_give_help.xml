@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:background="@color/whitesmoke"
-            android:fontFamily="@font/montserrat"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="@string/help_someone"
             android:textColor="@color/black"

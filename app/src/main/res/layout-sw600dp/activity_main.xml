@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/bism_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/rectimage"
+        android:layout_width="750dp"
+        android:layout_height="698dp"
+        android:src="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="@string/welcome"
+        android:textColor="@color/white"
+        android:textSize="100sp"
+        app:layout_constraintBottom_toTopOf="@+id/rectimage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.676" />
+
+
+    <ImageView
+        android:id="@+id/bism_logo"
+        android:layout_width="264dp"
+        android:layout_height="240sp"
+        android:layout_marginStart="244dp"
+        android:layout_marginLeft="244dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="246dp"
+        android:layout_marginRight="246dp"
+        app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/rectimage"
+        app:layout_constraintTop_toTopOf="@+id/rectimage"
+        app:srcCompat="@drawable/bismlogo"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/eid_field"
+        android:layout_width="620dp"
+        android:layout_height="126dp"
+        android:layout_marginTop="48dp"
+        android:autofillHints="AUTOFILL_HINT_PASSWORD"
+        android:background="@drawable/textview_border"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:hint="@string/employee_id"
+        android:inputType="numberPassword"
+        android:paddingStart="15dp"
+        android:paddingLeft="30dp"
+        android:paddingEnd="15dp"
+        android:paddingRight="30dp"
+        android:textSize="68sp"
+        app:layout_constraintEnd_toEndOf="@+id/rectimage"
+        app:layout_constraintStart_toStartOf="@+id/rectimage"
+        app:layout_constraintTop_toBottomOf="@+id/bism_logo"
+        tools:textColorHint="@color/whitesmoke" />
+
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:button="@drawable/check_box_selector"
+        android:fontFamily="@font/montserrat"
+        android:paddingStart="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/remember_me"
+        android:textSize="48sp"
+        app:buttonTint="@color/dodgerBlue"
+        app:layout_constraintStart_toStartOf="@id/eid_field"
+        app:layout_constraintTop_toBottomOf="@id/eid_field" />
+
+    <Button
+        android:id="@+id/login_b"
+        android:layout_width="430dp"
+        android:layout_height="160dp"
+        android:background="@drawable/button_background"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/login"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="68sp"
+        app:backgroundTint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectimage" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

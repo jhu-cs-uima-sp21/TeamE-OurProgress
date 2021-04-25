@@ -17,13 +17,45 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/mobile_navigation" />
 
+    <LinearLayout
+        android:id="@+id/transparent_bg"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_view">
+
+        <ImageView
+            android:id="@+id/first_tab_a"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/rectangle_tab_blue"></ImageView>
+
+        <ImageView
+            android:id="@+id/second_tab_b"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/rectangle_tab_white"></ImageView>
+
+        <ImageView
+            android:id="@+id/third_tab_c"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/rectangle_tab_blue"></ImageView>
+    </LinearLayout>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
-        android:layout_height="104dp"
-        android:background="@color/bism_blue"
+        android:layout_height="wrap_content"
+        android:background="@drawable/transparent_rect"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:itemBackground="@drawable/bottom_nav_active"
         app:itemIconSize="67dp"
-        app:itemIconTint="@color/white"
+        app:itemIconTint="@color/color_selector"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

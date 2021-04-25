@@ -53,7 +53,7 @@
     <string name="text_not_found">404: Text not found</string>
 
     <!--GIVE HELP SCREEN-->
-    <string name="help_someone">Help someone</string>
+    <string name="help_someone">Help Someone</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="create_or_delete_a_team">Create or delete a team</string>

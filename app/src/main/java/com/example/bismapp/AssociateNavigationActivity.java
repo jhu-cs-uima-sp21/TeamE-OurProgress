@@ -4,6 +4,7 @@ package com.example.bismapp;
         import android.os.Bundle;
         import android.util.Log;
         import android.view.MenuItem;
+        import android.widget.ImageView;
 
         import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -15,12 +16,17 @@ package com.example.bismapp;
 public class AssociateNavigationActivity extends AppCompatActivity {
 
     private static final String TAG = "AssocNav";
+    private ImageView first_tab;
+    private ImageView second_tab;
+    private ImageView third_tab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.associate_navigation);
-
+        first_tab = (ImageView) findViewById(R.id.first_tab_a);
+        second_tab = (ImageView) findViewById(R.id.second_tab_b);
+        third_tab = (ImageView) findViewById(R.id.third_tab_c);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.nav_production);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
@@ -48,12 +54,21 @@ public class AssociateNavigationActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.navigation_give:
                             openFragment(GiveHelp.newInstance("", ""));
+                            first_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_white));
+                            second_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
+                            third_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
                             return true;
                         case R.id.nav_production:
-                            openFragment(AssociateProductionDash.newInstance("", ""));
+                            openFragment(ProductionDashboard.newInstance("", ""));
+                            first_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
+                            second_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_white));
+                            third_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
                             return true;
                         case R.id.navigation_ask:
                             openFragment(AskForHelp.newInstance("", ""));
+                            first_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
+                            second_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
+                            third_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_white));
                             return true;
                     }
                     return false;
