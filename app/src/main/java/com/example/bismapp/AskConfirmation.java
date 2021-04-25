@@ -71,6 +71,7 @@ public class AskConfirmation extends AppCompatActivity {
                     numRequests++;
                 }
                 dbref.child("numRequests").setValue(numRequests);
+                newReq.setNumReq(numRequests);
                 dbref.child("requests").child(numRequests.toString()).setValue(newReq);
             }
             @Override

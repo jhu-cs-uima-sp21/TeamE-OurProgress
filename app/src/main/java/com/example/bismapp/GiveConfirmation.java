@@ -20,51 +20,37 @@ import org.jetbrains.annotations.NotNull;
 
 public class GiveConfirmation extends AppCompatActivity {
     private static final String TAG = "tag?";
-    private String name, id, receiverID;
+    private String name, senderID, receiverID;
     private boolean isTeam;
     private OkCancelFragment okCancel;
     private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
-    private SharedPreferences myPrefs;
-    private Request newReq;
+    private Integer reqNum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_confirmation);
+        setContentView(R.layout.activity_give_confirmation);
         okCancel = new OkCancelFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Intent intent = getIntent();
         name = intent.getStringExtra("NAME");
-        receiverID = intent.getStringExtra("RECEIVERID");
-        isTeam = intent.getBooleanExtra("ISTEAM", false);
-        id = myPrefs.getString("ID", "");
-        newReq = new Request(id, receiverID, isTeam);
-
+        reqNum = (Integer) intent.getIntExtra("REQNUM", 0);
+        System.out.println("numRequest = " + reqNum);
         TextView nameView = (TextView) findViewById(R.id.requester);
         nameView.setText(name);
     }
 
 
-    //THIS PUTS REQUEST IN FIREBASE!
+    //THIS REMOVES REQUEST FROM FIREBASE!
     public void okButtonClicked() {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                //increment numrequests
-                Integer numRequests = snapshot.child("numRequests").getValue(Integer.class);
-                System.out.println(numRequests);
-                if (numRequests == Integer.MAX_VALUE - 1) {
-                    numRequests = 0;
-                } else {
-                    numRequests++;
-                }
-                dbref.child("numRequests").setValue(numRequests);
-                dbref.child("requests").child(numRequests.toString()).setValue(newReq);
+                dbref.child("requests").child(reqNum.toString()).removeValue();
             }
             @Override
             public void onCancelled(@NotNull DatabaseError error) {
@@ -73,7 +59,7 @@ public class GiveConfirmation extends AppCompatActivity {
             }
         });
         int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(this, "Request has been sent!", duration);
+        Toast toast = Toast.makeText(this, "You've accepted the help request!", duration);
         toast.show();
 
         finish();

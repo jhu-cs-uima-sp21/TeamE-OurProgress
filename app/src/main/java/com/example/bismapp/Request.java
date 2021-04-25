@@ -3,6 +3,7 @@ package com.example.bismapp;
 public class Request {
     private String senderID, receiverID; //these fiels are necessary
     private boolean team;
+    int numReq;
     //constructor for request for one individual (team member or supervisor)
 
     //if team is true, then receiver id isnt an id -- it's a team name
@@ -10,6 +11,21 @@ public class Request {
         this.senderID = senderID;
         this.receiverID = receiverID;
         this.team = team;
+    }
+
+    public Request(String senderID, String receiverID, boolean team, int numReq) {
+        this.senderID = senderID;
+        this.receiverID = receiverID;
+        this.team = team;
+        this.numReq = numReq;
+    }
+
+    public int getNumReq() {
+        return numReq;
+    }
+
+    public void setNumReq(int numReq) {
+        this.numReq = numReq;
     }
 
     public String getSenderID() {
