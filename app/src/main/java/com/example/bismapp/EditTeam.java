@@ -5,16 +5,20 @@ package com.example.bismapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
 
 import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
 import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
@@ -26,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -74,12 +77,19 @@ public class EditTeam extends AppCompatActivity {
 
         // pre-populate
         preName = myPrefs.getString("TEAM", "A");
-        EditText editName = ((EditText) findViewById(R.id.edit_team_name));
-        editName.setText(preName);
-        disableEditText(editName);
+
+        disableEditingTeamName();
     }
 
-    private void disableEditText(EditText editText) {
+    private void disableEditingTeamName() {
+        EditText editText = ((EditText) findViewById(R.id.edit_team_name));
+        editText.setText("Edit Team " + preName);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            editText.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
+        } else {
+            editText.setTextSize(32);
+            editText.setMaxLines(2);
+        }
         editText.setInputType(InputType.TYPE_NULL);
         editText.setFocusable(false);
         editText.setEnabled(false);
@@ -88,6 +98,12 @@ public class EditTeam extends AppCompatActivity {
         editText.setBackgroundColor(ContextCompat.getColor(this, R.color.bism_blue));
         editText.setTextColor(ContextCompat.getColor(this, R.color.white));
         editText.setContentDescription("Name of the team being edited: " + preName);
+
+        LinearLayout linearLayout = findViewById(R.id.linearLayout);
+        linearLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.bism_blue));
+        linearLayout.setPadding(0,0,0,0);
+
+        findViewById(R.id.imageView).setVisibility(View.GONE);
     }
 
     public void makeToast(CharSequence text) {
@@ -126,7 +142,7 @@ public class EditTeam extends AppCompatActivity {
                     .toString());
             if (dailyGoal == 0) {
                 ((EditText) findViewById(R.id.enterDailyGoal)).setText("");
-                makeToast("Daily goal cannot be 0");
+                makeToast("Daily goal cannot be 0 nor greater than " + Integer.MAX_VALUE);
                 return;
             }
         } catch (NumberFormatException e) {
