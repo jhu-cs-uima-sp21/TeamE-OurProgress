@@ -87,36 +87,24 @@ public class MainActivity extends AppCompatActivity {
             dbref.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
-                    System.out.println("hello");
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    // do something with snapshot values
                     boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
+                    String teamID = null;
                     boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
-                    //Context context = getApplicationContext();  // app level storage
                     System.out.println("isManager is " + isManager);
                     System.out.println("isAssociate is " + isAssociate);
-                    //store associate/manager in shared preferences
-                    //TODO: Might need to uncomment if this fails!
-                   // myPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-                    //SharedPreferences.Editor peditor = myPrefs.edit();
-
-                    //peditor.putBoolean("MANAGER", isManager);
-                    //peditor.putBoolean("ASSOCIATE", isAssociate);
 
                     if (isManager) {
                         Log.w(TAG, "This user is a Manager");
                         peditor.putString("ID", entered_id);
                     } else if (isAssociate) {
-                        String teamID = snapshot.child("users").child("associates").child(entered_id).child("team").getValue(String.class);
+                        teamID = snapshot.child("users").child("associates").child(entered_id).child("team").getValue(String.class);
                         peditor.putString("ID", entered_id);
                         peditor.putString("TEAM", teamID);
+                        System.out.println("the team id IS : " + teamID);
                         Log.w(TAG, "This user is a Associate");
                     }
                     peditor.apply();
 
-                    //isManager = myPrefs.getBoolean("MANAGER", false);
-                    //boolean isAssociate = myPrefs.getBoolean("ASSOCIATE", false);
 
                     System.out.println("Shared Prefs Manager is: " + myPrefs.getBoolean("MANAGER", false));
                     System.out.println("Shared Prefs Associate is: " + myPrefs.getBoolean("ASSOCIATE", false));
@@ -124,19 +112,23 @@ public class MainActivity extends AppCompatActivity {
                     if (isManager) {
                         Intent intent = new Intent(getApplicationContext(), YourTeams.class);
                         startActivity(intent);
+                    } else if (isAssociate && teamID== null) {
+                        CharSequence text = "Please ask a supervisor to add you to a team";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                        toast.show();
                     } else if (isAssociate) {
                         Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
                         startActivity(intent);
                     } else {
-                        //TODO: SEE IF WE CAN MAKE TOAST LARGER
+                            CharSequence text = "Please enter a valid employee id";
+                            int duration = Toast.LENGTH_LONG;
 
-                        CharSequence text = "Please enter a valid employee id";
-                        int duration = Toast.LENGTH_LONG;
-
-                        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                        toast.show();
-                        Log.w(TAG, "Invalid Employee ID");
+                            Toast toast = Toast.makeText(getApplicationContext(), text, duration);
+                            toast.show();
+                            Log.w(TAG, "Invalid Employee ID");
                     }
+
 
 
 
