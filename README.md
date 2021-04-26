@@ -9,9 +9,7 @@ environment.
 We use a Realtime Firebase database for our app, which keeps tracks of users, teams, and requests.
 
 # Usernames (Employee IDs)
-Manager: 123456789
-         987654321
-Associate: 234567891
-           007 (This will produce a toast, since this user is not assigned a team)
-           456789123
-           246802468
+# Manager: 
+123456789, 987654321
+# Associate: 
+234567891, 456789123, 246802468, 007 (007 will produce a toast, since this user is not assigned a team)
