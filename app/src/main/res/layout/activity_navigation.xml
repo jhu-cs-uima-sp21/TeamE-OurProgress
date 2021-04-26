@@ -25,36 +25,41 @@
         android:layout_width="match_parent"
         android:layout_height="104dp"
         android:orientation="horizontal"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:weightSum="3"
         app:layout_constraintBottom_toBottomOf="@+id/nav_view">
 
         <ImageView
             android:id="@+id/first_tab"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/rectangle_tab_blue"></ImageView>
 
         <ImageView
             android:id="@+id/second_tab"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/rectangle_tab_white"></ImageView>
 
         <ImageView
             android:id="@+id/third_tab"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.1"
             android:src="@drawable/rectangle_tab_blue"></ImageView>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="104dp"
         android:background="@drawable/transparent_rect"
+        android:paddingLeft="0dp"
         android:paddingTop="20dp"
+        android:paddingRight="0dp"
         android:paddingBottom="20dp"
         app:itemBackground="@drawable/bottom_nav_active"
         app:itemIconSize="67dp"

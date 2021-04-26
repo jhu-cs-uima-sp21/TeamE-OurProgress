@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class GiveConfirmation extends AppCompatActivity {
     private static final String TAG = "tag?";
-    private String name, senderID, receiverID;
+    private String name, senderID, receiverID, station;
     private boolean isTeam;
     private OkCancelFragment okCancel;
     private FirebaseDatabase mdbase;
@@ -39,9 +39,17 @@ public class GiveConfirmation extends AppCompatActivity {
         Intent intent = getIntent();
         name = intent.getStringExtra("NAME");
         reqNum = (Integer) intent.getIntExtra("REQNUM", 0);
+        station = intent.getStringExtra("STATION");
         System.out.println("numRequest = " + reqNum);
         TextView nameView = (TextView) findViewById(R.id.requester);
+        TextView stationView = (TextView) findViewById(R.id.requester_station);
+        TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
         nameView.setText(name);
+        stationView.setText(station);
+        questionMarkView.setText("?");
+        if (isTeam) {
+            nameView.setText("Team " + name);
+        }
     }
 
 

@@ -46,7 +46,7 @@ public class AskConfirmation extends AppCompatActivity {
         newReq = new Request(id, receiverID, isTeam);
 
         TextView nameView = (TextView) findViewById(R.id.requester);
-        TextView questionMarkView = (TextView) findViewById(R.id.question_mark);
+        TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
         nameView.setText(name);
         questionMarkView.setText("?");
 

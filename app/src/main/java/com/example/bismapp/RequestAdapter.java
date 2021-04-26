@@ -76,6 +76,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         private TextView station;
         private Request req;
         private String sname;
+        private String s_station_name;
 
         public ViewHolder(View view, TextView name, TextView station) {
             super(view);
@@ -89,6 +90,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("REQNUM", req.getNumReq());
                 intent.putExtra("NAME", sname);
+                intent.putExtra("STATION", s_station_name);
                 cntx.startActivity(intent);
 
                 //try {
@@ -109,7 +111,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                         if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
                             sname = i.child("Name").getValue(String.class);
                             name.setText(sname);
-                            station.setText(i.child("station").getValue(String.class));
+                            s_station_name = i.child("station").getValue(String.class);
+                            station.setText(s_station_name);
                         }
                     }
                     usersShots = snapshot.child("users").child("managers").getChildren();
@@ -117,7 +120,8 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                         if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
                             sname = i.child("Name").getValue(String.class);
                             name.setText(sname);
-                            station.setText("");
+                            s_station_name = "";
+                            station.setText(s_station_name);
                         }
                     }
                 }
