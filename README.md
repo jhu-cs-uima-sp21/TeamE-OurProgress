@@ -5,7 +5,7 @@
 # Manager: 123456789
 #           987654321
 # Associate: 234567891
-#Background:
+# Background:
 The Blind Industries and Services of Maryland is a facility that hires mostly vision impaired, deaf
 people, and non-native English speakers. The app outputs production information to the user in real
 time, and in an accessible way that accommodates differently abled users.
