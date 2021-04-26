@@ -44,6 +44,8 @@ public class ChangeMemberTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     String method = "N/A";
     TeamMember member;
+    String team;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,14 +61,20 @@ public class ChangeMemberTeam extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         method = bundle.getString("Method");
         member = (TeamMember)bundle.get("Member");
+        team = bundle.getString("Team");
         printMessage();
     }
 
     private void printMessage() {
         String message;
-        String associateName = member.getName();
-        String associateTeam = member.getTeam();
-        String associateStation = member.getStation();
+        String associateName = null;
+        String associateTeam = null;
+        String associateStation = null;
+        if (member != null) {
+            associateName = member.getName();
+            associateTeam = member.getTeam();
+            associateStation = member.getStation();
+        }
         TextView textView = findViewById(R.id.change_text);
         int bismBlue = ContextCompat.getColor(this, R.color.bism_blue);
         int black = ContextCompat.getColor(this, R.color.black);
@@ -102,6 +110,20 @@ public class ChangeMemberTeam extends AppCompatActivity {
             // "?" is black
             text.setSpan(new ForegroundColorSpan(black),message.length() - 1,
                     message.length(), 0);
+            textView.setText(text);
+        } else if (method.equals("team")) {
+            message = "Remove Team " + team + " and remove all team members from the team?" +
+                    "\n\nThis action cannot be undone.";
+            // this is the text we'll be operating on
+            SpannableString text = new SpannableString(message);
+            // "Remove" is black
+            text.setSpan(new ForegroundColorSpan(black), 0, 6, 0);
+            // make associate's name blue
+            text.setSpan(new ForegroundColorSpan(bismBlue), 7, team.length() + 13,
+                    0);
+            // "at" is black
+            text.setSpan(new ForegroundColorSpan(black), team.length() + 14,
+                    message.length() - 1, 0);
             textView.setText(text);
         }
     }

@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -24,11 +26,13 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
     private final ArrayList<Team> teams;
     private static ClickListener clickListener;
     private static Context cntx;
+    private static YourTeams activity;
 
 
-    public TeamListAdapter(ArrayList<Team> teams, Context cntx) {
+    public TeamListAdapter(ArrayList<Team> teams, Context cntx, YourTeams activity) {
         this.teams = teams;
         this.cntx = cntx;
+        this.activity = activity;
     }
 
     @NonNull
@@ -65,17 +69,23 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final ProgressBar progress;
         private final TextView name;
+        private View view;
 
         public ViewHolder(View view, ProgressBar progress, TextView name) {
             super(view);
             this.progress = progress;
             this.name = name;
+            this.view = view;
             // make view clickable
             view.setClickable(true);
             view.setOnClickListener(this);
         }
 
         public void setData(Team team) {
+            ImageView arrowOrClear;
+            final int red = cntx.getResources().getColor(R.color.red);
+            final int gray = cntx.getResources().getColor(R.color.gray);
+
             int percent = (int) ((double) team.getUnits_produced()
                     / team.getDaily_goal() * 100);
             if (team.getDaily_goal() > 0) {
@@ -94,23 +104,39 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
             } else  {
                 draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
             }
-
+            // change arrow to x and vice versa
+            if (activity.deleteMode) {
+                // set imagebutton to x
+                arrowOrClear = (ImageView) view.findViewById(R.id.team_arrow);
+                arrowOrClear.setImageResource(R.drawable.ic_clear_white_18dp);
+                arrowOrClear.setColorFilter(red);
+                arrowOrClear.setPadding(0, 0, 24, 0);
+            } else {
+                // set imagebutton to arrow
+                arrowOrClear = (ImageView) view.findViewById(R.id.team_arrow);
+                arrowOrClear.setImageResource(R.drawable.ic_navigate_next_24px);
+                arrowOrClear.setColorFilter(gray);
+                arrowOrClear.setPadding(0, 0, 0, 0);
+            }
             progress.setProgressDrawable(draw);
         }
 
         @Override
         public void onClick(View v) {
-            v.startAnimation(MainActivity.buttonClick);
-            clickListener.onItemClick(getAdapterPosition(), v);
-            SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-            SharedPreferences.Editor peditor = myPrefs.edit();
-            peditor.putString("TEAM", (String) name.getText());
-            peditor.apply();
-            //TODO is this broken?
-            Intent intent = new Intent(cntx.getApplicationContext(), NavigationActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            cntx.startActivity(intent);
-
+            if (activity.deleteMode) {
+                activity.deleteTeam((String) name.getText());
+            } else {
+                v.startAnimation(MainActivity.buttonClick);
+                clickListener.onItemClick(getAdapterPosition(), v);
+                SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
+                SharedPreferences.Editor peditor = myPrefs.edit();
+                peditor.putString("TEAM", (String) name.getText());
+                peditor.apply();
+                //TODO is this broken?
+                Intent intent = new Intent(cntx.getApplicationContext(), NavigationActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                cntx.startActivity(intent);
+            }
         }
     }
 
