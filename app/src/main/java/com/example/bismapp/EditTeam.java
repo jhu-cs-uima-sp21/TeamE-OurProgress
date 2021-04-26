@@ -38,7 +38,6 @@ public class EditTeam extends AppCompatActivity {
     public ArrayList<String> associatesNames;
     public HashMap<String, String> associatesToTeamChange;
 
-    //public Bundle bundle;
     private String preName;
 
     private FirebaseDatabase mdbase;
@@ -64,12 +63,6 @@ public class EditTeam extends AppCompatActivity {
         associatesNames = new ArrayList<>();
         associatesToTeamChange = new HashMap<>();
 
-        Intent intent = getIntent();
-        //intent.getStringExtra();
-        //intent.getExtra();
-
-        // getting the bundle back from the android
-
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
         okCancel = new OkCancelFragment();
@@ -92,7 +85,7 @@ public class EditTeam extends AppCompatActivity {
         editText.setEnabled(false);
         editText.setCursorVisible(false);
         editText.setKeyListener(null);
-        editText.setBackgroundColor(Color.TRANSPARENT);
+        editText.setBackgroundColor(ContextCompat.getColor(this, R.color.bism_blue));
         editText.setTextColor(ContextCompat.getColor(this, R.color.white));
         editText.setContentDescription("Name of the team being edited: " + preName);
     }
@@ -147,7 +140,6 @@ public class EditTeam extends AppCompatActivity {
         }
         // Update values of team
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
-            // TODO: Update list of teams
             @Override
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // get team's progress
@@ -189,10 +181,6 @@ public class EditTeam extends AppCompatActivity {
         });
 
         changeOldTeams();
-        //Intent returnIntent = new Intent();
-        //returnIntent.putExtra("Name", teamName);
-        //returnIntent.putExtra("Goal", dailyGoal);
-        //setResult(Activity.RESULT_OK, returnIntent);
         finish();
     }
 

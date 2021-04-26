@@ -127,6 +127,7 @@ public class CreateTeam extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+        changeOldTeams();
         finish();
     }
 
@@ -179,5 +180,40 @@ public class CreateTeam extends AppCompatActivity {
 
     public void notRemoveAssociateFromOldTeam(String id) {
         associatesToTeamChange.remove(id);
+    }
+
+    private void changeOldTeams() {
+        mdbase = FirebaseDatabase.getInstance();
+        dbref = mdbase.getReference();
+        // Fetch all associates
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("Removing team members from their previous teams...");
+                for (String i : associatesToTeamChange.keySet()) {
+                    String teamName = associatesToTeamChange.get(i);
+                    ArrayList<HashMap<String, String>> teamMembers = (ArrayList<HashMap<String, String>>)
+                            snapshot.child("teams").child(teamName).child("team_members").getValue();
+                    for (HashMap<String, String> member : teamMembers) {
+                        if (member.get("id").equals(i)) {
+                            teamMembers.remove(member);
+                            break;
+                        }
+                    }
+                    if (teamMembers.isEmpty()) {
+                        dbref.child("teams").child(teamName).removeValue();
+                    } else {
+                        dbref.child("teams")
+                                .child(teamName).child("team_members").setValue(teamMembers);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NotNull DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
     }
 }

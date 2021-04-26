@@ -106,10 +106,11 @@ public class GiveHelp extends Fragment {
                 for (DataSnapshot i : requestShots) {
                     String receiverID = i.child("receiverID").getValue(String.class);
                     String senderID = i.child("senderID").getValue(String.class);
+                    int numReq = i.child("numReq").getValue(Integer.class);
                     boolean team = i.child("team").getValue(Boolean.class);
                     //check if this users ID matches receiverID
                     if (receiverID.equals(myPrefs.getString("TEAM", "")) || receiverID.equals(myPrefs.getString("ID", ""))) {
-                        requests.add(new Request(senderID, receiverID, team));
+                        requests.add(new Request(senderID, receiverID, team, numReq));
                         System.out.println(senderID);
                     }
                 }

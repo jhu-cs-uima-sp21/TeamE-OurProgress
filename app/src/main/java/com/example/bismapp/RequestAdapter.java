@@ -86,9 +86,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             remove_request_btn.setOnClickListener((View.OnClickListener) btnview  -> {
                 btnview.startAnimation(MainActivity.buttonClick);
                 Intent intent = new Intent(cntx.getApplicationContext(), GiveConfirmation.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("REQNUM", req.getNumReq());
                 intent.putExtra("NAME", sname);
-                intent.putExtra("RECEIVERID", req.getReceiverID());
-                intent.putExtra("ISTEAM", req.isTeam());
                 cntx.startActivity(intent);
 
                 //try {
@@ -109,7 +109,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                         if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
                             sname = i.child("Name").getValue(String.class);
                             name.setText(sname);
-                            station.setText(i.child("team").getValue(String.class));
+                            station.setText(i.child("station").getValue(String.class));
                         }
                     }
                     usersShots = snapshot.child("users").child("managers").getChildren();
@@ -117,7 +117,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                         if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
                             sname = i.child("Name").getValue(String.class);
                             name.setText(sname);
-                            station.setText(i.child("id").getValue(String.class));
+                            station.setText("");
                         }
                     }
                 }

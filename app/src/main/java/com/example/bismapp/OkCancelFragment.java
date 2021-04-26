@@ -44,6 +44,8 @@ public class OkCancelFragment extends Fragment {
                 ((CreateTeam) getActivity()).okButtonClicked();
             } else if (getActivity() instanceof AskConfirmation) {
                 ((AskConfirmation) getActivity()).okButtonClicked();
+            } else if (getActivity() instanceof GiveConfirmation) {
+                ((GiveConfirmation) getActivity()).okButtonClicked();
             } else if (getActivity() instanceof ChangeMemberTeam) {
                 ((ChangeMemberTeam) getActivity()).okButtonClicked();
             } else if (getActivity() instanceof EditTeam) {
@@ -58,6 +60,8 @@ public class OkCancelFragment extends Fragment {
                 ((CreateTeam) getActivity()).cancelButtonClicked();
             } else if (getActivity() instanceof AskConfirmation) {
                 ((AskConfirmation) getActivity()).cancelButtonClicked();
+            } else if (getActivity() instanceof GiveConfirmation) {
+                ((GiveConfirmation) getActivity()).cancelButtonClicked();
             } else if (getActivity() instanceof ChangeMemberTeam) {
                 ((ChangeMemberTeam) getActivity()).cancelButtonClicked();
             } else if (getActivity() instanceof EditTeam) {
