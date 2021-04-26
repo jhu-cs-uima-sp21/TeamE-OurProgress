@@ -166,54 +166,12 @@ public class ProductionDashboard extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        // dbref.removeEventListener(valueEventListener);
-        /*if (teamEventListener != null) {
-            newTeamRef.removeEventListener(teamEventListener);
-        }
-        hasPaused = true;*/
+        dbref.removeEventListener(valueEventListener);
     }
 
     @Override
     public void onResume() {
+        dbref.addValueEventListener(valueEventListener);
         super.onResume();
-        /*if (hasPaused) {
-            // wait till child been fully added
-            newTeamRef = dbref.child("teams")
-                    .child(myPrefs.getString("TEAM", "A"));
-            teamEventListener = new ChildEventListener() {
-                String nameCheck = myPrefs.getString("TEAM", "A");
-
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    if (snapshot.hasChild("name") && snapshot.hasChild("daily_goal")
-                            && snapshot.hasChild("units_produced")) {
-                        dbref.addValueEventListener(valueEventListener);
-                        newTeamRef.removeEventListener(teamEventListener);
-                    }
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    // Nothing
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                    // Nothing
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                    // Nothing
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Failed to read value
-                    Log.w(TAG, "onResume-Failed to read value.", error.toException());
-                }
-            };
-            newTeamRef.addChildEventListener(teamEventListener);
-        }*/
     }
 }
