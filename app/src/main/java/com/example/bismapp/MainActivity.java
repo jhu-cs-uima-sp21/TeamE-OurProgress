@@ -90,6 +90,10 @@ public class MainActivity extends AppCompatActivity {
                     boolean isManager = snapshot.child("users").child("managers").child(entered_id).exists();
                     String teamID = null;
                     boolean isAssociate = snapshot.child("users").child("associates").child(entered_id).exists();
+                    if (entered_id.equals("")) {
+                        isManager = false;
+                        isAssociate = false;
+                    }
                     System.out.println("isManager is " + isManager);
                     System.out.println("isAssociate is " + isAssociate);
 
