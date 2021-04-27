@@ -107,7 +107,13 @@ public class ProductionDashboard extends Fragment {
                 DataSnapshot first = snapshot.child("teams").child(teamID);
                 System.out.println("Production DashBoard first" + first.toString());
                 System.out.println("Production DashBoard DataSnap" + first.child("daily_goal").toString());
-                daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
+                try {
+                    daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
+                } catch (Exception e) {
+                    System.out.println("WE KILLIN THIS");
+                    dbref.removeEventListener(valueEventListener);
+                    return;
+                }
                 peditor.putInt("DAILY_GOAL", daily_goal);
                 units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
                 percent = (int) (((double) units_produced / daily_goal) * 100);
@@ -165,8 +171,8 @@ public class ProductionDashboard extends Fragment {
 
     @Override
     public void onPause() {
-        super.onPause();
         dbref.removeEventListener(valueEventListener);
+        super.onPause();
     }
 
     @Override
