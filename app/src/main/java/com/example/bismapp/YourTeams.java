@@ -252,8 +252,10 @@ public class YourTeams extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
         dbref.removeEventListener(valueEventListener);
+        super.onPause();
+        clicked = true;
+        onEYTBtnClicked();
     }
 }
