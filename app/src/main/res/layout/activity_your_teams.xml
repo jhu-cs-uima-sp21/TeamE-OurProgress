@@ -41,28 +41,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/bism_blue"
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
+        app:fabCustomSize="85dp"
         app:layout_constraintBottom_toTopOf="@+id/add_team_btn"
         app:layout_constraintEnd_toEndOf="@+id/add_team_btn"
-        android:backgroundTint="@color/bism_blue"
-        app:tint="@color/white"
-        app:srcCompat="@drawable/ic_clear_bismblue_24" />
+        app:srcCompat="@drawable/ic_clear_bismblue_24"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_team_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/bism_blue"
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
-        android:backgroundTint="@color/bism_blue"
-        app:tint="@color/white"
+        app:fabCustomSize="85dp"
         app:layout_constraintBottom_toTopOf="@+id/edit_your_teams_btn"
         app:layout_constraintEnd_toEndOf="@+id/edit_your_teams_btn"
-        app:srcCompat="@drawable/ic_add_white_18dp" />
+        app:srcCompat="@drawable/ic_add_white_18dp"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit_your_teams_btn"
@@ -71,15 +73,17 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/white"
         android:background="@drawable/circle_inverted"
-        app:tint="@color/bism_blue"
-        app:borderWidth="4dp"
-        app:rippleColor="@color/bism_blue"
-        android:focusable="true"
+        android:backgroundTint="@color/white"
         android:contentDescription="@string/create_or_delete_a_team"
+        android:focusable="true"
+        android:scaleType="center"
+        app:borderWidth="4dp"
+        app:fabCustomSize="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_edit_white_18dp" />
+        app:rippleColor="@color/bism_blue"
+        app:srcCompat="@drawable/ic_edit_white_18dp"
+        app:tint="@color/bism_blue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
