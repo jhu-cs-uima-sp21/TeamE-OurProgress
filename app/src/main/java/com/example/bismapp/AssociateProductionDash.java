@@ -77,7 +77,7 @@ public class AssociateProductionDash extends Fragment {
         assocNav = (AssociateNavigationActivity) getActivity();
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
-        myView = inflater.inflate(R.layout.fragment_production_dashboard, container, false);
+        myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
         Context cntx = assocNav.getApplicationContext();
 
         buttonClick.setDuration(100);

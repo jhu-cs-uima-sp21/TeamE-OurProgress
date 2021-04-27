@@ -33,7 +33,7 @@ public class AssociateNavigationActivity extends AppCompatActivity {
         //navView.getMenu().findItem(R.id.nav_production).setChecked(true);
         openFragment(new ProductionDashboard());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.nav_host_fragment, new ProductionDashboard());
+        transaction.add(R.id.nav_host_fragment, new AssociateProductionDash());
         transaction.commit();
 
         //open to production dashboard
@@ -59,7 +59,7 @@ public class AssociateNavigationActivity extends AppCompatActivity {
                             third_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
                             return true;
                         case R.id.nav_production:
-                            openFragment(ProductionDashboard.newInstance("", ""));
+                            openFragment(AssociateProductionDash.newInstance("", ""));
                             first_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
                             second_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_white));
                             third_tab.setImageDrawable(getResources().getDrawable(R.drawable.rectangle_tab_blue));
