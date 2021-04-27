@@ -7,6 +7,21 @@
     tools:context=".AskConfirmation">
 
     <TextView
+        android:id="@+id/requester"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:gravity="center"
+        android:textColor="@color/bism_blue"
+        android:textSize="60sp"
+        app:layout_constraintBottom_toTopOf="@+id/okay_cancel_frag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/help"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
         android:id="@+id/help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,41 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
-        android:layout_marginTop="16dp"
         android:layout_weight=".25"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_linear"
-        app:layout_constraintVertical_bias="0.997">
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
-
-    <LinearLayout
-        android:id="@+id/name_linear"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/help">
-
-        <TextView
-            android:id="@+id/requester"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:textColor="@color/bism_blue"
-            android:textSize="60sp" />
-
-        <TextView
-            android:id="@+id/question_mark_give"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:textColor="@color/black"
-            android:textSize="60sp" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

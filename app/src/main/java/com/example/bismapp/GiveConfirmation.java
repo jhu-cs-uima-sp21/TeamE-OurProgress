@@ -1,11 +1,14 @@
 package com.example.bismapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,13 +46,17 @@ public class GiveConfirmation extends AppCompatActivity {
         System.out.println("numRequest = " + reqNum);
         TextView nameView = (TextView) findViewById(R.id.requester);
         TextView stationView = (TextView) findViewById(R.id.requester_station);
-        TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
+
+        int bismBlue = ContextCompat.getColor(this, R.color.bism_blue);
+        int black = ContextCompat.getColor(this, R.color.black);
+        String message = station + "?";
+        // this is the text we'll be operating on
+        SpannableString text = new SpannableString(message);
+
+        text.setSpan(new ForegroundColorSpan(bismBlue), 0, station.length() - 1, 0);
+        text.setSpan(new ForegroundColorSpan(black), station.length(), message.length(), 0);
         nameView.setText(name);
-        stationView.setText(station);
-        questionMarkView.setText("?");
-        if (isTeam) {
-            nameView.setText("Team " + name);
-        }
+        stationView.setText(text);
     }
 
 

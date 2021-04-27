@@ -1,11 +1,14 @@
 package com.example.bismapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,15 +49,22 @@ public class AskConfirmation extends AppCompatActivity {
         newReq = new Request(id, receiverID, isTeam);
 
         TextView nameView = (TextView) findViewById(R.id.requester);
-        TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
-        nameView.setText(name);
-        questionMarkView.setText("?");
-
+        //TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
+        //nameView.setText(name);
+        //questionMarkView.setText("?");
+        int bismBlue = ContextCompat.getColor(this, R.color.bism_blue);
+        int black = ContextCompat.getColor(this, R.color.black);
+        String textName = name;
         if (isTeam) {
-            nameView.setText("Team " + name);
+            textName = "Team " + name;
         }
-
-
+        String message = textName + "?";
+        // this is the text we'll be operating on
+        SpannableString text = new SpannableString(message);
+        // make associate's name blue
+        text.setSpan(new ForegroundColorSpan(bismBlue), 0, textName.length() - 1, 0);
+        text.setSpan(new ForegroundColorSpan(black), textName.length(), message.length(), 0);
+        nameView.setText(text);
     }
 
     //THIS PUTS REQUEST IN FIREBASE!
