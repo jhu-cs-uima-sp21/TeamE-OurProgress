@@ -120,7 +120,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                         if (i.child("id").getValue(String.class).equals(request.getSenderID())) {
                             sname = i.child("Name").getValue(String.class);
                             name.setText(sname);
-                            s_station_name = "";
+                            s_station_name = i.child("station").getValue(String.class);
                             station.setText(s_station_name);
                         }
                     }

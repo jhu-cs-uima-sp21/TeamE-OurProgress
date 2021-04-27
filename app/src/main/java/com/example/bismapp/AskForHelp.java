@@ -1,5 +1,6 @@
 package com.example.bismapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +48,7 @@ public class AskForHelp extends Fragment {
     private SharedPreferences myPrefs;
     private SharedPreferences.Editor peditor;
     private String supervisorID, teamName;
+    private Context cntx;
 
 
     //private AssociateNavigationActivity assocNav;
@@ -72,9 +75,10 @@ public class AskForHelp extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
+        cntx = getActivity().getApplication();
         namesAndIDs = new HashMap<>();
         names = new ArrayList<>();
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         peditor = myPrefs.edit();
@@ -88,7 +92,7 @@ public class AskForHelp extends Fragment {
 
 
         //TODO: Fix layout of the adapter for the AutoCompleteTextView
-        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+        adapter = new ArrayAdapter<String>(cntx,
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
         textView.setAdapter(adapter);
@@ -99,7 +103,7 @@ public class AskForHelp extends Fragment {
             public void onItemClick(AdapterView<?> parent, View arg1, int pos,
                                     long id) {
                 String name = textView.getText().toString();
-                Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
+                Intent intent = new Intent(cntx, AskConfirmation.class);
                 intent.putExtra("NAME", name);
                 intent.putExtra("RECEIVERID", namesAndIDs.get(name));
                 intent.putExtra("ISTEAM", false);
@@ -112,7 +116,7 @@ public class AskForHelp extends Fragment {
         Button teamBtn = (Button) view.findViewById(R.id.team);
         teamBtn.setOnClickListener(btnView -> {
             btnView.startAnimation(MainActivity.buttonClick);
-            Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
+            Intent intent = new Intent(cntx, AskConfirmation.class);
             intent.putExtra("NAME", teamName);
             intent.putExtra("RECEIVERID", teamName);
             intent.putExtra("ISTEAM", true);
@@ -122,12 +126,22 @@ public class AskForHelp extends Fragment {
         //supervisor button
         Button supBtn = (Button) view.findViewById(R.id.supervisor);
         supBtn.setOnClickListener(btnView -> {
-            btnView.startAnimation(MainActivity.buttonClick);
-            Intent intent = new Intent(getActivity().getApplicationContext(), AskConfirmation.class);
-            intent.putExtra("NAME", "Supervisor");
-            intent.putExtra("RECEIVERID", supervisorID);
-            intent.putExtra("ISTEAM", false);
-            startActivity(intent);
+            if (myPrefs.getBoolean("MANAGER", false)) {
+                CharSequence text = "You cannot request help from yourself!";
+                int duration = Toast.LENGTH_LONG;
+
+                Toast toast = Toast.makeText(cntx, text, duration);
+                toast.show();
+                return;
+
+            }
+                btnView.startAnimation(MainActivity.buttonClick);
+                Intent intent = new Intent(cntx, AskConfirmation.class);
+                intent.putExtra("NAME", "Supervisor");
+                intent.putExtra("RECEIVERID", supervisorID);
+                intent.putExtra("ISTEAM", false);
+                startActivity(intent);
+
         });
 
 
@@ -157,7 +171,7 @@ public class AskForHelp extends Fragment {
     //TODO: KEIDAI + CHIAMAKA LOOK HERE!
     //Reads users from firebase, then adds them to namesAndIDs, names!
     private void getTeamMemberNames() {
-        dbref.addValueEventListener(new ValueEventListener() {
+        dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
@@ -165,10 +179,15 @@ public class AskForHelp extends Fragment {
                 // do something with snapshot values
                 namesAndIDs.clear();
                 names.clear();
+                String prefUserID = myPrefs.getString("ID", "");
                 Iterable<DataSnapshot> usersShots = snapshot.child("users").child("associates").getChildren();
                 for (DataSnapshot i : usersShots) {
+
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
+                    if (userID.equals(prefUserID)) {
+                        continue;
+                    }
                     namesAndIDs.put(userName, userID);
                     names.add(userName);
                     System.out.println("name:" + userName + " ID:" + userID);
@@ -178,6 +197,9 @@ public class AskForHelp extends Fragment {
                 for (DataSnapshot i : usersShots) {
                     String userName = i.child("Name").getValue(String.class);
                     String userID = i.child("id").getValue(String.class);
+                    if (userID.equals(prefUserID)) {
+                        continue;
+                    }
                     namesAndIDs.put(userName, userID);
                     names.add(userName);
                     System.out.println("name:" + userName + " ID:" + userID);
