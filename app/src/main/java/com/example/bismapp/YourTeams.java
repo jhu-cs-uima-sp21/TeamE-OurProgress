@@ -224,6 +224,7 @@ public class YourTeams extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_CHANGE_TEAM) {
             if (resultCode == Activity.RESULT_OK) {
+                //teamNames.remove(name);
                 mdbase = FirebaseDatabase.getInstance();
                 dbref = mdbase.getReference();
                 // Fetch all associates
