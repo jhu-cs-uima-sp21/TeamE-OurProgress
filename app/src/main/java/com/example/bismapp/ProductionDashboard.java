@@ -177,7 +177,7 @@ public class ProductionDashboard extends Fragment {
 
     @Override
     public void onResume() {
-        dbref.addValueEventListener(valueEventListener);
         super.onResume();
+        dbref.addValueEventListener(valueEventListener);
     }
 }

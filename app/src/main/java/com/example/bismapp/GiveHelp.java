@@ -109,7 +109,9 @@ public class GiveHelp extends Fragment {
                     int numReq = i.child("numReq").getValue(Integer.class);
                     boolean team = i.child("team").getValue(Boolean.class);
                     //check if this users ID matches receiverID
-                    if (receiverID.equals(myPrefs.getString("TEAM", "")) || receiverID.equals(myPrefs.getString("ID", ""))) {
+                    if ((receiverID.equals(myPrefs.getString("TEAM", ""))
+                            && !senderID.equals(myPrefs.getString("ID", "")))
+                            || receiverID.equals(myPrefs.getString("ID", ""))) {
                         requests.add(new Request(senderID, receiverID, team, numReq));
                         System.out.println(senderID);
                     }
