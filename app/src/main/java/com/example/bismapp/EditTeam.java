@@ -87,7 +87,7 @@ public class EditTeam extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             editText.setAutoSizeTextTypeWithDefaults(TextView.AUTO_SIZE_TEXT_TYPE_UNIFORM);
         } else {
-            editText.setTextSize(32);
+            editText.setTextSize(38);
             editText.setMaxLines(2);
         }
         editText.setInputType(InputType.TYPE_NULL);
@@ -119,24 +119,9 @@ public class EditTeam extends AppCompatActivity {
 
     public void okButtonClicked() {
         // form new team with user input
-        teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
         managerID = myPrefs.getString("ID", "N/A");
         members = teamRoster.getTeamMembers();
 
-        // if any information is missing, do not make team
-        if (teamName.equals("")) {
-            makeToast("Please enter a team name");
-            Log.d(TEAM_TAG, "team name");
-            return;
-        } else if (teamName.equals("N/A") || teamName.equals("TBD")) {
-            makeToast("Please enter a team name that is not \"N/A\" or \"TBD\"");
-            Log.d(TEAM_TAG, "team name");
-            return;
-        } else if (!preName.equals(teamName) && YourTeams.teamNames.contains(teamName)) {
-            makeToast("Team \"" + teamName + "\" has already been created");
-            makeToast(teamName + " is not the same as " + preName);
-            return;
-        }
         try {
             dailyGoal = Integer.parseInt(((EditText) findViewById(R.id.enterDailyGoal)).getText()
                     .toString());
@@ -183,7 +168,7 @@ public class EditTeam extends AppCompatActivity {
                 System.out.println("This is the daily goal:" + dailyGoal);
 
                 // replace with new edited
-                Team team = new Team(teamName, managerID, unitsProduced, dailyGoal, members);
+                Team team = new Team(preName, managerID, unitsProduced, dailyGoal, members);
                 dbref.child("teams").child(preName).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
                 //finish();
