@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +27,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,7 +35,7 @@ public class YourTeams extends AppCompatActivity {
 
     private DatabaseReference dbref;
     private static final String TAG = "dbref at YourTeams: ";
-    private final int LAUNCH_CHANGE_TEAM = 4;
+    private final int LAUNCH_DELETE_TEAM = 4;
 
     private TeamListAdapter adapter;
     private ArrayList<Team> teams;
@@ -149,7 +146,7 @@ public class YourTeams extends AppCompatActivity {
         Intent intent = new Intent(this, ChangeMemberTeam.class);
         intent.putExtra("Method", "team");
         intent.putExtra("Team", name);
-        startActivityForResult(intent, LAUNCH_CHANGE_TEAM);
+        startActivityForResult(intent, LAUNCH_DELETE_TEAM);
         this.name = name;
     }
 
@@ -222,7 +219,7 @@ public class YourTeams extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == LAUNCH_CHANGE_TEAM) {
+        if (requestCode == LAUNCH_DELETE_TEAM) {
             if (resultCode == Activity.RESULT_OK) {
                 //teamNames.remove(name);
                 mdbase = FirebaseDatabase.getInstance();
@@ -236,7 +233,6 @@ public class YourTeams extends AppCompatActivity {
                         for (HashMap<String, String> i : teamMembers) {
                             dbref.child("users").child("associates").child(i.get("id")).child("team").setValue("N/A");
                         }
-
                         dbref.child("teams").child(name).removeValue();
                     }
 
@@ -246,6 +242,7 @@ public class YourTeams extends AppCompatActivity {
                         Log.w(TAG, "Failed to read value.", error.toException());
                     }
                 });
+                Toast.makeText(this, "Team " + name + " was deleted", Toast.LENGTH_SHORT).show();
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(this, "Team " + name + " was not deleted", Toast.LENGTH_SHORT).show();
             }
