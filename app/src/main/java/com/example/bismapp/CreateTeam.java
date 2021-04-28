@@ -70,21 +70,21 @@ public class CreateTeam extends AppCompatActivity {
 
     public void okButtonClicked() {
         // form new team with user input
-        String teamName = ((EditText) findViewById(R.id.edit_team_name)).getText().toString();
+        final String[] teamName = {((EditText) findViewById(R.id.edit_team_name)).getText().toString()};
         String managerID = myPrefs.getString("ID", "N/A");
         ArrayList<TeamMember> members = teamRoster.getTeamMembers();
 
         // if any information is missing, do not make team
-        if (teamName.equals("")) {
+        if (teamName[0].equals("")) {
             makeToast("Please enter a team name");
             Log.d(TEAM_TAG, "team name");
             return;
-        } else if (teamName.equals("N/A") || teamName.equals("TBD")) {
+        } else if (teamName[0].equals("N/A") || teamName[0].equals("TBD")) {
             makeToast("Please enter a team name that is not \"N/A\" or \"TBD\"");
             Log.d(TEAM_TAG, "team name");
             return;
-        } else if (YourTeams.teamNames.contains(teamName)) {
-            makeToast("Team \"" + teamName + "\" has already been created");
+        } else if (YourTeams.teamNames.contains(teamName[0])) {
+            makeToast("Team \"" + teamName[0] + "\" has already been created");
             return;
         }
         Integer dailyGoal;
@@ -111,12 +111,15 @@ public class CreateTeam extends AppCompatActivity {
             public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // update team values in firebase
                 for (TeamMember associate : members) {
-                    associate.setTeam(teamName);
+                    if (teamName[0] == null) {
+                        teamName[0] = "N/A";
+                    }
+                    associate.setTeam(teamName[0]);
                     dbref.child("users").child("associates").child(associate.getID()).child("team")
-                            .setValue(teamName);
-                    Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
+                            .setValue(teamName[0]);
+                    Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName[0]);
                 }
-                Team team = new Team(teamName, managerID, 0, dailyGoal, members);
+                Team team = new Team(teamName[0], managerID, 0, dailyGoal, members);
                 dbref.child("teams").child(team.getName()).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
             }

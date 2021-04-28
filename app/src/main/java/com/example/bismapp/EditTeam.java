@@ -149,16 +149,19 @@ public class EditTeam extends AppCompatActivity {
                         .getValue(Integer.class);
                 // update team values of members in firebase
                 for (TeamMember associate : members) {
+                    if (teamName == null) {
+                        teamName = "N/A";
+                    }
                     associate.setTeam(teamName);
                     dbref.child("users").child("associates").child(associate.getID()).child("team")
                             .setValue(teamName);
                     Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
                 }
                 // update values of the team's branch on firebase
-                if (!preName.equals(teamName)) {
+                /*if (!preName.equals(teamName)) {
                     //dbref.child("teams").child(preName).setValue(teamName);
                 }
-
+*/
                 peditor.putString("TEAM", preName);
                 peditor.apply();
 
