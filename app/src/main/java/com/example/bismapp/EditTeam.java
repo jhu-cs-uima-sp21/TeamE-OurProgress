@@ -50,7 +50,7 @@ public class EditTeam extends AppCompatActivity {
     private static final String TAG = "dbref at CreateTeams: ";
     private static final String TEAM_TAG = "Invalid team: ";
 
-    private String teamName, managerID;
+    private String managerID;
     private Integer unitsProduced, dailyGoal;
     private ArrayList<TeamMember> members;
 
@@ -149,13 +149,10 @@ public class EditTeam extends AppCompatActivity {
                         .getValue(Integer.class);
                 // update team values of members in firebase
                 for (TeamMember associate : members) {
-                    if (teamName == null) {
-                        teamName = "N/A";
-                    }
-                    associate.setTeam(teamName);
+                    associate.setTeam(preName);
                     dbref.child("users").child("associates").child(associate.getID()).child("team")
-                            .setValue(teamName);
-                    Log.d(TAG, "Set " + associate.getName() + "'s team to " + teamName);
+                            .setValue(preName);
+                    Log.d(TAG, "Set " + associate.getName() + "'s team to " + preName);
                 }
                 // update values of the team's branch on firebase
                 /*if (!preName.equals(teamName)) {
@@ -165,7 +162,7 @@ public class EditTeam extends AppCompatActivity {
                 peditor.putString("TEAM", preName);
                 peditor.apply();
 
-                System.out.println("This is the team name:" + teamName);
+                System.out.println("This is the team name:" + preName);
                 System.out.println("This is the manager ID:" + managerID);
                 System.out.println("This is the units produced:" + unitsProduced);
                 System.out.println("This is the daily goal:" + dailyGoal);
@@ -247,21 +244,21 @@ public class EditTeam extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 System.out.println("Removing team members from their previous teams...");
-                for (String i : associatesToTeamChange.keySet()) {
-                    String teamName = associatesToTeamChange.get(i);
+                for (String memberID : associatesToTeamChange.keySet()) {
+                    String teamName = associatesToTeamChange.get(memberID);
                     ArrayList<HashMap<String, String>> teamMembers = (ArrayList<HashMap<String, String>>)
                             snapshot.child("teams").child(teamName).child("team_members").getValue();
                     for (HashMap<String, String> member : teamMembers) {
-                        if (member.get("id").equals(i)) {
+                        if (member.get("id").equals(memberID)) {
                             teamMembers.remove(member);
                             break;
                         }
                     }
-                    if (teamMembers.isEmpty()) {
-                        dbref.child("teams").child(teamName).removeValue();
-                    } else {
-                        dbref.child("teams")
+                    dbref.child("teams")
                                 .child(teamName).child("team_members").setValue(teamMembers);
+                    if (snapshot.child("users").child(memberID).child("team")
+                            .getValue(String.class).equals(preName)) {
+                        dbref.child("users").child(memberID).child("team").setValue("N/A");
                     }
                 }
             }

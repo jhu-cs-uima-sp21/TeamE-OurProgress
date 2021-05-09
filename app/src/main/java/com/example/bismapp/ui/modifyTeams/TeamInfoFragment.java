@@ -93,7 +93,7 @@ public class TeamInfoFragment extends Fragment {
                     newTeamMemberTeam = newMember.getTeam();
                     if (activity instanceof EditTeam) {
                         String teamName = ((EditText)activity.findViewById(R.id.edit_team_name))
-                                .getText().toString();
+                                .getText().toString().substring("Edit Team ".length());
                         if (newTeamMemberTeam.equals(teamName)) {
                             makeToast(newTeamMemberName + " is already on this team");
                             textView.setText("");
