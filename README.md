@@ -10,6 +10,24 @@ We use a Realtime Firebase database for our app, which keeps tracks of users, te
 
 # Usernames (Employee IDs)
 # Manager: 
-123456789, 987654321
-# Associate: 
-234567891, 456789123, 246802468, 007 (007 will produce a toast, since this user is not assigned a team)
+123456789 - Ana Doe
+987654321 - Emily Ochoa
+
+# Associate:
+007 - James Bond (not assigned to a team)
+135797531 - Keidai Lee
+143154135 - Barry Allen
+143525321 - Green Smith
+234567891 - Jane Doe
+246802468 - Chia Ana
+333333333 - Joanne Selinski
+345678912 - John Doe
+436829422 - Jessie Prescott
+456789123 - James John
+628193661 - Onwa Nova
+712234891 - Nneoma Onye
+821037281 - Emi Ochoa
+876543219 - Samuel Atefah
+881274820 - Theodora Frank
+896786498 - Clark Kent
+
