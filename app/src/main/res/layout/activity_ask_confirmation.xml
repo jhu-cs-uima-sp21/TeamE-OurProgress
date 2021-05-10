@@ -9,9 +9,9 @@
     <TextView
         android:id="@+id/requester"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="103dp"
         android:fontFamily="@font/montserrat"
-        android:gravity="center"
+        android:gravity="center_horizontal|top"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:textColor="@color/bism_blue"

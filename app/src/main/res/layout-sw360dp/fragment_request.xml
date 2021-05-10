@@ -44,7 +44,7 @@
             android:layout_weight="2"
             android:ems="4"
             android:fontFamily="@font/montserrat"
-            android:gravity="right"
+            android:gravity="end"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:singleLine="true"

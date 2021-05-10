@@ -58,7 +58,7 @@
             android:layout_height="90dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/montserrat"
-            android:gravity="center"
+            android:gravity="center_horizontal|top"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:textColor="#000000"
