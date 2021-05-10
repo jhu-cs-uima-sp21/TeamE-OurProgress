@@ -74,7 +74,7 @@ public class AskForHelp extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
+
         cntx = getActivity().getApplication();
         namesAndIDs = new HashMap<>();
         names = new ArrayList<>();
@@ -82,7 +82,14 @@ public class AskForHelp extends Fragment {
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         peditor = myPrefs.edit();
-        teamName = myPrefs.getString("TEAM", "");
+        teamName = myPrefs.getString("TEAM", "N/A");
+
+        View view;
+        if (teamName.equals("N/A")) {
+            view = inflater.inflate(R.layout.fragment_ask_for_help_no_team, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_ask_for_help, container, false);
+        }
 
         getTeamMemberNames();
         System.out.println("names and ids:" + namesAndIDs.toString());
@@ -112,29 +119,30 @@ public class AskForHelp extends Fragment {
             }
         });
 
-        //team button
-        Button teamBtn = (Button) view.findViewById(R.id.team);
-        teamBtn.setOnClickListener(btnView -> {
-            btnView.startAnimation(MainActivity.buttonClick);
-            Intent intent = new Intent(cntx, AskConfirmation.class);
-            intent.putExtra("NAME", teamName);
-            intent.putExtra("RECEIVERID", teamName);
-            intent.putExtra("ISTEAM", true);
-            startActivity(intent);
-        });
+        if (!teamName.equals("N/A")) {
+            //team button
+            Button teamBtn = (Button) view.findViewById(R.id.team);
+            teamBtn.setOnClickListener(btnView -> {
+                btnView.startAnimation(MainActivity.buttonClick);
+                Intent intent = new Intent(cntx, AskConfirmation.class);
+                intent.putExtra("NAME", teamName);
+                intent.putExtra("RECEIVERID", teamName);
+                intent.putExtra("ISTEAM", true);
+                startActivity(intent);
+            });
 
-        //supervisor button
-        Button supBtn = (Button) view.findViewById(R.id.supervisor);
-        supBtn.setOnClickListener(btnView -> {
-            if (myPrefs.getBoolean("MANAGER", false)) {
-                CharSequence text = "You cannot request help from yourself!";
-                int duration = Toast.LENGTH_LONG;
+            //supervisor button
+            Button supBtn = (Button) view.findViewById(R.id.supervisor);
+            supBtn.setOnClickListener(btnView -> {
+                if (myPrefs.getBoolean("MANAGER", false)) {
+                    CharSequence text = "You cannot request help from yourself!";
+                    int duration = Toast.LENGTH_LONG;
 
-                Toast toast = Toast.makeText(cntx, text, duration);
-                toast.show();
-                return;
+                    Toast toast = Toast.makeText(cntx, text, duration);
+                    toast.show();
+                    return;
 
-            }
+                }
                 btnView.startAnimation(MainActivity.buttonClick);
                 Intent intent = new Intent(cntx, AskConfirmation.class);
                 intent.putExtra("NAME", "Supervisor");
@@ -142,7 +150,8 @@ public class AskForHelp extends Fragment {
                 intent.putExtra("ISTEAM", false);
                 startActivity(intent);
 
-        });
+            });
+        }
 
 
         return view;

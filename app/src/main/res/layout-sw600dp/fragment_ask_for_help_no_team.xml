@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/ask_for_help2"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/whitesmoke"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:text="@string/askheader"
+        android:textColor="@color/black"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bluerectangle"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ask_for_help2">
+
+        <AutoCompleteTextView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/button_background"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center_horizontal"
+            android:hint="@string/search"
+            android:inputType="textPersonName"
+            android:letterSpacing="0.05"
+            android:paddingLeft="7dp"
+            android:paddingRight="7dp"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="28sp" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/team"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/group"
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:gravity="center_horizontal|top"
+                android:paddingTop="17dp"
+                android:paddingBottom="17dp"
+                android:text="@string/team"
+                android:textAllCaps="false"
+                android:textSize="20sp"
+                tools:textSize="20sp" />
+
+            <Button
+                android:id="@+id/supervisor"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="7dp"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/adminstration"
+                android:drawablePadding="0dp"
+                android:fontFamily="@font/montserrat_bold"
+                android:paddingTop="17dp"
+                android:paddingBottom="17dp"
+                android:text="@string/supervisor"
+                android:textAllCaps="false"
+                android:textSize="17sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

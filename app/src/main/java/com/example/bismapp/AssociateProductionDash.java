@@ -1,12 +1,10 @@
 package com.example.bismapp;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
@@ -15,12 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,58 +71,65 @@ public class AssociateProductionDash extends Fragment {
         assocNav = (AssociateNavigationActivity) getActivity();
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
-        myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
+
+        //myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
         Context cntx = assocNav.getApplicationContext();
 
         buttonClick.setDuration(100);
 
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        String teamID = myPrefs.getString("TEAM", "A");
+        String teamID = myPrefs.getString("TEAM", "N/A");
 
-        dbref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                // do something with snapshot values
-                daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
-                units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
-                percent = (int) (((double) units_produced / daily_goal) * 100);
-                ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
+        if (teamID.equals("N/A")) {
+            myView = inflater.inflate(R.layout.fragment_associate_prod_dash_no_team, container, false);
+        } else {
+            myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
 
-                Drawable draw;
-                if (percent < 10) {
-                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
-                } else if (percent < 24) {
-                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_orange);
-                } else if (percent < 75) {
-                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
-                } else  {
-                    draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
+            dbref.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    // do something with snapshot values
+                    daily_goal = snapshot.child("teams").child(teamID).child("daily_goal").getValue(Integer.class);
+                    units_produced = snapshot.child("teams").child(teamID).child("units_produced").getValue(Integer.class);
+                    percent = (int) (((double) units_produced / daily_goal) * 100);
+                    ProgressBar progressBar = (ProgressBar) myView.findViewById(R.id.circularProgressbar);
+
+                    Drawable draw;
+                    if (percent < 10) {
+                        draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_red);
+                    } else if (percent < 24) {
+                        draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_orange);
+                    } else if (percent < 75) {
+                        draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_yellow);
+                    } else {
+                        draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
+                    }
+
+                    //TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
+                    progressBar.setProgressDrawable(draw);
+                    progressBar.setSecondaryProgress(percent);
+                    TextView per_text = (TextView) myView.findViewById(R.id.textView);
+                    TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
+                    per_text.setText(percent + "%");
+                    if (percent >= 100) {
+                        per_text.setTextSize(42);
+                        progressBar.setSecondaryProgress(100);
+                    }
+
+                    prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
+                    //team_name_txt.setText("Team " + teamID + " has made");
+
                 }
 
-                //TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
-                progressBar.setProgressDrawable(draw);
-                progressBar.setSecondaryProgress(percent);
-                TextView per_text = (TextView) myView.findViewById(R.id.textView);
-                TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
-                per_text.setText(percent + "%");
-                if (percent >=100){
-                    per_text.setTextSize(42);
-                    progressBar.setSecondaryProgress(100);
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.w(TAG, "Failed to read value.", error.toException());
                 }
-
-                prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
-                //team_name_txt.setText("Team " + teamID + " has made");
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+            });
+        }
 
         return myView;
     }

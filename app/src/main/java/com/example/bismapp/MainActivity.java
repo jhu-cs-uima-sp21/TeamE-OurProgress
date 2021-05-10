@@ -117,10 +117,8 @@ public class MainActivity extends AppCompatActivity {
                         Intent intent = new Intent(getApplicationContext(), YourTeams.class);
                         startActivity(intent);
                     } else if (isAssociate && !snapshot.child("teams").child(teamID).exists()) {
-                        CharSequence text = "Please ask a supervisor to add you to a team";
-                        int duration = Toast.LENGTH_LONG;
-                        Toast toast = Toast.makeText(getApplicationContext(), text, duration);
-                        toast.show();
+                        Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
+                        startActivity(intent);
                     } else if (isAssociate) {
                         Intent intent = new Intent(getApplicationContext(), AssociateNavigationActivity.class);
                         startActivity(intent);
