@@ -8,20 +8,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.http.SslCertificate;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.bismapp.CreateTeam;
 import com.example.bismapp.EditTeam;
 import com.example.bismapp.R;
-import com.example.bismapp.Team;
 import com.example.bismapp.TeamMember;
 import com.example.bismapp.TeamMemberAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -32,9 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.concurrent.RunnableScheduledFuture;
 
 public class TeamMRFragment extends Fragment {
     private FirebaseDatabase mdbase;
@@ -143,13 +138,7 @@ public class TeamMRFragment extends Fragment {
         if (requestCode == LAUNCH_REMOVE_MEMBER) {
             if (resultCode == Activity.RESULT_OK) {
                 try {
-                    if (isFromATeam()) {
-                        if (activity instanceof CreateTeam) {
-                            ((CreateTeam)activity).notRemoveAssociateFromOldTeam(changedMember.getID());
-                        } else { // instanceof EditTeam
-                            ((EditTeam)activity).notRemoveAssociateFromOldTeam(changedMember.getID());
-                        }
-                    }
+                    changeMemberTeamOnFirebaseIfNeeded();
                     removeTeamMember(changedIndex, changedMember.getName());
                 } catch (Exception e) {
                     makeToast("Error occurred: Was not able to remove associate from roster");
@@ -161,16 +150,19 @@ public class TeamMRFragment extends Fragment {
         }
     }
 
-    private boolean isFromATeam() {
+    private void changeMemberTeamOnFirebaseIfNeeded() {
         if (activity instanceof CreateTeam) {
-            return ((CreateTeam)activity).associatesToTeamChange.containsKey(changedMember.getID());
-        } else { // instanceof EditTeam
-            return ((EditTeam)activity).associatesToTeamChange.containsKey(changedMember.getID());
+            ((CreateTeam)activity).notRemoveAssociateFromOldTeam(changedMember);
+        } else {
+            ((EditTeam)activity).notRemoveAssociateFromOldTeamIfNeeded(changedMember);
         }
+
+
     }
 
     public void removeTeamMember(int index, String name) throws Exception {
         TeamMember member = adapter.teamMembers.get(index);
+        String team = member.getTeam();
         member.setTeam("N/A");
         // Update AutoCompleteTextView adapter
         if (requireActivity() instanceof CreateTeam) {

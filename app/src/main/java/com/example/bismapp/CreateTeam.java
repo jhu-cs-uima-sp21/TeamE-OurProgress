@@ -181,8 +181,11 @@ public class CreateTeam extends AppCompatActivity {
         associatesToTeamChange.put(member.getID(), member.getTeam());
     }
 
-    public void notRemoveAssociateFromOldTeam(String id) {
-        associatesToTeamChange.remove(id);
+    public void notRemoveAssociateFromOldTeam(TeamMember member) {
+        if (associatesToTeamChange.containsKey(member.getID())) {
+            associatesToTeamChange.remove(member.getID());
+        }
+
     }
 
     private void changeOldTeams() {

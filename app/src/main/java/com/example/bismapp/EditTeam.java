@@ -31,6 +31,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class EditTeam extends AppCompatActivity {
     public TeamInfoFragment teamInfo;
@@ -38,6 +39,7 @@ public class EditTeam extends AppCompatActivity {
     private OkCancelFragment okCancel;
     public ArrayList<TeamMember> associates;
     public ArrayList<String> associatesNames;
+    private HashSet<String> associatesFromCurrTeamToChange;
     public HashMap<String, String> associatesToTeamChange;
 
     private String preName;
@@ -64,6 +66,7 @@ public class EditTeam extends AppCompatActivity {
         associates = new ArrayList<>();
         associatesNames = new ArrayList<>();
         associatesToTeamChange = new HashMap<>();
+        associatesFromCurrTeamToChange = new HashSet<>();
 
         teamRoster = new TeamMRFragment();
         teamInfo = new TeamInfoFragment();
@@ -219,15 +222,25 @@ public class EditTeam extends AppCompatActivity {
                 return curr;
             }
         }
-        throw new Exception("No associate with name " + name + " found");
+        throw new Exception("No associate with name \"" + name + "\" found");
     }
 
     public void removeAssociateFromOldTeam(TeamMember member) {
-        associatesToTeamChange.put(member.getID(), member.getTeam());
+        if (member.getTeam().equals(preName)) {
+            associatesFromCurrTeamToChange.remove(member.getID());
+        } else {
+            // associate was previously in another team
+            associatesToTeamChange.put(member.getID(), member.getTeam());
+        }
     }
 
-    public void notRemoveAssociateFromOldTeam(String id) {
-        associatesToTeamChange.remove(id);
+    public void notRemoveAssociateFromOldTeamIfNeeded(TeamMember member) {
+        if (associatesToTeamChange.containsKey(member.getID())) {
+            // associate was previously in another team
+            associatesToTeamChange.remove(member.getID());
+        } else {
+            associatesFromCurrTeamToChange.add(member.getID());
+        }
     }
 
     private void changeOldTeams() {
@@ -250,10 +263,10 @@ public class EditTeam extends AppCompatActivity {
                     }
                     dbref.child("teams")
                                 .child(teamName).child("team_members").setValue(teamMembers);
-                    if (snapshot.child("users").child(memberID).child("team")
-                            .getValue(String.class).equals(preName)) {
-                        dbref.child("users").child(memberID).child("team").setValue("N/A");
-                    }
+                }
+                for (String memberID : associatesFromCurrTeamToChange) {
+                    dbref.child("users").child("associates").child(memberID).child("team")
+                            .setValue("N/A");
                 }
             }
 
