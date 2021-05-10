@@ -138,7 +138,7 @@ public class ProductionDashboard extends Fragment {
                 TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
                 per_text.setText(percent + "%");
                 if (percent >=100){
-                    per_text.setTextSize(42);
+                    //per_text.setTextSize(42);
                     progressBar.setSecondaryProgress(100);
                     progressBar.setProgress(100);
                 }

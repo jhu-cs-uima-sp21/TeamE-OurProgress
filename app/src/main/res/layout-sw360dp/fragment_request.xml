@@ -30,7 +30,7 @@
             android:singleLine="true"
             android:text="@string/dummy_name"
             android:textColor="@color/black"
-            android:textSize="21sp"
+            android:textSize="30sp"
             tools:layout_marginRight="5dp" />
 
         <TextView
@@ -45,17 +45,17 @@
             android:ems="4"
             android:fontFamily="@font/montserrat"
             android:gravity="right"
-            android:paddingLeft="7dp"
-            android:paddingRight="7dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:singleLine="true"
             android:text="@string/dummy_station"
             android:textColor="@color/bism_blue"
-            android:textSize="17sp" />
+            android:textSize="24sp" />
 
         <ImageButton
             android:id="@+id/remove_request_btn"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="60dp"
             android:layout_marginStart="2dp"
             android:layout_marginLeft="2dp"
             android:layout_weight="1"

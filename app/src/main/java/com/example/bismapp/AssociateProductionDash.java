@@ -110,12 +110,13 @@ public class AssociateProductionDash extends Fragment {
                     //TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
                     progressBar.setProgressDrawable(draw);
                     progressBar.setSecondaryProgress(percent);
+                    progressBar.setProgress(percent);
                     TextView per_text = (TextView) myView.findViewById(R.id.textView);
                     TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
                     per_text.setText(percent + "%");
                     if (percent >= 100) {
-                        per_text.setTextSize(42);
                         progressBar.setSecondaryProgress(100);
+                        progressBar.setProgress(100);
                     }
 
                     prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");

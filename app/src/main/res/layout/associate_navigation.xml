@@ -30,21 +30,24 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/rectangle_tab_blue"></ImageView>
+            android:src="@drawable/rectangle_tab_blue"
+            tools:ignore="ContentDescription"></ImageView>
 
         <ImageView
             android:id="@+id/second_tab_b"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/rectangle_tab_white"></ImageView>
+            android:src="@drawable/rectangle_tab_white"
+            tools:ignore="ContentDescription"></ImageView>
 
         <ImageView
             android:id="@+id/third_tab_c"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/rectangle_tab_blue"></ImageView>
+            android:src="@drawable/rectangle_tab_blue"
+            tools:ignore="ContentDescription"></ImageView>
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
