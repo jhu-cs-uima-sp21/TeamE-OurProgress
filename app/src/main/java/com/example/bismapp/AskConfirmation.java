@@ -23,29 +23,24 @@ import org.jetbrains.annotations.NotNull;
 
 public class AskConfirmation extends AppCompatActivity {
     private static final String TAG = "tag?";
-    private String name, id, receiverID;
-    private boolean isTeam;
-    private OkCancelFragment okCancel;
-    private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
-    private SharedPreferences myPrefs;
     private Request newReq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_confirmation);
-        okCancel = new OkCancelFragment();
+        OkCancelFragment okCancel = new OkCancelFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.okay_cancel_frag, okCancel).commit();
-        mdbase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Intent intent = getIntent();
-        name = intent.getStringExtra("NAME");
-        receiverID = intent.getStringExtra("RECEIVERID");
-        isTeam = intent.getBooleanExtra("ISTEAM", false);
-        id = myPrefs.getString("ID", "");
+        String name = intent.getStringExtra("NAME");
+        String receiverID = intent.getStringExtra("RECEIVERID");
+        boolean isTeam = intent.getBooleanExtra("ISTEAM", false);
+        String id = myPrefs.getString("ID", "");
         newReq = new Request(id, receiverID, isTeam);
 
         TextView nameView = (TextView) findViewById(R.id.requester);
@@ -69,7 +64,7 @@ public class AskConfirmation extends AppCompatActivity {
     public void okButtonClicked() {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
                 //increment numrequests
                 Integer numRequests = snapshot.child("numRequests").getValue(Integer.class);
                 System.out.println(numRequests);

@@ -35,13 +35,11 @@ public class AskForHelp extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "dbref at AskForHelp: ";
 
-    private FirebaseDatabase mdbase;
     private DatabaseReference dbref;
     private HashMap<String, String> namesAndIDs;
     public ArrayAdapter<String> adapter;
     private ArrayList<String> names;
     private SharedPreferences myPrefs;
-    private SharedPreferences.Editor peditor;
     private String supervisorID, teamName;
     private Context cntx;
 
@@ -64,16 +62,15 @@ public class AskForHelp extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         cntx = getActivity().getApplication();
         namesAndIDs = new HashMap<>();
         names = new ArrayList<>();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
-        mdbase = FirebaseDatabase.getInstance();
+        FirebaseDatabase mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
-        peditor = myPrefs.edit();
         teamName = myPrefs.getString("TEAM", "N/A");
 
         View view;
@@ -89,7 +86,7 @@ public class AskForHelp extends Fragment {
         getSupervisor();
         System.out.print("Team: " + teamName + " Managed by: " + supervisorID);
 
-        adapter = new ArrayAdapter<String>(cntx,
+        adapter = new ArrayAdapter<>(cntx,
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
         textView.setAdapter(adapter);
@@ -150,7 +147,7 @@ public class AskForHelp extends Fragment {
     private void getSupervisor() {
         dbref.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> teamsShots = snapshot.child("teams").getChildren();
                 for (DataSnapshot i : teamsShots) {
                     if (i.child("name").getValue(String.class).equals(teamName)){
@@ -170,7 +167,7 @@ public class AskForHelp extends Fragment {
     private void getTeamMemberNames() {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
+            public void onDataChange(@NotNull DataSnapshot snapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 // do something with snapshot values
