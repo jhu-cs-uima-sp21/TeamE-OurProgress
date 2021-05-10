@@ -15,14 +15,14 @@
         <TextView
             android:id="@+id/your_teams"
             android:layout_width="match_parent"
-            android:layout_height="66dp"
+            android:layout_height="96dp"
             android:background="@color/bism_blue"
             android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="@string/your_teams"
             android:textColor="@color/white"
             android:textScaleX="1.1"
-            android:textSize="26sp" />
+            android:textSize="40sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/team_list"
@@ -40,55 +40,52 @@
         android:id="@+id/del_team_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="11dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/bism_blue"
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
-        app:fabCustomSize="55dp"
+        app:fabCustomSize="80dp"
         app:layout_constraintBottom_toTopOf="@+id/add_team_btn"
         app:layout_constraintEnd_toEndOf="@+id/add_team_btn"
         app:srcCompat="@drawable/ic_clear_bismblue_24"
-        app:tint="@color/white"
-        tools:targetApi="lollipop" />
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_team_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="7dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/bism_blue"
         android:clickable="true"
         android:focusable="true"
         android:visibility="invisible"
-        app:fabCustomSize="55dp"
+        app:fabCustomSize="80dp"
         app:layout_constraintBottom_toTopOf="@+id/edit_your_teams_btn"
         app:layout_constraintEnd_toEndOf="@+id/edit_your_teams_btn"
         app:srcCompat="@drawable/ic_add_white_18dp"
-        app:tint="@color/white"
-        tools:targetApi="lollipop" />
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/edit_your_teams_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/circle_inverted"
         android:backgroundTint="@color/white"
         android:contentDescription="@string/create_or_delete_a_team"
         android:focusable="true"
         android:scaleType="center"
-        app:borderWidth="3dp"
-        app:fabCustomSize="60dp"
+        app:borderWidth="4dp"
+        app:fabCustomSize="90dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:rippleColor="@color/bism_blue"
         app:srcCompat="@drawable/ic_edit_white_18dp"
-        app:tint="@color/bism_blue"
-        tools:targetApi="lollipop" />
+        app:tint="@color/bism_blue" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
