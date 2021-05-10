@@ -35,7 +35,6 @@ public class AssociateProductionDash extends Fragment {
     private static final String TAG = "dbref: ";
     private int daily_goal, units_produced, percent;
     private View myView;
-    private Context cntx;
     private AssociateNavigationActivity assocNav;
 
     public AssociateProductionDash() {
@@ -69,10 +68,6 @@ public class AssociateProductionDash extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         assocNav = (AssociateNavigationActivity) getActivity();
-        // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
-
-        //myView = inflater.inflate(R.layout.fragment_associate_production_dash, container, false);
         Context cntx = assocNav.getApplicationContext();
 
         buttonClick.setDuration(100);
@@ -107,7 +102,6 @@ public class AssociateProductionDash extends Fragment {
                         draw = cntx.getResources().getDrawable(R.drawable.circular_progress_bar_green);
                     }
 
-                    //TextView team_name_txt = (TextView) myView.findViewById(R.id.hasMade);
                     progressBar.setProgressDrawable(draw);
                     progressBar.setSecondaryProgress(percent);
                     progressBar.setProgress(percent);
@@ -120,8 +114,6 @@ public class AssociateProductionDash extends Fragment {
                     }
 
                     prod_txt.setText(units_produced + " out of \n" + daily_goal + " units");
-                    //team_name_txt.setText("Team " + teamID + " has made");
-
                 }
 
                 @Override

@@ -93,11 +93,6 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
                 intent.putExtra("STATION", s_station_name);
                 cntx.startActivity(intent);
 
-                //try {
-                //    activity.checkToRemoveTeamMember(getAdapterPosition(), member);
-                //} catch (Exception e) {
-                //    e.printStackTrace();
-                //}
             });
 
         }

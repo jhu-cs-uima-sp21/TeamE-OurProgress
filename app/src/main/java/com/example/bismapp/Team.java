@@ -46,12 +46,4 @@ public class Team {
         this.daily_goal = daily_goal;
     }
 
-    public void addMember(String id){
-
-    }
-
-    public void deleteMember(String id){
-
-    }
-
 }

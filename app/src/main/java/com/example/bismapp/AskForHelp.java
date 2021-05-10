@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,11 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.bismapp.ui.modifyTeams.ChangeMemberTeam;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -49,9 +44,6 @@ public class AskForHelp extends Fragment {
     private SharedPreferences.Editor peditor;
     private String supervisorID, teamName;
     private Context cntx;
-
-
-    //private AssociateNavigationActivity assocNav;
 
     public AskForHelp() {
         // Required empty public constructor
@@ -97,8 +89,6 @@ public class AskForHelp extends Fragment {
         getSupervisor();
         System.out.print("Team: " + teamName + " Managed by: " + supervisorID);
 
-
-        //TODO: Fix layout of the adapter for the AutoCompleteTextView
         adapter = new ArrayAdapter<String>(cntx,
                 R.layout.hint_item, names);
         AutoCompleteTextView textView = (AutoCompleteTextView) view.findViewById(R.id.search);
@@ -176,8 +166,6 @@ public class AskForHelp extends Fragment {
         });
     }
 
-
-    //TODO: KEIDAI + CHIAMAKA LOOK HERE!
     //Reads users from firebase, then adds them to namesAndIDs, names!
     private void getTeamMemberNames() {
         dbref.addListenerForSingleValueEvent(new ValueEventListener() {

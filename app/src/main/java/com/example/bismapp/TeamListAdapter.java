@@ -132,7 +132,7 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
                 SharedPreferences.Editor peditor = myPrefs.edit();
                 peditor.putString("TEAM", (String) name.getText());
                 peditor.apply();
-                //TODO is this broken?
+
                 Intent intent = new Intent(cntx.getApplicationContext(), NavigationActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 cntx.startActivity(intent);

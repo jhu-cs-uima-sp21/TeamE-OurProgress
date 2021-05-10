@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         EditText id_field = (EditText) findViewById(R.id.eid_field);
         // Clear text
         if (!remember) {
-            //EditText id = (EditText) findViewById(R.id.eid_field);
-            // Clear text
             id_field.setText("");
         } else {
             String id = myPrefs.getString("ID", "");
@@ -72,16 +70,10 @@ public class MainActivity extends AppCompatActivity {
 
         Button login_btn = (Button)findViewById(R.id.login_b);
         login_btn.setOnClickListener((View.OnClickListener) view -> { // switch to Your Teams activity
-            //view.startAnimation(buttonClick);
             EditText id = (EditText) findViewById(R.id.eid_field);
             String entered_id = id.getText().toString();
 
             System.out.println("hello, the entered ID is: " + entered_id);
-
-            // TODO: DO we need this?
-            //boolean isAssociate;
-
-            //dbref.child("users").child("managers").child(entered_id).exists();
 
             //READ FROM DATABASE TO CHECK IF MANAGER
             dbref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -131,9 +123,6 @@ public class MainActivity extends AppCompatActivity {
                             Log.w(TAG, "Invalid Employee ID");
                     }
 
-
-
-
                     Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
                 }
 
@@ -155,10 +144,6 @@ public class MainActivity extends AppCompatActivity {
             } else {
                 isRemembered = true;
             }
-
-            //TODO: Might need to uncomment if this fails!
-            //myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            //SharedPreferences.Editor peditor = myPrefs.edit();
 
             peditor.putBoolean("REMEMBER", isRemembered);
             peditor.apply();

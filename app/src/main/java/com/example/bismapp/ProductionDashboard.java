@@ -48,7 +48,6 @@ public class ProductionDashboard extends Fragment {
     private DatabaseReference dbref;
     private ValueEventListener valueEventListener;
     private DatabaseReference newTeamRef;
-    private ChildEventListener teamEventListener;
     private static final String TAG = "dbref: ";
     private int daily_goal, units_produced, percent;
     private boolean hasPaused;
@@ -88,7 +87,6 @@ public class ProductionDashboard extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_production_dashboard, container, false);
         View myView = inflater.inflate(R.layout.fragment_production_dashboard, container, false);
         Context cntx = getActivity().getApplicationContext();
 
@@ -138,7 +136,6 @@ public class ProductionDashboard extends Fragment {
                 TextView prod_txt = (TextView) myView.findViewById(R.id.prodText);
                 per_text.setText(percent + "%");
                 if (percent >=100){
-                    //per_text.setTextSize(42);
                     progressBar.setSecondaryProgress(100);
                     progressBar.setProgress(100);
                 }

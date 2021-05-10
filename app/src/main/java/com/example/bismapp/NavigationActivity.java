@@ -27,10 +27,8 @@ public class NavigationActivity extends AppCompatActivity{
         second_tab = (ImageView) findViewById(R.id.second_tab);
         third_tab = (ImageView) findViewById(R.id.third_tab);
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        //navView.setBackgroundResource(R.drawable.tabbar_background);
         navView.setSelectedItemId(R.id.nav_production);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        //navView.getMenu().findItem(R.id.nav_production).setChecked(true);
         openFragment(new ProductionDashboard());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.nav_host_fragment, new ProductionDashboard());

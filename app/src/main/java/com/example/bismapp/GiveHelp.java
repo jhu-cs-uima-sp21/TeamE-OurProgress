@@ -64,36 +64,13 @@ public class GiveHelp extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_give_help, container, false);
 
-        //setContentView(R.layout.fragment_give_help);
         mdbase = FirebaseDatabase.getInstance();
         dbref = mdbase.getReference();
         myPrefs = PreferenceManager.getDefaultSharedPreferences(cntx);
         requests = new ArrayList<>();
         getRequests();
-        //System.out.print("LOOK HERE FOR FIRST SENDER ID: " + requests.get(0).getSenderID());
-        //requests.add(new Request("12", "34", false));
 
-        // set up RecyclerView
-        //LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext(),
-                //LinearLayoutManager.VERTICAL, false);
-        /*adapter = new RequestAdapter(requests, getActivity().getApplicationContext());
-
-        RecyclerView request_list = view.findViewById(R.id.request_list);
-
-        request_list.setLayoutManager(layoutManager);
-        request_list.setAdapter(adapter);*/
-
-        // set up individual team clickListener
-       /* adapter.setOnItemClickListener((position, v) ->
-                Log.d("Team", "onItemClick position: " + position));*/
-
-        /*getSupportFragmentManager().beginTransaction()
-                .replace(R.id.team_roster_frag, teamRoster)
-                .replace(R.id.team_info_frag, teamInfo)
-                .replace(R.id.okay_cancel_frag, okCancel).commit();
-        */
         return view;
-
     }
 
     private void getRequests() {

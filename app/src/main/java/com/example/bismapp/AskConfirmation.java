@@ -49,9 +49,7 @@ public class AskConfirmation extends AppCompatActivity {
         newReq = new Request(id, receiverID, isTeam);
 
         TextView nameView = (TextView) findViewById(R.id.requester);
-        //TextView questionMarkView = (TextView) findViewById(R.id.question_mark_give);
-        //nameView.setText(name);
-        //questionMarkView.setText("?");
+
         int bismBlue = ContextCompat.getColor(this, R.color.bism_blue);
         int black = ContextCompat.getColor(this, R.color.black);
         String textName = name;

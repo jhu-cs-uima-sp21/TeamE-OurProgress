@@ -30,7 +30,6 @@ public class AssociateNavigationActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setSelectedItemId(R.id.nav_production);
         navView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
-        //navView.getMenu().findItem(R.id.nav_production).setChecked(true);
         openFragment(new ProductionDashboard());
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.nav_host_fragment, new AssociateProductionDash());
@@ -44,7 +43,6 @@ public class AssociateNavigationActivity extends AppCompatActivity {
     public void openFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.nav_host_fragment, fragment);
-        //transaction.addToBackStack(null);
         transaction.commit();
     }
 
@@ -74,7 +72,6 @@ public class AssociateNavigationActivity extends AppCompatActivity {
                     return false;
                 }
             };
-
 }
 
 

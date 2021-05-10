@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.core.widget.TextViewCompat;
 
 import com.example.bismapp.ui.modifyTeams.TeamInfoFragment;
 import com.example.bismapp.ui.modifyTeams.TeamMRFragment;
@@ -154,11 +153,7 @@ public class EditTeam extends AppCompatActivity {
                             .setValue(preName);
                     Log.d(TAG, "Set " + associate.getName() + "'s team to " + preName);
                 }
-                // update values of the team's branch on firebase
-                /*if (!preName.equals(teamName)) {
-                    //dbref.child("teams").child(preName).setValue(teamName);
-                }
-*/
+
                 peditor.putString("TEAM", preName);
                 peditor.apply();
 
@@ -171,7 +166,6 @@ public class EditTeam extends AppCompatActivity {
                 Team team = new Team(preName, managerID, unitsProduced, dailyGoal, members);
                 dbref.child("teams").child(preName).setValue(team);
                 Log.d(TAG, "Children count: " + snapshot.getChildrenCount());
-                //finish();
             }
 
             @Override

@@ -151,7 +151,6 @@ public class YourTeams extends AppCompatActivity {
     }
 
     private void genLocalTeams() {
-        //ArrayList<Team> tmp_teams = new ArrayList<>();
         SharedPreferences myPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String manager_id = myPrefs.getString("ID", "");
 
@@ -221,7 +220,7 @@ public class YourTeams extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LAUNCH_DELETE_TEAM) {
             if (resultCode == Activity.RESULT_OK) {
-                //teamNames.remove(name);
+
                 mdbase = FirebaseDatabase.getInstance();
                 dbref = mdbase.getReference();
                 // Fetch all associates
