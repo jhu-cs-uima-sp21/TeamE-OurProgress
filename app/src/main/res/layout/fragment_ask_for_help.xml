@@ -75,8 +75,7 @@
                 android:paddingBottom="17dp"
                 android:text="@string/team"
                 android:textAllCaps="false"
-                android:textSize="20sp"
-                tools:textSize="20sp" />
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/supervisor"

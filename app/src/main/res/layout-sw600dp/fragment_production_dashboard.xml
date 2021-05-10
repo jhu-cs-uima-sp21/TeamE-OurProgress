@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context=".AssociateProductionDash">
+    android:background="@color/white">
 
 
     <!-- TODO: Update blank fragment layout -->
@@ -19,8 +18,8 @@
 
             android:id="@+id/circularProgressbar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="450dp"
+            android:layout_height="450dp"
             android:layout_centerInParent="true"
             android:background="@drawable/circle_shape"
             android:indeterminate="false"
@@ -30,54 +29,75 @@
             android:secondaryProgress="90"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.126" />
+            app:layout_constraintVertical_bias="0.185" />
 
         <TextView
             android:id="@+id/hasMade"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="124dp"
+            android:layout_marginTop="165dp"
             android:fontFamily="@font/montserrat"
-            android:text="@string/has_made"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:textColor="#000000"
-            android:textSize="30sp"
+            android:textSize="61sp"
+            app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
             android:id="@+id/prodText"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="170dp"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/montserrat"
             android:gravity="center_horizontal|top"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:textColor="#000000"
-            android:textSize="50sp"
+            android:textSize="75sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.511"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hasMade" />
 
+
         <TextView
             android:id="@+id/textView"
-            android:layout_width="145dp"
-            android:layout_height="87dp"
+            android:layout_width="217dp"
+            android:layout_height="130dp"
             android:fontFamily="@font/montserrat"
             android:gravity="center"
             android:textColor="#000000"
-            android:textSize="65sp"
+            android:textSize="67sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="@+id/circularProgressbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/circularProgressbar" />
+
+        <ImageButton
+            android:id="@+id/settingsButton"
+            android:layout_width="112dp"
+            android:layout_height="111dp"
+            android:background="#FFFFFF"
+            android:scaleType="fitCenter"
+            android:tint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.953"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.011"
+            app:srcCompat="@drawable/settings_icon"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
