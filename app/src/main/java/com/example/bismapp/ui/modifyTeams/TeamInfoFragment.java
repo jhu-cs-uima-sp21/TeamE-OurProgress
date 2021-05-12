@@ -62,12 +62,12 @@ public class TeamInfoFragment extends Fragment {
             CreateTeam activity = (CreateTeam)getActivity();
             activity.getAllAssociates();
             adapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_list_item_1, activity.associatesNames);
+                    R.layout.hint_item, activity.associatesNames);
         } else if (getActivity() instanceof EditTeam) {
             EditTeam activity = (EditTeam)getActivity();
             activity.getAllAssociates();
             adapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_list_item_1, activity.associatesNames);
+                     R.layout.hint_item, activity.associatesNames);
             // pre-populate goal
             EditText editGoal = (EditText)view.findViewById(R.id.enterDailyGoal);
             editGoal.setText(String.valueOf(myPrefs.getInt("DAILY_GOAL", 1000)));

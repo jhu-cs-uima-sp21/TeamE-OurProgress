@@ -11,22 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="13dp"
-        android:paddingTop="10dp"
-        android:paddingRight="13dp"
-        android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="20dp"
+        android:paddingTop="15dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="15dp">
 
         <TextView
             android:id="@+id/setDailyGoal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="6dp"
+            android:paddingBottom="10dp"
             android:text="@string/set_daily_goal"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
         <EditText
@@ -38,19 +38,19 @@
             android:fontFamily="@font/montserrat"
             android:hint="@string/enter_daily_goal"
             android:inputType="number"
-            android:paddingLeft="10dp"
+            android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="21sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/addTeamMembers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:paddingBottom="6dp"
+            android:layout_marginTop="10dp"
+            android:paddingBottom="10dp"
             android:text="@string/add_team_members"
             android:textColor="@color/black"
-            android:textSize="17sp"
+            android:textSize="24sp"
             tools:fontFamily="@font/montserrat" />
 
         <AutoCompleteTextView
@@ -62,9 +62,9 @@
             android:fontFamily="@font/montserrat"
             android:hint="@string/enter_names"
             android:inputType="text"
-            android:paddingLeft="10dp"
+            android:paddingLeft="15dp"
             android:textColor="@color/black"
-            android:textSize="21sp"
+            android:textSize="30sp"
             android:windowSoftInputMode="adjustPan|adjustResize" />
 
     </LinearLayout>
